@@ -1,5 +1,8 @@
 package clases;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +15,6 @@ public class EquipoDAO {
 
     public static Connection conectar() {
         Connection con = null;
-
         String url = "jdbc:mysql://localhost:3306/proyectoprogramacion";
 
         try {
