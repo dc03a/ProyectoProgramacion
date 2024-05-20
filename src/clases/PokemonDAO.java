@@ -23,9 +23,11 @@ public class PokemonDAO {
 
     public static Pokemon leerDatos(int ID) {
         Pokemon pokemon = null;
-        String sen = "SELECT pok.*, hab.NOMBRE AS HABILIDAD, obj.NOMBRE AS NOMBRE_OBJETO " +
-                "FROM pokemon pok LEFT JOIN habilidades hab ON pok.ID_HABILIDAD = hab.ID_HABILIDAD " +
-                "LEFT JOIN objetos obj ON pok.OBJETO = obj.ID_OBJETO WHERE ID_POKEMON =" + ID;
+        String sen = "SELECT pok.*, hab.NOMBRE AS HABILIDAD, obj.NOMBRE AS NOMBRE_OBJETO, mov1.DESCRIPCION" +
+                " AS MOVI1, mov2.DESCRIPCION AS MOVI2 FROM pokemon pok LEFT JOIN habilidades hab ON pok.ID" +
+                "_HABILIDAD = hab.ID_HABILIDAD LEFT JOIN objetos obj ON pok.OBJETO = obj.ID_OBJETO" +
+                " LEFT JOIN movimientos mov1 ON pok.MOV1 = mov1.ID_MOVIMIENTO LEFT JOIN movimientos mov2 ON" +
+                " pok.MOV2 = mov2.ID_MOVIMIENTO WHERE ID_POKEMON = " + ID;
         try {
             Connection con = conectar();
             Statement sentencia = con.createStatement();
@@ -45,8 +47,11 @@ public class PokemonDAO {
                 int defensaEspecial = res.getInt("DEFENSA_ESPECIAL");
                 int velocidad = res.getInt("VELOCIDAD");
                 String objeto = res.getNString("NOMBRE_OBJETO");
+                String mov1 = res.getNString("MOVI1");
+                String mov2 = res.getNString("MOVI2");
 
-                pokemon = new Pokemon(num_pokedex, Nombre, habilidad,nivel,tipo1,tipo2, HP, ataque,defensa,ataqueEspecial,defensaEspecial,velocidad,objeto);
+                pokemon = new Pokemon(num_pokedex, Nombre, habilidad,nivel,tipo1,tipo2, HP,
+                        ataque,defensa,ataqueEspecial,defensaEspecial,velocidad,objeto, mov1,mov2);
             }
             conectar().close();
         } catch(SQLException e) {
