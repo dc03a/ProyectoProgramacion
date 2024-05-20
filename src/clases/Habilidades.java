@@ -9,5 +9,5 @@ public class Habilidades {
         this.ID_HABILIDAD = ID_HABILIDAD;
     }
     public Habilidades() {}
-    public Habilidades(String[] NOMBRE, String[] EFECTO) {}
+    public Habilidades(String NOMBRE, String EFECTO) {}
 }
