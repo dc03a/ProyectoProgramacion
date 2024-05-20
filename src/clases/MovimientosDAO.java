@@ -3,14 +3,14 @@ package clases;
 import java.sql.*;
 
 public class MovimientosDAO {
-    public MovimientosDAO(){
+    public MovimientosDAO() {
         super();
     }
 
-    public static Connection conectar(){
+    public static Connection conectar() {
         Connection con = null;
 
-        String url= "jdbc:mysql://localhost:3306/proyectoprogramacion";
+        String url = "jdbc:mysql://localhost:3306/proyectoprogramacion";
 
         try {
             con = DriverManager.getConnection(url, "root", "root");
@@ -21,7 +21,7 @@ public class MovimientosDAO {
     }
 
 
-    public static Movimientos leerMovimiento(int ID){
+    public static Movimientos leerMovimiento(int ID) {
         Movimientos movimiento = null;
         String sen = "SELECT * FROM movimientos WHERE ID_MOVIMIENTO = " + ID;
         try {
@@ -37,11 +37,11 @@ public class MovimientosDAO {
                 int potencia = res.getInt("POTENCIA");
                 int acuracy = res.getInt("ACURACY");
                 int pp = res.getInt("PP");
-                String clase  = res.getString("CLASE");
+                String clase = res.getString("CLASE");
                 movimiento = new Movimientos(tipo, descripcion, potencia, acuracy, pp, clase);
             }
             conectar().close();
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             System.out.print(e);
         }
         return movimiento;

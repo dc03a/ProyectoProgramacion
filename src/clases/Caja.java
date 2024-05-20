@@ -1,4 +1,5 @@
 package clases;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -13,14 +14,15 @@ public class Caja {
         this.ID_CAJA = ID_CAJA;
     }
 
-    public void setCapacidad(){
+    public void setCapacidad() {
         this.CAPACIDAD = 30;
     }
+
     public void setNombre(String NOMBRE) {
         this.NOMBRE = NOMBRE;
     }
 
-    public String getNombreCaja(){
+    public String getNombreCaja() {
         String nombre = "";
 
         return nombre;

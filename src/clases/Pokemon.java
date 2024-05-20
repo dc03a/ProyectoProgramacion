@@ -1,10 +1,8 @@
 package clases;
 
-import java.sql.*;
-
-public class Pokemon{
-    String url= "jdbc:mysql://localhost:3306/proyectoprogramacion";
-    String usuario="root";
+public class Pokemon {
+    String url = "jdbc:mysql://localhost:3306/proyectoprogramacion";
+    String usuario = "root";
     String password = "7645";
 
     public int ID;
@@ -30,17 +28,17 @@ public class Pokemon{
     public int id_mov2;
     public int id_objeto;
 
-    public Pokemon(){
+    public Pokemon() {
     }
 
-    public Pokemon(int id){
+    public Pokemon(int id) {
 
         this.ID = id;
     }
 
     public Pokemon(int num_pokedex, String nombre, String habilidad, int nivel, String tipo1, String tipo2,
                    int HP, int ataque, int defensa, int ataqueEspecial, int defensaEspecial, int velocidad,
-                   String objeto){
+                   String s, String mov1, String objeto) {
         setNum_pokedex(num_pokedex);
         setNombre(nombre);
         setHabilidad(habilidad);
@@ -55,6 +53,7 @@ public class Pokemon{
         setVelocidad(velocidad);
         setObjeto(objeto);
     }
+
     public boolean isEstaEnEquipo() {
         return estaEnEquipo;
     }
@@ -170,11 +169,11 @@ public class Pokemon{
         this.num_pokedex = numPokedex;
     }
 
-    public void setId_habilibidad(int hab){
+    public void setId_habilibidad(int hab) {
         this.id_habilibidad = hab;
     }
 
-    public void setId_mov1(int mov1){
+    public void setId_mov1(int mov1) {
         this.id_mov1 = mov1;
     }
 
@@ -182,7 +181,7 @@ public class Pokemon{
         this.defensa = defensa;
     }
 
-    public void setId_mov2(int mov2){
+    public void setId_mov2(int mov2) {
         this.id_mov2 = mov2;
     }
 
@@ -194,7 +193,7 @@ public class Pokemon{
         this.id_Caja = id_Caja;
     }
 
-    public void setId_objeto(int obj){
+    public void setId_objeto(int obj) {
         this.id_objeto = obj;
     }
 

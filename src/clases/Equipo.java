@@ -7,7 +7,7 @@ public class Equipo {
     public Objetos objeto;
     public ArrayList<Pokemon> EquipoPokemon;
 
-    public Equipo(){
+    public Equipo() {
         EquipoPokemon = new ArrayList<>();
     }
 
@@ -15,5 +15,29 @@ public class Equipo {
         this.ID_POKEMON = id;
         this.objeto = obj;
         this.EquipoPokemon = new ArrayList<>(6);
+    }
+
+    public int getID_POKEMON() {
+        return ID_POKEMON;
+    }
+
+    public void setID_POKEMON(int ID_POKEMON) {
+        this.ID_POKEMON = ID_POKEMON;
+    }
+
+    public Objetos getObjeto() {
+        return objeto;
+    }
+
+    public void setObjeto(Objetos objeto) {
+        this.objeto = objeto;
+    }
+
+    public ArrayList<Pokemon> getEquipoPokemon() {
+        return EquipoPokemon;
+    }
+
+    public void setEquipoPokemon(ArrayList<Pokemon> equipoPokemon) {
+        EquipoPokemon = equipoPokemon;
     }
 }

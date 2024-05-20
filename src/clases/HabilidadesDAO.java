@@ -3,15 +3,15 @@ package clases;
 import java.sql.*;
 
 public class HabilidadesDAO {
-    public HabilidadesDAO(){
+    public HabilidadesDAO() {
         super();
     }
 
 
-    public static Connection conectar(){
+    public static Connection conectar() {
         Connection con = null;
 
-        String url= "jdbc:mysql://localhost:3306/proyectoprogramacion";
+        String url = "jdbc:mysql://localhost:3306/proyectoprogramacion";
 
         try {
             con = DriverManager.getConnection(url, "root", "root");
@@ -22,23 +22,21 @@ public class HabilidadesDAO {
     }
 
 
-    public static Habilidades leerDatos(int ID){
+    public static Habilidades leerDatos(int ID) {
         Habilidades habilidad = null;
         String sen = "SELECT * FROM habilidades WHERE ID_HABILIDAD = " + ID;
         try {
             Connection con = conectar();
-
             Statement sentencia = con.createStatement();
-
             ResultSet res = sentencia.executeQuery(sen);
 
             if (res.next()) {
+                int idHab = res.getInt("ID_HABILIDAD");
                 String nombre = res.getString("NOMBRE");
                 String efecto = res.getString("EFECTO");
-                habilidad = new Habilidades(nombre, efecto);
+                habilidad = new Habilidades(idHab, nombre, efecto);
             }
-            conectar().close();
-        } catch(SQLException e){
+        } catch (SQLException e) {
             System.out.print(e);
         }
         return habilidad;

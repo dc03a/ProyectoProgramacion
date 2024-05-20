@@ -5,15 +5,14 @@ import java.util.ArrayList;
 
 
 public class EquipoDAO {
-    public EquipoDAO(){
+    public EquipoDAO() {
         super();
     }
 
-
-    public static Connection conectar(){
+    public static Connection conectar() {
         Connection con = null;
 
-        String url= "jdbc:mysql://localhost:3306/proyectoprogramacion";
+        String url = "jdbc:mysql://localhost:3306/proyectoprogramacion";
 
         try {
             con = DriverManager.getConnection(url, "root", "root");
@@ -22,27 +21,26 @@ public class EquipoDAO {
         }
         return con;
     }
-    public static ArrayList<Pokemon> listaPokemon(ArrayList<Pokemon> equipoPokemon){
+
+    public static ArrayList<Pokemon> listaPokemon() {
         String sen = "SELECT * FROM equipo";
         ArrayList<Pokemon> listaPokemon = new ArrayList<>();
         try {
-            Pokemon pokemon = null;
-            PokemonDAO pokeDAO = null;
             Connection con = conectar();
-
             Statement sentencia = con.createStatement();
-
             ResultSet res = sentencia.executeQuery(sen);
 
-            if (res.next()) {
+            PokemonDAO pokeDAO = new PokemonDAO();
+
+            while (res.next()) {
                 int id_pokemon = res.getInt("ID_POKEMON");
-                String objeto = res.getString("OBJETO");
-                pokemon = pokeDAO.leerDatos(id_pokemon);
-                listaPokemon.add(pokemon);
+                Pokemon pokemon = pokeDAO.leerDatos(id_pokemon);
+                if (pokemon != null) {
+                    listaPokemon.add(pokemon);
+                }
             }
-            conectar().close();
-        } catch(SQLException e){
-            System.out.print(e);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return listaPokemon;
     }
