@@ -8,4 +8,6 @@ public class Habilidades {
     public Habilidades(int ID_HABILIDAD) {
         this.ID_HABILIDAD = ID_HABILIDAD;
     }
+    public Habilidades() {}
+    public Habilidades(String[] NOMBRE, String[] EFECTO) {}
 }
