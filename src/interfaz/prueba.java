@@ -1,11 +1,11 @@
 package interfaz;
 
-import clases.Pokemon;
-import clases.Equipo;
+import clases.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class prueba extends JFrame {
 
@@ -110,10 +110,10 @@ public class prueba extends JFrame {
         equipoPanel.setLayout(new GridLayout(6, 1, 10, 10));
         equipoDialog.add(equipoPanel, BorderLayout.CENTER);
 
-        String[] equipo = obtenerEquipoDesdeBD();
+        ArrayList<Pokemon> equipo = EquipoDAO.listaPokemon();
 
         for (int i = 0; i < 6; i++) {
-            String pokemonNombre = i < equipo.length ? equipo[i] : "Empty Slot " + (i + 1);
+            String pokemonNombre = i < equipo.size() ? String.valueOf(equipo.get(i)) : "Empty Slot " + (i + 1);
             JButton pokemonButton = new JButton(pokemonNombre);
             pokemonButton.setFont(new Font("Arial", Font.PLAIN, 16));
             equipoPanel.add(pokemonButton);
@@ -254,7 +254,7 @@ public class prueba extends JFrame {
         sacarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Pokemon< 6) {
+                if (EquipoDAO.< 6) {
 
                     sacarPokemonDeBD(pokemonNombre);
                     opcionesDialog.dispose();

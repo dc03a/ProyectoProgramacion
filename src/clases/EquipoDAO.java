@@ -2,6 +2,7 @@ package clases;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class EquipoDAO {
@@ -43,5 +44,27 @@ public class EquipoDAO {
             e.printStackTrace();
         }
         return listaPokemon;
+    }
+
+    public static String[] obtenerEquipoDesdeBD() {
+        List<String> equipo = new ArrayList<>();
+        String query = "SELECT NOMBRE FROM pokemon WHERE EQUIPO = true"; // Siempre se obtiene el equipo con ID 1
+        try (Connection con = conectar();
+             Statement sent = con.createStatement();
+             ResultSet res = sent.executeQuery(query)) {
+            while (res.next()) {
+                equipo.add(res.getString("NOMBRE"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return equipo.toArray(new String[0]);
+    }
+
+    public static boolean hayEspacioEnEquipo() {
+        int capMaxim = 6;
+        int cantPokemon = obtenerEquipoDesdeBD().length;
+
+        return cantPokemon < capMaxim;
     }
 }

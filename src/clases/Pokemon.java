@@ -54,6 +54,9 @@ public class Pokemon {
         setObjeto(objeto);
     }
 
+    public Pokemon(int idPokemon, String nombre, int hp, int ataque, int defensa, int nivel, int idCaja) {
+    }
+
     public boolean isEstaEnEquipo() {
         return estaEnEquipo;
     }

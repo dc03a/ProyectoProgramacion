@@ -62,48 +62,39 @@ public class PokemonDAO {
     }
 
 
-    public int getId_Caja() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            System.out.print(e);
-        }
-        try {
-            String sen = "SELECT * FROM pokemon WHERE ID_POKEMON = " + ID;
-            Connection con = DriverManager.getConnection(url, usuario, password);
-            Statement sentencia = con.createStatement();
-            ResultSet res = sentencia.executeQuery(sen);
-            while (res.next()) {
-                id_Caja = res.getInt("ID_CAJA");
-            }
 
+    public static void dejarPokemonEnBD(String nombre) {
+        String query = "UPDATE pokemon SET EQUIPO = 0 WHERE NOMBRE = ?";
+        try (Connection con = conectar();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, nombre);
+            pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.print(e);
+            e.printStackTrace();
         }
-        return id_Caja;
     }
 
-
-    public boolean isEstaEnEquipo() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            System.out.print(e);
-        }
-        try {
-            String sen = "SELECT * FROM pokemon WHERE ID_POKEMON = " + ID;
-            Connection con = DriverManager.getConnection(url, usuario, password);
-            Statement sentencia = con.createStatement();
-            ResultSet res = sentencia.executeQuery(sen);
-            while (res.next()) {
-                estaEnEquipo = res.getBoolean("EQUIPO");
-            }
-
+    public static void cambiarApodoEnBD(String nombreActual, String nuevoNombre) {
+        String query = "UPDATE pokemon SET NOMBRE = ? WHERE NOMBRE = ?";
+        try (Connection con = conectar();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, nuevoNombre);
+            pstmt.setString(2, nombreActual);
+            pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.print(e);
+            e.printStackTrace();
         }
-        return estaEnEquipo;
     }
+
+    public static void liberarPokemonDeBD(String nombre) {
+        String query = "DELETE FROM pokemon WHERE NOMBRE = ?";
+        try (Connection con = conectar();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, nombre);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
