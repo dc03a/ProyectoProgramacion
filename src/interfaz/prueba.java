@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class prueba extends JFrame {
 
     public static void main(String[] args) {
-        Pokemon pokemonClase;
         JFrame frame = new JFrame("PC Pokémon");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
@@ -311,6 +310,7 @@ public class prueba extends JFrame {
     }
 
     private static void sacarPokemon(JFrame parentFrame) {
+        CajaDAO.sacarPokemonDeBD("Caterpie");
         mostrarCajas(parentFrame);
     }
 
@@ -318,9 +318,6 @@ public class prueba extends JFrame {
         JDialog dejarDialog = new JDialog(parentFrame, "Dejar Pokémon", true);
         dejarDialog.setSize(400, 300);
         dejarDialog.setLayout(new GridLayout(6, 1, 10, 10));
-
-
-
 
         String[] equipo = obtenerEquipoDesdeBD();
 
@@ -476,26 +473,21 @@ public class prueba extends JFrame {
     }
 
     private static void sacarPokemonDeBD(String pokemonNombre) {
-
-
-
+        CajaDAO.sacarPokemonDeBD(pokemonNombre);
+        if (EquipoDAO.hayEspacioEnEquipo()) {
+            EquipoDAO.aniadirAEquipoDesdeBD(pokemonNombre);
+        }
     }
 
     private static void dejarPokemonEnBD(String pokemonNombre) {
-
-
-
+        CajaDAO.dejarPokemonEnBD(pokemonNombre);
     }
 
     private static void cambiarApodoEnBD(String pokemonNombre, String nuevoNombre) {
-
-
-
+        PokemonDAO.cambiarApodoEnBD(pokemonNombre, nuevoNombre);
     }
 
     private static void liberarPokemonDeBD(String pokemonNombre) {
-
-
-
+        CajaDAO.liberarPokemon(pokemonNombre);
     }
 }

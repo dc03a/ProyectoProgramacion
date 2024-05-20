@@ -135,7 +135,6 @@ public class CajaDAO {
         return cajaPok;
     }
 
-
     /* Para comprobar si el id_caja que le pasamos corresponde a una caja */
     public static boolean existeCaja(int ID_CAJA) {
         boolean existe = false;
@@ -159,9 +158,9 @@ public class CajaDAO {
     public static void sacarPokemonDeBD(String pokemonNombre) {
         String query = "UPDATE pokemon SET EQUIPO = 1 WHERE NOMBRE = ?";
         try (Connection con = conectar();
-             PreparedStatement pstmt = con.prepareStatement(query)) {
-            pstmt.setString(1, pokemonNombre);
-            pstmt.executeUpdate();
+             PreparedStatement sentencia = con.prepareStatement(query)) {
+            sentencia.setString(1, pokemonNombre);
+            sentencia.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -170,9 +169,9 @@ public class CajaDAO {
     public static void dejarPokemonEnBD(String pokemonNombre) {
         String query = "UPDATE pokemon SET EQUIPO = 0 WHERE NOMBRE = ?";
         try (Connection con = conectar();
-             PreparedStatement pstmt = con.prepareStatement(query)) {
-            pstmt.setString(1, pokemonNombre);
-            pstmt.executeUpdate();
+             PreparedStatement sentencia = con.prepareStatement(query)) {
+            sentencia.setString(1, pokemonNombre);
+            sentencia.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -181,10 +180,10 @@ public class CajaDAO {
     public static void agregarPokemonACaja(int idCaja, String pokemonNombre) {
         String query = "UPDATE pokemon SET ID_CAJA = ?, EQUIPO = 0 WHERE NOMBRE = ?";
         try (Connection con = conectar();
-             PreparedStatement pstmt = con.prepareStatement(query)) {
-            pstmt.setInt(1, idCaja);
-            pstmt.setString(2, pokemonNombre);
-            pstmt.executeUpdate();
+             PreparedStatement sentencia = con.prepareStatement(query)) {
+            sentencia.setInt(1, idCaja);
+            sentencia.setString(2, pokemonNombre);
+            sentencia.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -194,10 +193,10 @@ public class CajaDAO {
         Pokemon pokemon = null;
         String query = "SELECT * FROM pokemon WHERE ID_CAJA = ? AND NOMBRE = ?";
         try (Connection con = conectar();
-             PreparedStatement pstmt = con.prepareStatement(query)) {
-            pstmt.setInt(1, idCaja);
-            pstmt.setString(2, pokemonNombre);
-            try (ResultSet res = pstmt.executeQuery()) {
+             PreparedStatement sentenceia = con.prepareStatement(query)) {
+            sentenceia.setInt(1, idCaja);
+            sentenceia.setString(2, pokemonNombre);
+            try (ResultSet res = sentenceia.executeQuery()) {
                 if (res.next()) {
                     pokemon = new Pokemon(
                             res.getInt("ID_POKEMON"),
@@ -219,9 +218,9 @@ public class CajaDAO {
     public static void liberarPokemon(String nombrePokemon) {
         String query = "DELETE FROM pokemon WHERE NOMBRE = ?";
         try (Connection con = conectar();
-             PreparedStatement pstmt = con.prepareStatement(query)) {
-            pstmt.setString(1, nombrePokemon);
-            pstmt.executeUpdate();
+             PreparedStatement sentencia = con.prepareStatement(query)) {
+            sentencia.setString(1, nombrePokemon);
+            sentencia.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
