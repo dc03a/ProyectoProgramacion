@@ -254,8 +254,7 @@ public class prueba extends JFrame {
         sacarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (EquipoDAO.< 6) {
-
+                if (EquipoDAO.hayEspacioEnEquipo()) {
                     sacarPokemonDeBD(pokemonNombre);
                     opcionesDialog.dispose();
                 } else {
@@ -469,11 +468,11 @@ public class prueba extends JFrame {
     }
 
     private static Pokemon obtenerDatosPokemonDesdeBD(String pokemonNombre) {
-        return new Pokemon(pokemonNombre, 50, 50, 50, 5);
+        return PokemonDAO.leerDatos(Integer.parseInt(pokemonNombre));
     }
 
     private static String obtenerObjetoDesdeBD(String pokemonNombre) {
-        return "Poción";
+        return ObjetosDAO.obtenerObjetoPorNombre(pokemonNombre);
     }
 
     private static void sacarPokemonDeBD(String pokemonNombre) {
