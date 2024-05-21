@@ -57,7 +57,7 @@ public class CajaDAO {
     }
 
     public static void meterPokemonACaja(String pokemonNombre) {
-        String query = "UPDATE pokemon SET estaEnCaja = true WHERE NOMBRE = ?";
+        String query = "UPDATE pokemon SET estaEnCaja = true, estaEnEquipo = false WHERE NOMBRE = ?";
         try (Connection con = conectar();
              PreparedStatement sentencia = con.prepareStatement(query)) {
             sentencia.setString(1, pokemonNombre);
