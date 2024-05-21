@@ -1,35 +1,14 @@
 package clases;
 
-import java.sql.*;
-import java.util.ArrayList;
-
 public class Caja {
+    public int Id_Pokemon;
+    public String Nombre;
 
-    public ArrayList<Pokemon> caja = new ArrayList<>();
-    public int ID_CAJA;
-    public String NOMBRE;
-    public int CAPACIDAD = 30;
-
-    public Caja(int ID_CAJA) {
-        this.ID_CAJA = ID_CAJA;
+    public int getId_Pokemon() {
+        return Id_Pokemon;
     }
 
-    public void setCapacidad() {
-        this.CAPACIDAD = 30;
+    public void setId_Pokemon(int id_Pokemon) {
+        Id_Pokemon = id_Pokemon;
     }
-
-    public void setNombre(String NOMBRE) {
-        this.NOMBRE = NOMBRE;
-    }
-
-    public String getNombreCaja() {
-        String nombre = "";
-
-        return nombre;
-    }
-
-    public int getID_CAJA() {
-        return ID_CAJA;
-    }
-
 }

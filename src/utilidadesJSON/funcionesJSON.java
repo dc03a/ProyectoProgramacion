@@ -11,7 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class funcionesJSON {
-    public static Pokemon leerDatosDesdeJSON(String ruta) {
+
+    public static Pokemon leerDatosPokemonDesdeJSON(String ruta) {
         Gson gson = new Gson();
         Pokemon pokemon = null;
 
