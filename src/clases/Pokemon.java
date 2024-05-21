@@ -156,6 +156,9 @@ public class Pokemon {
     }
 
     public Pokemon() {
+    }
 
+
+    public Pokemon(int id, String nombre) {
     }
 }
