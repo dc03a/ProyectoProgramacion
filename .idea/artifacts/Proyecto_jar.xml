@@ -4,7 +4,7 @@
     <root id="archive" name="Proyecto.jar">
       <element id="module-output" name="Proyecto" />
       <element id="extracted-dir" path="$USER_HOME$/Desktop/Proyecto/mysql-connector-j-8.4.0/mysql-connector-j-8.4.0.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/gson-2.11.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/librerias/gson-2.11.0.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
