@@ -8,25 +8,11 @@ public class HabilidadesDAO {
     }
 
 
-    public static Connection conectar() {
-        Connection con = null;
-
-        String url = "jdbc:mysql://localhost:3306/proyectoprogramacion";
-
-        try {
-            con = DriverManager.getConnection(url, "root", "root");
-        } catch (SQLException ex) {
-            System.out.println("Error al conectar al SGBD");
-        }
-        return con;
-    }
-
-
     public static Habilidades leerDatos(int ID) {
         Habilidades habilidad = null;
         String sen = "SELECT * FROM habilidades WHERE ID_HABILIDAD = " + ID;
         try {
-            Connection con = conectar();
+            Connection con = PokemonDAO.conectar();
             Statement sentencia = con.createStatement();
             ResultSet res = sentencia.executeQuery(sen);
 

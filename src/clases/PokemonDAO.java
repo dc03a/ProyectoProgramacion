@@ -62,7 +62,6 @@ public class PokemonDAO {
     }
 
 
-
     public static void dejarPokemonEnBD(String nombre) {
         String query = "UPDATE pokemon SET EQUIPO = 0 WHERE NOMBRE = ?";
         try (Connection con = conectar();
@@ -85,16 +84,4 @@ public class PokemonDAO {
             e.printStackTrace();
         }
     }
-
-    public static void liberarPokemonDeBD(String nombre) {
-        String query = "DELETE FROM pokemon WHERE NOMBRE = ?";
-        try (Connection con = conectar();
-             PreparedStatement pstmt = con.prepareStatement(query)) {
-            pstmt.setString(1, nombre);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

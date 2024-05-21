@@ -7,24 +7,11 @@ public class ObjetosDAO {
         super();
     }
 
-    public static Connection conectar() {
-        Connection con = null;
-
-        String url = "jdbc:mysql://localhost:3306/proyectoprogramacion";
-
-        try {
-            con = DriverManager.getConnection(url, "root", "root");
-        } catch (SQLException ex) {
-            System.out.println("Error al conectar al SGBD");
-        }
-        return con;
-    }
-
     public static Objetos leerDatosObjeto(int ID) {
         Objetos objeto = null;
         String sen = "SELECT * FROM objetos WHERE ID_OBJETO = " + ID;
         try {
-            Connection con = conectar();
+            Connection con = PokemonDAO.conectar();
             Statement sentencia = con.createStatement();
             ResultSet res = sentencia.executeQuery(sen);
 
@@ -45,7 +32,7 @@ public class ObjetosDAO {
         String query = "SELECT obj.NOMBRE AS NOMBRE_OBJETO FROM pokemon pok " +
                 "LEFT JOIN objetos obj ON pok.OBJETO = obj.ID_OBJETO " +
                 "WHERE pok.NOMBRE = ?";
-        try (Connection con = conectar();
+        try (Connection con = PokemonDAO.conectar();
              PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setString(1, pokemonNombre);
             ResultSet rs = pstmt.executeQuery();
