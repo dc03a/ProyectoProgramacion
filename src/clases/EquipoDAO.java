@@ -23,11 +23,10 @@ public class EquipoDAO {
             return leerEquipoDeJSON(JSON_EQUIPO_PATH);
         }
 
-        // If not, fetch the team from the database and save it to JSON
         Equipo equipo = new Equipo();
         try (Connection conn = getConnection();
              Statement sentencia = conn.createStatement()) {
-            ResultSet rs = sentencia.executeQuery("SELECT * FROM pokemon WHERE equipo = 1");
+            ResultSet rs = sentencia.executeQuery("SELECT * FROM pokemon WHERE estaEnEquipo = 1");
             while (rs.next()) {
                 Pokemon pokemon = new Pokemon();
                 pokemon.setID(rs.getInt("id"));

@@ -253,7 +253,7 @@ public class prueba extends JFrame {
         sacarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (EquipoDAO.hayEspacioEnEquipo()) {
+                if (EquipoDAO.()) {
                     sacarPokemonDeBD(pokemonNombre);
                     opcionesDialog.dispose();
                 } else {
