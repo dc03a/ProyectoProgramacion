@@ -6,7 +6,7 @@ public class Pokemon {
     public String Habilidad;
     public String Tipo1;
     public String Tipo2;
-    public int nivel = 50;
+    public int Nivel = 50;
     public int Hp;
     public int Ataque;
     public int Defensa;

@@ -3,6 +3,7 @@ package utilidadesJSON;
 import clases.*;
 import com.google.gson.Gson;
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 
 import javax.swing.event.ChangeListener;
 import java.io.FileReader;
@@ -11,112 +12,66 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class funcionesJSON {
+    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    public static Pokemon leerDatosPokemonDesdeJSON(String ruta) {
-        Gson gson = new Gson();
-        Pokemon pokemon = null;
-
-        try (FileReader reader = new FileReader(ruta)) {
-            pokemon = gson.fromJson(reader, Pokemon.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return pokemon;
+    public static void escribirEquipoAJSON(Equipo equipo, String rutaArchivo) throws IOException {
+        String equipoJSON = gson.toJson(equipo);
+        FileWriter writer = new FileWriter(rutaArchivo);
+        writer.write(equipoJSON);
+        writer.close();
+        System.out.println("Equipo guardado en el archivo: " + rutaArchivo);
     }
 
-    public static String escribirDatosPokemonJSON(int id) {
-        Pokemon pokemon = PokemonDAO.leerDatos(id);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(pokemon);
-    }
-
-    public static Movimientos leerDatosMovimientoJSON(String ruta) {
-        Gson gson = new Gson();
-        Movimientos movimientos = null;
-
-        try (FileReader reader = new FileReader(ruta)) {
-            movimientos = gson.fromJson(reader, Movimientos.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return movimientos;
-    }
-
-    public String escribirDatosMovimientoJSON(int id) {
-        Movimientos movimiento = MovimientosDAO.leerMovimiento(id);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(movimiento);
-    }
-
-    public static Caja leerDatosCajaJSON(String ruta) {
-        Gson gson = new Gson();
-        Caja caja = null;
-
-        try (FileReader reader = new FileReader(ruta)) {
-            caja = gson.fromJson(reader, Caja.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return caja;
-    }
-
-    public static String escribirDatosCajaJSON(int id) {
-        Caja caja = CajaDAO.datosCaja(id);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(caja);
-    }
-
-    public static ArrayList<Equipo> leerDatosEquipoJSON(String ruta) {
-        Gson gson = new Gson();
-        ArrayList<Equipo> equipo = null;
-
-        try (FileReader reader = new FileReader(ruta)) {
-            equipo = gson.fromJson(reader, ArrayList.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static Equipo leerEquipoDeJSON(String rutaArchivo) throws IOException {
+        FileReader reader = new FileReader(rutaArchivo);
+        Equipo equipo = gson.fromJson(reader, Equipo.class);
+        reader.close();
         return equipo;
     }
 
-    public static void escribirDatosEquipoJSON(String ruta) {
-        ArrayList<Pokemon> equipo = EquipoDAO.listaPokemon();
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(equipo);
-
-        try (FileWriter writer = new FileWriter(ruta)) {
-            writer.write(json);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void escribirCajaAJSON(Caja caja, String rutaArchivo) throws IOException {
+        String cajaJSON = gson.toJson(caja);
+        FileWriter writer = new FileWriter(rutaArchivo);
+        writer.write(cajaJSON);
+        writer.close();
+        System.out.println("Caja guardada en el archivo: " + rutaArchivo);
     }
 
-    public static Habilidades leerDatosHabilidadesJSON(String ruta) {
-        Gson gson = new Gson();
-        Habilidades habilidades = null;
-
-        try (FileReader reader = new FileReader(ruta)) {
-            habilidades = gson.fromJson(reader, Habilidades.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return habilidades;
+    public static Caja leerCajaDeJSON(String rutaArchivo) throws IOException {
+        FileReader reader = new FileReader(rutaArchivo);
+        Caja caja = gson.fromJson(reader, Caja.class);
+        reader.close();
+        return caja;
     }
 
-    public static String escribirDatosHabilidadJSON(int id) {
-        Habilidades habilidad = HabilidadesDAO.leerDatos(id);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(habilidad);
+    public static void escribirPokemonAJSON(Pokemon pokemon, String rutaArchivo) throws IOException {
+        String pokemonJSON = gson.toJson(pokemon);
+        FileWriter writer = new FileWriter(rutaArchivo);
+        writer.write(pokemonJSON);
+        writer.close();
+        System.out.println("Pokemon guardado en el archivo: " + rutaArchivo);
     }
 
-    public static void escribirDatosHabilidadJSON(String ruta, Habilidades habilidad) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(habilidad);
-
-        try (FileWriter writer = new FileWriter(ruta)) {
-            writer.write(json);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static Pokemon leerPokemonDeJSON(String rutaArchivo) throws IOException {
+        FileReader reader = new FileReader(rutaArchivo);
+        Pokemon pokemon = gson.fromJson(reader, Pokemon.class);
+        reader.close();
+        return pokemon;
     }
 
+    public static void escribirListaPokemonAJSON(ArrayList<Pokemon> listaPokemon, String rutaArchivo) throws IOException {
+        String listaPokemonJSON = gson.toJson(listaPokemon);
+        FileWriter writer = new FileWriter(rutaArchivo);
+        writer.write(listaPokemonJSON);
+        writer.close();
+        System.out.println("Lista de Pokemon guardada en el archivo: " + rutaArchivo);
+    }
+
+    public static ArrayList<Pokemon> leerListaPokemonDeJSON(String rutaArchivo) throws IOException {
+        FileReader reader = new FileReader(rutaArchivo);
+        TypeToken<ArrayList<Pokemon>> typeToken = new TypeToken<ArrayList<Pokemon>>() {};
+        ArrayList<Pokemon> listaPokemon = gson.fromJson(reader, typeToken.getType());
+        reader.close();
+        return listaPokemon;
+    }
 }

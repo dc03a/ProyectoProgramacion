@@ -1,15 +1,17 @@
 package clases;
 
+import java.util.ArrayList;
+
 public class Equipo {
-    public int Id_Pokemon;
+    public ArrayList<Pokemon> equipo;
     public String Nombre;
 
-    public int getId_Pokemon() {
-        return Id_Pokemon;
+    public ArrayList<Pokemon> getEquipo() {
+        return equipo;
     }
 
-    public void setId_Pokemon(int id_Pokemon) {
-        Id_Pokemon = id_Pokemon;
+    public void setEquipo(ArrayList<Pokemon> equipo) {
+        this.equipo = equipo;
     }
 
     public String getNombre() {

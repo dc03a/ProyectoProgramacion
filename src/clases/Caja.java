@@ -1,14 +1,24 @@
 package clases;
 
+import java.util.ArrayList;
+
 public class Caja {
-    public int Id_Pokemon;
+    public ArrayList<Pokemon> listaCaja;
     public String Nombre;
 
-    public int getId_Pokemon() {
-        return Id_Pokemon;
+    public ArrayList<Pokemon> getListaCaja() {
+        return listaCaja;
     }
 
-    public void setId_Pokemon(int id_Pokemon) {
-        Id_Pokemon = id_Pokemon;
+    public void setListaCaja(ArrayList<Pokemon> listaCaja) {
+        this.listaCaja = listaCaja;
+    }
+
+    public String getNombre() {
+        return Nombre;
+    }
+
+    public void setNombre(String nombre) {
+        Nombre = nombre;
     }
 }

@@ -194,7 +194,7 @@ INSERT INTO movimientos (TIPO, DESCRIPCION, POTENCIA, ACURACY, PP, CLASE) VALUES
 ('Psíquico', 'Confusión', 50, 100, 25, 'Especial'),
 ('Psíquico', 'Psicorrayo', 65, 100, 20, 'Especial');
 
-INSERT INTO objetos (ID_OBJETO, NOMBRE, DESCRIPCION) VALUES 
+INSERT INTO objetos (ID_OBJETO, NOMBRE, DESCRIPCION) VALUES
 (1,'Banda Focus', 'Evita que el pokemon muera directamente cuando esta con la vida al maximo'),
 (2,'Baya Zidra', 'Cura el 33% de los PS máximos del Pokémon'),
 (3,'Baya Aranja', 'Cura 10PS del Pokémon'),
@@ -217,7 +217,7 @@ INSERT INTO objetos (ID_OBJETO, NOMBRE, DESCRIPCION) VALUES
 (20,'Polvo Veloz','Aumenta la velocidad a algunos pokemon')
 ;
 
-INSERT INTO caja (ID_CAJA, NOMBRE, CAPACIDAD) VALUES 
+INSERT INTO caja (ID_CAJA, NOMBRE, CAPACIDAD) VALUES
 (1, 'CAJA 1', 30),
 (2, 'CAJA 2', 30),
 (3, 'CAJA 3', 30),
@@ -283,6 +283,6 @@ SELECT * FROM pokemon WHERE ID_CAJA = 0;
 
 UPDATE pokemon SET MOV1 = 1, MOV2 = 2 WHERE ID_POKEMON = 1;
 
-SELECT pok.*, hab.NOMBRE AS HABILIDAD, obj.NOMBRE AS NOMBRE_OBJETO FROM pokemon pok 
+SELECT pok.*, hab.NOMBRE AS HABILIDAD, obj.NOMBRE AS NOMBRE_OBJETO FROM pokemon pok
 LEFT JOIN habilidades hab ON pok.ID_HABILIDAD = hab.ID_HABILIDAD
 LEFT JOIN objetos obj ON pok.OBJETO = obj.ID_OBJETO WHERE ID_POKEMON = 1;
