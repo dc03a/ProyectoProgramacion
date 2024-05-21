@@ -60,11 +60,11 @@ public class Pokemon {
     }
 
     public int getNivel() {
-        return nivel;
+        return Nivel;
     }
 
     public void setNivel(int nivel) {
-        this.nivel = nivel;
+        this.Nivel = nivel;
     }
 
     public int getHp() {
