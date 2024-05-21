@@ -19,6 +19,11 @@ public class Pokemon {
     public boolean estaEnEquipo;
     public boolean estaEnCaja;
 
+    public Pokemon(int idPokemon, String nombre) {
+        this.ID = idPokemon;
+        this.Nombre = nombre;
+    }
+
     public int getID() {
         return ID;
     }
