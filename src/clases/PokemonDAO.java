@@ -2,15 +2,13 @@ package clases;
 
 import java.io.*;
 import java.sql.*;
+import utilidades.*;
 
 public class PokemonDAO {
     private static final String JSON_EQUIPO_PATH = "json/equipo.json";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/pokemon_db";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "root";
 
     private static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        return conector.conectar();
     }
 
     public static void guardarPokemon(Pokemon pokemon) throws IOException, SQLException {
@@ -81,6 +79,21 @@ public class PokemonDAO {
         }
 
         pokemon.setNombre(nuevoApodo);
+    }
+
+    public static String devolverObjetoPokemon(String nombre)  {
+        try (Connection conn = getConnection();
+        PreparedStatement sentencia = conn.prepareStatement("SELECT Objeto FROM pokemon WHERE Nombre = ?")) {
+            sentencia.setString(1, nombre);
+            ResultSet rs = sentencia.executeQuery();
+            if (rs.next()) {
+                return rs.getString("Objeto");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.print("No se ha podido devolver el objeto");
+        return nombre;
     }
 
 }

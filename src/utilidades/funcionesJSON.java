@@ -1,11 +1,10 @@
-package utilidadesJSON;
+package utilidades;
 
 import clases.*;
 import com.google.gson.Gson;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
-import javax.swing.event.ChangeListener;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;

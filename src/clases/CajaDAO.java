@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.gson.Gson;
-import utilidadesJSON.*;
+import utilidades.*;
 
 public class CajaDAO {
 
@@ -14,10 +12,6 @@ public class CajaDAO {
 
     private static final String JSON_CAJA_PATH = "json/caja.json";
     private static final String JSON_EQUIPO_PATH = "json/caja.json";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/pokemon_db";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "root";
-    private static Gson gson;
 
     private static Connection conectar() {
         Connection con = null;
@@ -92,7 +86,7 @@ public class CajaDAO {
         }
     }
 
-    public static Pokemon obtenerPokemonDeCaja(boolean estaEnCaja, String pokemonNombre) {
+    public static Pokemon obtenerPokemonDeCaja(String pokemonNombre) {
         Pokemon pokemon = null;
         String query = "SELECT * FROM pokemon WHERE estaEnCaja = true AND NOMBRE = ?";
         try (Connection con = conectar();

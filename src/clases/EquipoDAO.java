@@ -2,23 +2,19 @@ package clases;
 
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
 import com.google.gson.*;
-import utilidadesJSON.*;
+import utilidades.*;
 
 public class EquipoDAO {
-
-    private static final String JSON_EQUIPO_PATH = "json/equipo.json";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/pokemon_db";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "root";
-    private static Gson gson;
+    private static final String JSON_CAJA_PATH = "json/caja.json";
+    private static final String JSON_EQUIPO_PATH = "json/caja.json";
 
     private static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        return conector.conectar();
     }
 
     public static Equipo getEquipo() throws IOException, SQLException {
-        // Check if the team exists in the JSON file
         if (new File(JSON_EQUIPO_PATH).exists()) {
             return leerEquipoDeJSON(JSON_EQUIPO_PATH);
         }
@@ -55,6 +51,10 @@ public class EquipoDAO {
         return equipo;
     }
 
+    public static boolean equipoLleno(ArrayList<Pokemon> lista) {
+        return lista.size() < 6;
+    }
+
     public static void guardarEquipo(Equipo equipo) throws IOException {
         funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
 
@@ -64,7 +64,6 @@ public class EquipoDAO {
 
     public static void agregarPokemon(Pokemon pokemon) throws IOException, SQLException {
         getEquipo().getEquipo().add(pokemon);
-
         guardarEquipo(getEquipo());
 
         // Update the database (optional)
@@ -85,6 +84,7 @@ public class EquipoDAO {
     // ... other methods for managing the team in the database and JSON files
 
     private static Equipo leerEquipoDeJSON(String rutaArchivo) throws IOException {
+        Gson gson = new Gson();
         FileReader reader = new FileReader(rutaArchivo);
         Equipo equipo = gson.fromJson(reader, Equipo.class);
         reader.close();
