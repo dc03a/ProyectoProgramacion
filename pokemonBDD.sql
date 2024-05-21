@@ -225,7 +225,7 @@ INSERT INTO caja (ID_CAJA, NOMBRE, CAPACIDAD) VALUES
 (5, 'CAJA 5', 30);
 
 DELIMITER $$
-CREATE TRIGGER scarEquipo
+CREATE TRIGGER sacarEquipo
 AFTER UPDATE ON pokemon
 FOR EACH ROW
 BEGIN
@@ -249,6 +249,24 @@ BEGIN
 	END IF;
 END $$
 DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER meterCaja
+    BEFORE UPDATE ON pokemon
+    FOR EACH ROW
+BEGIN
+    DECLARE id INT;
+    DECLARE comprobar INT;
+    SET id = (SELECT new.ID_CAJA FROM pokemon WHERE ID_POKEMON = new.ID_POKEMON);
+    SET comprobar = (SELECT COUNT(*) FROM pokemon WHERE ID_CAJA = id);
+
+    IF comprobar >= 30 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se puede actualizar el Pokémon porque la caja ya
+        tiene 30 o más Pokémon';
+    END IF;
+END //
+DELIMITER ;
+
 SELECT * FROM equipo;
 
 UPDATE pokemon SET MOV1 = 1, MOV2 = 2 WHERE ID_POKEMON = 1;
