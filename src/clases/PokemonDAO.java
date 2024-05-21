@@ -4,9 +4,10 @@ import java.io.*;
 import java.sql.*;
 
 public class PokemonDAO {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/pokemon_db"; // Replace with your DB URL
-    private static final String DB_USER = "user"; // Replace with your DB username
-    private static final String DB_PASSWORD = "password"; // Replace with your DB password
+    private static final String JSON_EQUIPO_PATH = "json/equipo.json";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/pokemon_db";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "root";
 
     private static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);

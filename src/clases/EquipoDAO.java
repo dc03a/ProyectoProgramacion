@@ -7,10 +7,10 @@ import utilidadesJSON.*;
 
 public class EquipoDAO {
 
-    private static final String JSON_EQUIPO_PATH = "equipo.json"; // Path to the JSON file for the team
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/pokemon_db"; // Replace with your DB URL
-    private static final String DB_USER = "user"; // Replace with your DB username
-    private static final String DB_PASSWORD = "password"; // Replace with your DB password
+    private static final String JSON_EQUIPO_PATH = "json/equipo.json";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/pokemon_db";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "root";
     private static Gson gson;
 
     private static Connection getConnection() throws SQLException {
