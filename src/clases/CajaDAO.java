@@ -6,18 +6,6 @@ import java.util.Iterator;
 
 public class CajaDAO {
 
-    public static Connection conectar() {
-        Connection con = null;
-        String url = "jdbc:mysql://localhost:3306/proyectoprogramacion";
-
-        try {
-            con = DriverManager.getConnection(url, "root", "root");
-        } catch (SQLException ex) {
-            System.out.println("Error al conectar al SGBD");
-        }
-        return con;
-    }
-
     /*** METODOS PARA CAJAS ***/
 
     /* para poder crear el objeto Caja a partir de un id_caja */
@@ -26,7 +14,7 @@ public class CajaDAO {
         Caja cajaAux = null;
 
         if (resultado) {
-            Connection con = conectar();
+            Connection con = PokemonDAO.conectar();
             String sql = "SELECT * FROM caja WHERE ID_CAJA = ?";
             try (PreparedStatement sentencia = con.prepareStatement(sql)) {
                 sentencia.setInt(1, ID_CAJA);
@@ -102,7 +90,7 @@ public class CajaDAO {
         ArrayList<Pokemon> cajaPok = new ArrayList<>();
 
         if (resultado) {
-            Connection con = conectar();
+            Connection con = PokemonDAO.conectar();
             String sql = "SELECT * FROM pokemon WHERE ID_CAJA = ?";
             try (PreparedStatement sentencia = con.prepareStatement(sql)) {
                 sentencia.setInt(1, ID_CAJA);
@@ -138,7 +126,7 @@ public class CajaDAO {
     /* Para comprobar si el id_caja que le pasamos corresponde a una caja */
     public static boolean existeCaja(int ID_CAJA) {
         boolean existe = false;
-        Connection con = conectar();
+        Connection con = PokemonDAO.conectar();
         String sql = "SELECT * FROM caja WHERE id_caja = ? ";
         try (PreparedStatement sentencia = con.prepareStatement(sql)) {
             sentencia.setInt(1, ID_CAJA);
@@ -157,7 +145,7 @@ public class CajaDAO {
 
     public static void sacarPokemonDeBD(String pokemonNombre) {
         String query = "UPDATE pokemon SET EQUIPO = 1 WHERE NOMBRE = ?";
-        try (Connection con = conectar();
+        try (Connection con = PokemonDAO.conectar();
              PreparedStatement sentencia = con.prepareStatement(query)) {
             sentencia.setString(1, pokemonNombre);
             sentencia.executeUpdate();
@@ -168,7 +156,7 @@ public class CajaDAO {
 
     public static void dejarPokemonEnBD(String pokemonNombre) {
         String query = "UPDATE pokemon SET EQUIPO = 0 WHERE NOMBRE = ?";
-        try (Connection con = conectar();
+        try (Connection con = PokemonDAO.conectar();
              PreparedStatement sentencia = con.prepareStatement(query)) {
             sentencia.setString(1, pokemonNombre);
             sentencia.executeUpdate();
@@ -179,7 +167,7 @@ public class CajaDAO {
 
     public static void agregarPokemonACaja(int idCaja, String pokemonNombre) {
         String query = "UPDATE pokemon SET ID_CAJA = ?, EQUIPO = 0 WHERE NOMBRE = ?";
-        try (Connection con = conectar();
+        try (Connection con = PokemonDAO.conectar();
              PreparedStatement sentencia = con.prepareStatement(query)) {
             sentencia.setInt(1, idCaja);
             sentencia.setString(2, pokemonNombre);
@@ -192,7 +180,7 @@ public class CajaDAO {
     public static Pokemon obtenerPokemonDeCaja(int idCaja, String pokemonNombre) {
         Pokemon pokemon = null;
         String query = "SELECT * FROM pokemon WHERE ID_CAJA = ? AND NOMBRE = ?";
-        try (Connection con = conectar();
+        try (Connection con = PokemonDAO.conectar();
              PreparedStatement sentenceia = con.prepareStatement(query)) {
             sentenceia.setInt(1, idCaja);
             sentenceia.setString(2, pokemonNombre);
@@ -217,7 +205,7 @@ public class CajaDAO {
 
     public static void liberarPokemon(String nombrePokemon) {
         String query = "DELETE FROM pokemon WHERE NOMBRE = ?";
-        try (Connection con = conectar();
+        try (Connection con = PokemonDAO.conectar();
              PreparedStatement sentencia = con.prepareStatement(query)) {
             sentencia.setString(1, nombrePokemon);
             sentencia.executeUpdate();

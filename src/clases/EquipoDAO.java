@@ -11,23 +11,11 @@ public class EquipoDAO {
         super();
     }
 
-    public static Connection conectar() {
-        Connection con = null;
-        String url = "jdbc:mysql://localhost:3306/proyectoprogramacion";
-
-        try {
-            con = DriverManager.getConnection(url, "root", "root");
-        } catch (SQLException ex) {
-            System.out.println("Error al conectar al SGBD");
-        }
-        return con;
-    }
-
     public static ArrayList<Pokemon> listaPokemon() {
         String sen = "SELECT * FROM equipo";
         ArrayList<Pokemon> listaPokemon = new ArrayList<>();
         try {
-            Connection con = conectar();
+            Connection con = PokemonDAO.conectar();
             Statement sentencia = con.createStatement();
             ResultSet res = sentencia.executeQuery(sen);
 
@@ -49,7 +37,7 @@ public class EquipoDAO {
     public static String[] obtenerEquipoDesdeBD() {
         List<String> equipo = new ArrayList<>();
         String query = "SELECT NOMBRE FROM pokemon WHERE EQUIPO = true"; // Siempre se obtiene el equipo con ID 1
-        try (Connection con = conectar();
+        try (Connection con = PokemonDAO.conectar();
              Statement sent = con.createStatement();
              ResultSet res = sent.executeQuery(query)) {
             while (res.next()) {
@@ -71,7 +59,7 @@ public class EquipoDAO {
     public static void aniadirAEquipoDesdeBD(String nombrePokemon) {
         String query = "UPDATE pokemon SET EQUIPO = ? WHERE NOMBRE = ?";
         try {
-            Connection con = conectar();
+            Connection con = PokemonDAO.conectar();
             PreparedStatement sentencia = con.prepareStatement(query);
             sentencia.setBoolean(1, true);
             sentencia.setString(2,nombrePokemon);

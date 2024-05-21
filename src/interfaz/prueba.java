@@ -456,8 +456,8 @@ public class prueba extends JFrame {
         System.exit(0);
     }
 
-    private static String[] obtenerEquipoDesdeBD() {
-        return new String[]{"Pikachu", "Bulbasaur", "Charmander"};
+    private static Pokemon obtenerEquipoDesdeBD() {
+        return new Pokemon();
     }
 
     private static String[] obtenerPokemonsDesdeBD() {
@@ -476,7 +476,9 @@ public class prueba extends JFrame {
         CajaDAO.sacarPokemonDeBD(pokemonNombre);
         if (EquipoDAO.hayEspacioEnEquipo()) {
             EquipoDAO.aniadirAEquipoDesdeBD(pokemonNombre);
+            CajaDAO.dejarPokemonEnBD(pokemonNombre);
         }
+        System.out.println("El pokemon con nombre " + pokemonNombre + " se ha añadido a");
     }
 
     private static void dejarPokemonEnBD(String pokemonNombre) {
