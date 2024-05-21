@@ -1,12 +1,23 @@
 package clases;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
+import utilidadesJSON.*;
+
 public class CajaDAO {
 
     /*** METODOS PARA CAJAS ***/
+
+    private static final String JSON_CAJA_PATH = "json/caja.json";
+    private static final String JSON_EQUIPO_PATH = "json/caja.json";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/pokemon_db";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "root";
+    private static Gson gson;
 
     private static Connection conectar() {
         Connection con = null;
@@ -25,7 +36,7 @@ public class CajaDAO {
     }
 
     public static void moverPokemonCajaAEquipo(String nombre){
-        String sql = "UPDATE pokemon SET estaEnequipo = true, estaEnCaja = false WHERE NOMBRE = ? ";
+        String sql = "UPDATE pokemon SET estaEnequipo = true AND estaEnCaja = false WHERE NOMBRE = ? ";
         try{
             Connection con = conectar();
             PreparedStatement sentencia = con.prepareStatement(sql);
@@ -38,13 +49,15 @@ public class CajaDAO {
     }
 
     /* Para generar la lista de pokemons de la caja que le pasemos */
-    public static List<Pokemon> listaPokemon() {
-        List<Pokemon> cajaPok = new ArrayList<>();
+    public static List<Pokemon> listaPokemon() throws IOException {
+        Caja caja = new Caja();
+        ArrayList<Pokemon> cajaPok = new ArrayList<>();
+        caja.setListaCaja(cajaPok);
         String sql = "SELECT * FROM pokemon WHERE estaEnCaja = true";
             Connection con = conectar();
 
             try (PreparedStatement sentencia = con.prepareStatement(sql)) {
-                ResultSet rs = sentencia.executeQuery();
+                ResultSet rs = sentencia.executeQuery(sql);
                 while (rs.next()) {
                     Pokemon pokemonAux = new Pokemon(rs.getInt("Id"), rs.getString("Nombre"));
                     pokemonAux.setNombre(rs.getString("Nombre"));
@@ -53,6 +66,7 @@ public class CajaDAO {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        funcionesJSON.escribirCajaAJSON(caja,JSON_CAJA_PATH );
         return cajaPok;
     }
 

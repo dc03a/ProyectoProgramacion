@@ -310,7 +310,7 @@ public class prueba extends JFrame {
     }
 
     private static void sacarPokemon(JFrame parentFrame) {
-        CajaDAO.sacarPokemonDeBD("Caterpie");
+        CajaDAO.sacarPokemonCaja("Caterpie");
         mostrarCajas(parentFrame);
     }
 
@@ -469,7 +469,7 @@ public class prueba extends JFrame {
     }
 
     private static String obtenerObjetoDesdeBD(String pokemonNombre) {
-        return ObjetosDAO.obtenerObjetoPorNombre(pokemonNombre);
+        return PokemonDAO.(pokemonNombre);
     }
 
     private static void sacarPokemonDeBD(String pokemonNombre) {
