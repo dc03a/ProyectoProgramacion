@@ -11,17 +11,6 @@ public class CajaDAO {
     private static final String JSON_EQUIPO_PATH = "json/caja.json";
     private static final String JSON_POKEMON_PATH = "json/pokemon.json";
 
-    private static Connection conectar() {
-        Connection con = null;
-        String url = "jdbc:mysql://localhost:3306/proyectoProgramacion";
-        try {
-            con = DriverManager.getConnection(url, "root", "root");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return con;
-    }
-
     /* para comprobar el tamanio de una caja */
     public static boolean getTamanioCaja(ArrayList<Pokemon> lista) {
         return lista.size() < 30;
@@ -52,7 +41,7 @@ public class CajaDAO {
         ArrayList<Pokemon> cajaPok = new ArrayList<>();
         String sql = "SELECT * FROM pokemon WHERE estaEnCaja = true";
 
-        try (Connection con = conectar();
+        try (Connection con = conector.conectar();
              PreparedStatement sentencia = con.prepareStatement(sql);
              ResultSet rs = sentencia.executeQuery(sql);) {
             while (rs.next()) {
@@ -83,7 +72,7 @@ public class CajaDAO {
         funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
 
         String query = "UPDATE pokemon SET estaEnCaja = true, estaEnEquipo = false WHERE NOMBRE = ?";
-        try (Connection con = conectar();
+        try (Connection con = conector.conectar();
              PreparedStatement sentencia = con.prepareStatement(query);) {
             sentencia.setString(1, pokemonNombre);
             sentencia.executeUpdate();
@@ -103,7 +92,7 @@ public class CajaDAO {
         funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
 
         String query = "UPDATE pokemon SET estaEnCaja = false WHERE NOMBRE = ?";
-        try (Connection con = conectar();
+        try (Connection con = conector.conectar();
              PreparedStatement sentencia = con.prepareStatement(query)) {
             sentencia.setString(1, pokemonNombre);
             sentencia.executeUpdate();
@@ -124,13 +113,13 @@ public class CajaDAO {
     }
 
     public static void liberarPokemon(String nombrePokemon) throws SQLException, IOException {
-        if (!estaEnCaja(nombrePokemon)) {
+        if (!seEncuentraestaEnCaja(nombrePokemon)) {
             System.out.println("El Pokémon no está en la caja. No se puede liberar desde aquí.");
             return;
         }
 
         String query = "UPDATE pokemon SET estaEnEquipo = false, estaEnCaja = false WHERE NOMBRE = ?";
-        try (Connection con = conectar(); PreparedStatement sentencia = con.prepareStatement(query)) {
+        try (Connection con = conector.conectar(); PreparedStatement sentencia = con.prepareStatement(query)) {
             sentencia.setString(1, nombrePokemon);
             sentencia.executeUpdate();
         } catch (SQLException e) {
@@ -138,9 +127,9 @@ public class CajaDAO {
         }
     }
 
-    private static boolean estaEnCaja(String pokemonNombre) {
+    private static boolean seEncuentraestaEnCaja(String pokemonNombre) {
         String query = "SELECT * FROM pokemon WHERE Nombre = ? AND estaEnCaja = true";
-        try (Connection con = conectar(); PreparedStatement sentencia = con.prepareStatement(query)) {
+        try (Connection con = conector.conectar(); PreparedStatement sentencia = con.prepareStatement(query)) {
             sentencia.setString(1, pokemonNombre);
             try (ResultSet rs = sentencia.executeQuery()) {
                 return rs.next();
@@ -149,5 +138,14 @@ public class CajaDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static boolean estaEnCaja(Pokemon pokemon) throws SQLException, IOException {
+        Caja caja = funcionesJSON.leerCajaDeJSON(JSON_EQUIPO_PATH);
+        if (caja != null) {
+            return caja.getListaCaja().contains(pokemon);
+        } else {
+            return false;
+        }
     }
 }

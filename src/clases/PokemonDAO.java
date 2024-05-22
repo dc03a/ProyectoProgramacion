@@ -15,7 +15,7 @@ public class PokemonDAO {
         return conector.conectar();
     }
 
-    public static ArrayList<Pokemon> seleccionarTodosLosPokemon() throws SQLException {
+    public static ArrayList<Pokemon> seleccionarTodosLosPokemon() throws SQLException, IOException {
         ArrayList<Pokemon> listaPokemon = new ArrayList<>();
         String query = "SELECT * FROM pokemon";
 
@@ -41,26 +41,29 @@ public class PokemonDAO {
                 pokemon.setObjeto(resultSet.getString("Objeto"));
                 pokemon.setEstaEnEquipo(resultSet.getBoolean("EstaEnEquipo"));
                 pokemon.setEstaEnCaja(resultSet.getBoolean("EstaEnCaja"));
-
-                funcionesJSON.escribirPokemonAJSON(pokemon, JSON_POKEMON_PATH);
-
-                if (pokemon.isEstaEnEquipo()) {
-                    Equipo equipo = funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
-                    equipo.getEquipo().add(pokemon);
-                    funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
-                }
-
-                if (pokemon.isEstaEnCaja()) {
-                    Caja caja = funcionesJSON.leerCajaDeJSON(JSON_CAJA_PATH);
-                    caja.getListaCaja().add(pokemon);
-                    funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
-                }
-
                 listaPokemon.add(pokemon);
             }
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        // Iterar sobre la lista de Pokémon y agregar al equipo o caja según corresponda
+        for (Pokemon pokemon : listaPokemon) {
+            if (EquipoDAO.estaEnEquipo(pokemon)) {
+                Equipo equipo = funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
+                equipo.getEquipo().add(pokemon);
+                funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
+            }
+
+            if (CajaDAO.estaEnCaja(pokemon)) {
+                Caja caja = funcionesJSON.leerCajaDeJSON(JSON_CAJA_PATH);
+                caja.getListaCaja().add(pokemon);
+                funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
+            }
+
+            funcionesJSON.escribirPokemonAJSON(pokemon, JSON_POKEMON_PATH);
+        }
+
         return listaPokemon;
     }
 

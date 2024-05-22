@@ -134,7 +134,7 @@ class prueba extends JFrame {
             for (Pokemon pokemon : pokemons) {
                 System.out.println(pokemon);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }

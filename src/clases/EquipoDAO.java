@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import utilidades.*;
 
 public class EquipoDAO {
-    private static final String JSON_EQUIPO_PATH = "json/caja.json";
+    private static final String JSON_EQUIPO_PATH = "json/equipo.json";
 
     public static Equipo getEquipo() throws IOException, SQLException {
         if (new File(JSON_EQUIPO_PATH).exists()) {
@@ -96,13 +96,7 @@ public class EquipoDAO {
         }
     }
 
-    public static boolean estaEnEquipo(String pokemonNombre) throws SQLException, IOException {
-        Equipo equipo = getEquipo();
-        for (Pokemon pokemon : equipo.getEquipo()) {
-            if (pokemon.getNombre().equalsIgnoreCase(pokemonNombre)) {
-                return true;
-            }
-        }
-        return false;
+    public static boolean estaEnEquipo(Pokemon pokemon) throws IOException {
+        return pokemon.isEstaEnEquipo();
     }
 }

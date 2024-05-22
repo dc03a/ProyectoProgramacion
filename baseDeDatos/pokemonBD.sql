@@ -3,41 +3,41 @@ CREATE DATABASE proyectoProgramacion;
 USE proyectoProgramacion;
 
 CREATE TABLE pokemon (
-                         Id INT AUTO_INCREMENT PRIMARY KEY UNIQUE,
-                         Nombre VARCHAR(50) UNIQUE,
-                         Habilidad VARCHAR(40),
-                         Tipo1 VARCHAR(20),
-                         Tipo2 VARCHAR(20),
-                         Nivel INT,
-                         Hp INT,
-                         Ataque INT,
-                         Defensa INT,
-                         AtaqueEspecial INT,
-                         DefensaEspecial INT,
-                         Velocidad INT,
-                         Movimiento1 VARCHAR(50),
-                         Movimiento2 VARCHAR(50),
-                         Objeto VARCHAR(50),
-                         estaEnCaja BOOLEAN,
-                         estaEnEquipo BOOLEAN
+    Id INT AUTO_INCREMENT PRIMARY KEY UNIQUE,
+    Nombre VARCHAR(50) UNIQUE,
+    Habilidad VARCHAR(40),
+    Tipo1 VARCHAR(20),
+    Tipo2 VARCHAR(20),
+    Nivel INT,
+    Hp INT,
+    Ataque INT,
+    Defensa INT,
+    AtaqueEspecial INT,
+    DefensaEspecial INT,
+    Velocidad INT,
+    Movimiento1 VARCHAR(50),
+    Movimiento2 VARCHAR(50),
+    Objeto VARCHAR(50),
+    estaEnCaja BOOLEAN,
+    estaEnEquipo BOOLEAN
 );
 
 CREATE TABLE caja (
-                      IdPokemon INT PRIMARY KEY,
-                      NombrePokemon VARCHAR(50),
-                      FOREIGN KEY (IdPokemon) REFERENCES pokemon (Id)
+    IdPokemon INT PRIMARY KEY,
+    NombrePokemon VARCHAR(50),
+    FOREIGN KEY (IdPokemon) REFERENCES pokemon (Id)
 );
 
 CREATE TABLE equipo (
-                        IdPokemon INT,
-                        Nombre VARCHAR(50),
-                        FOREIGN KEY (IdPokemon) REFERENCES pokemon(Id)
+    IdPokemon INT,
+    Nombre VARCHAR(50),
+    FOREIGN KEY (IdPokemon) REFERENCES pokemon(Id)
 );
 
 DELIMITER $$
 CREATE TRIGGER insertar
-    AFTER INSERT ON pokemon
-    FOR EACH ROW
+AFTER INSERT ON pokemon
+FOR EACH ROW
 BEGIN
     DECLARE idPk INT;
     DECLARE nombrePk VARCHAR(100);
@@ -54,6 +54,10 @@ BEGIN
     END IF;
 END $$
 DELIMITER ;
+
+DELIMITER $$
+
+
 
 INSERT INTO pokemon (Nombre, Habilidad, Tipo1, Tipo2, Hp, Ataque, Defensa, AtaqueEspecial, DefensaEspecial, Velocidad, Nivel, Movimiento1, Movimiento2, estaEnCaja, estaEnEquipo, Objeto) VALUES
                                                                                                                                                                                               ('Bulbasaur', 'Espesura', 'Planta', 'Veneno', 45, 49, 49, 65, 65, 45, 50, 'Placaje', 'Gruñido', FALSE, TRUE, 'Baya Aranja'),
@@ -103,13 +107,9 @@ INSERT INTO pokemon (Nombre, Habilidad, Tipo1, Tipo2, Hp, Ataque, Defensa, Ataqu
                                                                                                                                                                                               ('Vileplume', 'Clorofila', 'Planta', 'Veneno', 75, 80, 85, 110, 90, 50, 50, 'Absorber', 'Ácido', TRUE, FALSE, 'Baya Ziuela'),
                                                                                                                                                                                               ('Paras', 'Efecto Espora', 'Bicho', 'Planta', 35, 70, 55, 45, 55, 25, 50, 'Arañazo', 'Gruñido', TRUE, FALSE, 'Garra Rápida'),
                                                                                                                                                                                               ('Parasect', 'Efecto Espora', 'Bicho', 'Planta', 60, 95, 80, 60, 80, 30, 50, 'Arañazo', 'Gruñido', TRUE, FALSE, 'Chaleco Asalto');
-
-
-
-DELIMITER $$
 CREATE TRIGGER liberar
-    BEFORE DELETE ON pokemon
-    FOR EACH ROW
+BEFORE DELETE ON pokemon
+FOR EACH ROW
 BEGIN
     DECLARE comprobar int;
     SET comprobar = (SELECT COUNT(*) FROM POKEMON);
@@ -121,8 +121,8 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE TRIGGER mover
-    BEFORE UPDATE ON pokemon
-    FOR EACH ROW
+BEFORE UPDATE ON pokemon
+FOR EACH ROW
 BEGIN
     DECLARE idPk INT;
     DECLARE nombrePk VARCHAR(100);

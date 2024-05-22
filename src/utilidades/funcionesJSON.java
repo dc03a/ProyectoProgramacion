@@ -5,16 +5,14 @@ import com.google.gson.Gson;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class funcionesJSON {
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    static boolean escribirJson(Object objeto, String rutaArchivo) {
+    private static boolean escribirJson(Object objeto, String rutaArchivo) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo))) {
             String json = gson.toJson(objeto);
             bw.write(json);
@@ -49,7 +47,7 @@ public class funcionesJSON {
         return leerObjetoDeJSON(rutaArchivo, Caja.class);
     }
 
-    public static void escribirPokemonAJSON(Pokemon pokemon, String rutaArchivo) throws IOException {
+    public static void escribirPokemonAJSON(Pokemon pokemon, String rutaArchivo) throws IOException, SQLException {
         escribirJson(pokemon, rutaArchivo);
         System.out.println("Pokemon guardado en el archivo: " + rutaArchivo);
     }
