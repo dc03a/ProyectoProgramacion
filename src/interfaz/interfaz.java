@@ -1,6 +1,7 @@
 package interfaz;
 
 import clases.*;
+import utilidades.funcionesJSON;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -53,7 +54,11 @@ class prueba extends JFrame {
         equipoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mostrarEquipo(frame);
+                try {
+                    mostrarEquipo(frame);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -122,7 +127,7 @@ class prueba extends JFrame {
         frame.setVisible(true);
     }
 
-    private static void mostrarEquipo(JFrame parentFrame) {
+    private static void mostrarEquipo(JFrame parentFrame) throws IOException {
         JDialog equipoDialog = new JDialog(parentFrame, "Equipo", true);
         equipoDialog.setSize(500, 400);
         equipoDialog.setLayout(new BorderLayout());
@@ -131,35 +136,39 @@ class prueba extends JFrame {
         equipoPanel.setLayout(new GridLayout(6, 1, 10, 10));
         equipoDialog.add(equipoPanel, BorderLayout.CENTER);
 
-        ArrayList<Pokemon> equipo;
+        Equipo equipo;
         try {
-            equipo = EquipoDAO.getEquipo().getEquipo();
-        } catch (SQLException | IOException e) {
+            equipo = funcionesJSON.leerEquipoDeJSON("json/equipo.json");
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        for (int i = 0; i < 6; i++) {
-            String pokemonNombre = i < equipo.size() ? String.valueOf(equipo.get(i)) : "Empty Slot " + (i + 1);
-            JButton pokemonButton = new JButton(pokemonNombre);
-            pokemonButton.setFont(new Font("Arial", Font.PLAIN, 16));
-            equipoPanel.add(pokemonButton);
+        if (equipo != null) {
+            for (Pokemon pokemon : equipo.getEquipo()) {
+                String pokemonNombre = pokemon.getNombre();
+                JButton pokemonButton = new JButton(pokemonNombre);
+                pokemonButton.setFont(new Font("Arial", Font.PLAIN, 16));
+                equipoPanel.add(pokemonButton);
 
-            pokemonButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (!pokemonNombre.startsWith("Empty")) {
-                        mostrarOpcionesPokemon(equipoDialog, pokemonNombre);
-                    } else {
-                        JOptionPane.showMessageDialog(equipoDialog, "No hay Pokémon en este slot.");
+                pokemonButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (!pokemonNombre.startsWith("Empty")) {
+                            mostrarOpcionesPokemon(equipoDialog, pokemon);
+                        } else {
+                            JOptionPane.showMessageDialog(equipoDialog, "No hay Pokémon en este slot.");
+                        }
                     }
-                }
-            });
+                });
+            }
+        } else {
+            JOptionPane.showMessageDialog(equipoDialog, "El equipo está vacío.");
         }
         equipoDialog.setVisible(true);
     }
 
-    private static void mostrarOpcionesPokemon(JDialog parentDialog, String pokemonNombre) {
-        JDialog opcionesDialog = new JDialog(parentDialog, pokemonNombre, true);
+    private static void mostrarOpcionesPokemon(JDialog parentDialog, Pokemon pokemon) {
+        JDialog opcionesDialog = new JDialog(parentDialog, pokemon.getNombre(), true);
         opcionesDialog.setSize(400, 300);
         opcionesDialog.setLayout(new GridLayout(4, 1, 10, 10));
 
@@ -178,12 +187,11 @@ class prueba extends JFrame {
         opcionesDialog.add(moverButton);
         opcionesDialog.add(atrasButton);
 
-        // Añadir ActionListeners a los botones
         datosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    mostrarDatos(opcionesDialog, pokemonNombre);
+                    mostrarDatos(opcionesDialog, pokemon.getNombre());
                 } catch (SQLException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -193,14 +201,20 @@ class prueba extends JFrame {
         objetoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mostrarObjeto(opcionesDialog, pokemonNombre);
+                mostrarObjeto(opcionesDialog, pokemon);
             }
         });
 
         moverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                moverPokemonEquipo(opcionesDialog, pokemonNombre);
+                try {
+                    moverPokemonEquipo(opcionesDialog, pokemon);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -221,17 +235,18 @@ class prueba extends JFrame {
                         "\nDefensa: " + pokemon.Defensa + "\nNivel: " + pokemon.Nivel);
     }
 
-    private static void mostrarObjeto(JDialog parentDialog, String pokemonNombre) {
-        String objeto = obtenerObjetoDesdeBD(pokemonNombre);
+    private static void mostrarObjeto(JDialog parentDialog, Pokemon pokemon) {
+        String objeto = obtenerObjetoDesdeBD(pokemon);
         if (objeto == null || objeto.isEmpty()) {
-            JOptionPane.showMessageDialog(parentDialog, pokemonNombre + " no porta ningún objeto.");
+            JOptionPane.showMessageDialog(parentDialog, pokemon.getNombre() + " no porta ningún objeto.");
         } else {
-            JOptionPane.showMessageDialog(parentDialog, pokemonNombre + " porta el objeto: " + objeto);
+            JOptionPane.showMessageDialog(parentDialog, pokemon.getNombre() + " porta el objeto: " + objeto);
         }
     }
 
-    private static void moverPokemonEquipo(JDialog parentDialog, String pokemonNombre) {
-        JOptionPane.showMessageDialog(parentDialog, "Funcionalidad para mover " + pokemonNombre + " en el equipo.");
+    private static void moverPokemonEquipo(JDialog parentDialog, Pokemon pokemon) throws SQLException, IOException {
+        EquipoDAO.agregarPokemon(pokemon);
+        JOptionPane.showMessageDialog(parentDialog, "Funcionalidad para mover " + pokemon.getNombre() + " en el equipo.");
     }
 
     private static void mostrarCajas(JFrame parentFrame) throws SQLException, IOException {
@@ -360,10 +375,16 @@ class prueba extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int confirm = JOptionPane.showConfirmDialog(opcionesDialog, "¿Estás seguro de liberar " + pokemonNombre + "?", "Confirmar", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    if (liberarPokemonDeBD(pokemonNombre)) {
-                        opcionesDialog.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(opcionesDialog, "Error al liberar el Pokémon.");
+                    try {
+                        if (liberarPokemonDeBD(pokemonNombre)) {
+                            opcionesDialog.dispose();
+                        } else {
+                            JOptionPane.showMessageDialog(opcionesDialog, "Error al liberar el Pokémon.");
+                        }
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
                     }
                 }
             }
@@ -438,10 +459,13 @@ class prueba extends JFrame {
         dejarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
-
-                dejarPokemonEnBD(pokemonNombre);
+                try {
+                    dejarPokemonEnBD(pokemonNombre);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 opcionesDialog.dispose();
             }
         });
@@ -489,10 +513,13 @@ class prueba extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int confirm = JOptionPane.showConfirmDialog(opcionesDialog, "¿Estás seguro de liberar " + pokemonNombre + "?", "Confirmar", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-
-
-
-                    liberarPokemonDeBD(pokemonNombre);
+                    try {
+                        liberarPokemonDeBD(pokemonNombre);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                     opcionesDialog.dispose();
                 }
             }
@@ -563,8 +590,19 @@ class prueba extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String pokemonNombre = (String) pokemonComboBox.getSelectedItem();
-                dejarPokemonEnBD(pokemonNombre);
-                Pokemon pokemonAnadido = CajaDAO.obtenerPokemonDeCaja(pokemonNombre);
+                try {
+                    dejarPokemonEnBD(pokemonNombre);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                Pokemon pokemonAnadido = null;
+                try {
+                    pokemonAnadido = CajaDAO.obtenerPokemonDeCaja(pokemonNombre);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 listaEquipo.add(pokemonAnadido);
                 listaEquipo.add(pokemonAnadido);
                 pokemonComboBox.setModel(new DefaultComboBoxModel<>(listaEquipo.toArray(new String[0])));
@@ -651,8 +689,8 @@ class prueba extends JFrame {
         return PokemonDAO.buscarPokemonPorNombre(pokemonNombre);
     }
 
-    private static String obtenerObjetoDesdeBD(String pokemonNombre) {
-        return PokemonDAO.devolverObjetoPokemon(pokemonNombre);
+    private static String obtenerObjetoDesdeBD(Pokemon pokemon) {
+        return PokemonDAO.devolverObjetoPokemon(pokemon);
     }
 
     private static void sacarPokemonDeBD(Pokemon pokemon) throws SQLException, IOException {
@@ -667,7 +705,7 @@ class prueba extends JFrame {
 
     }
 
-    private static void dejarPokemonEnBD(String pokemonNombre) {
+    private static void dejarPokemonEnBD(String pokemonNombre) throws SQLException, IOException {
         CajaDAO.meterPokemonACaja(pokemonNombre);
     }
 
@@ -675,7 +713,7 @@ class prueba extends JFrame {
         PokemonDAO.cambiarApodoPokemon(pokemon, nuevoNombre);
     }
 
-    private static boolean liberarPokemonDeBD(String pokemonNombre) {
+    private static boolean liberarPokemonDeBD(String pokemonNombre) throws SQLException, IOException {
         CajaDAO.liberarPokemon(pokemonNombre);
         return true;
     }

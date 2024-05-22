@@ -10,17 +10,13 @@ public class EquipoDAO {
     private static final String JSON_CAJA_PATH = "json/caja.json";
     private static final String JSON_EQUIPO_PATH = "json/caja.json";
 
-    private static Connection getConnection() throws SQLException {
-        return conector.conectar();
-    }
-
     public static Equipo getEquipo() throws IOException, SQLException {
         if (new File(JSON_EQUIPO_PATH).exists()) {
             return funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
         }
 
         Equipo equipo = new Equipo();
-        try (Connection conn = getConnection();
+        try (Connection conn = conector.conectar();
              Statement sentencia = conn.createStatement()) {
             ResultSet rs = sentencia.executeQuery("SELECT * FROM pokemon WHERE estaEnEquipo = 1");
             while (rs.next()) {
@@ -76,19 +72,26 @@ public class EquipoDAO {
         getEquipo().getEquipo().add(pokemon);
         guardarEquipo(getEquipo());
 
-        // Update the database (optional)
-        // You'll need to implement this based on your database schema
+        String query = "UPDATE pokemon SET estaEnEquipo = true WHERE Id = ?";
+        try (Connection con = conector.conectar();
+             PreparedStatement sentencia = con.prepareStatement(query)) {
+            sentencia.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void quitarPokemon(Pokemon pokemon) throws IOException, SQLException {
-        // Remove the Pokemon from the team in memory
         getEquipo().getEquipo().remove(pokemon);
-
-        // Save the updated team to JSON
         guardarEquipo(getEquipo());
 
-        // Update the database (optional)
-        // You'll need to implement this based on your database schema
+        String query = "UPDATE pokemon SET estaEnEquipo = false WHERE Id = ?";
+        try (Connection con = conector.conectar();
+             PreparedStatement sentencia = con.prepareStatement(query)) {
+            sentencia.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static boolean estaEnEquipo(String pokemonNombre) throws SQLException, IOException {
@@ -101,7 +104,4 @@ public class EquipoDAO {
         }
         return false;
     }
-
-
-    // ... other methods for managing the team in the database and JSON files
 }

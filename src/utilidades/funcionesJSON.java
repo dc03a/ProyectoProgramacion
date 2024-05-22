@@ -57,20 +57,4 @@ public class funcionesJSON {
         reader.close();
         return pokemon;
     }
-
-    public static void escribirListaPokemonAJSON(ArrayList<Pokemon> listaPokemon, String rutaArchivo) throws IOException {
-        String listaPokemonJSON = gson.toJson(listaPokemon);
-        FileWriter writer = new FileWriter(rutaArchivo);
-        writer.write(listaPokemonJSON);
-        writer.close();
-        System.out.println("Lista de Pokemon guardada en el archivo: " + rutaArchivo);
-    }
-
-    public static ArrayList<Pokemon> leerListaPokemonDeJSON(String rutaArchivo) throws IOException {
-        FileReader reader = new FileReader(rutaArchivo);
-        TypeToken<ArrayList<Pokemon>> typeToken = new TypeToken<ArrayList<Pokemon>>() {};
-        ArrayList<Pokemon> listaPokemon = gson.fromJson(reader, typeToken.getType());
-        reader.close();
-        return listaPokemon;
-    }
 }

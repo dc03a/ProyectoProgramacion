@@ -6,6 +6,7 @@ import utilidades.*;
 
 public class PokemonDAO {
     private static final String JSON_EQUIPO_PATH = "json/equipo.json";
+    private static final String JSON_POKEMON_PATH = "json/pokemon.json";
 
     private static Connection getConnection() throws SQLException {
         return conector.conectar();
@@ -33,6 +34,7 @@ public class PokemonDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        funcionesJSON.escribirPokemonAJSON(pokemon, JSON_POKEMON_PATH);
     }
 
     public static Pokemon buscarPokemonPorNombre(String nombre) throws IOException, SQLException {
@@ -64,6 +66,10 @@ public class PokemonDAO {
             e.printStackTrace();
         }
 
+        if (pokemon != null) {
+            funcionesJSON.escribirPokemonAJSON(pokemon, JSON_POKEMON_PATH);
+        }
+
         return pokemon;
     }
 
@@ -78,9 +84,12 @@ public class PokemonDAO {
         }
 
         pokemon.setNombre(nuevoApodo);
+
+        funcionesJSON.escribirPokemonAJSON(pokemon, JSON_POKEMON_PATH);
     }
 
-    public static String devolverObjetoPokemon(String nombre)  {
+    public static String devolverObjetoPokemon(Pokemon pokemon)  {
+        String nombre = pokemon.getNombre();
         try (Connection conn = getConnection();
         PreparedStatement sentencia = conn.prepareStatement("SELECT Objeto FROM pokemon WHERE Nombre = ?")) {
             sentencia.setString(1, nombre);
@@ -92,7 +101,6 @@ public class PokemonDAO {
             e.printStackTrace();
         }
         System.out.print("No se ha podido devolver el objeto");
-        return nombre;
+        return null;
     }
-
 }
