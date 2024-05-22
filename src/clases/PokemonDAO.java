@@ -13,18 +13,14 @@ public class PokemonDAO {
     private static final String JSON_EQUIPO_PATH = "json/equipo.json";
     private static final String JSON_CAJA_PATH = "json/caja.json";
 
-    private static Connection getConnection() throws SQLException {
-        return conector.conectar();
-    }
-
     public static ArrayList<Pokemon> seleccionarTodosLosPokemon() throws SQLException, IOException {
         ArrayList<Pokemon> listaPokemon = new ArrayList<>();
         String query = "SELECT * FROM pokemon";
         Equipo equipo = funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
         Caja caja = funcionesJSON.leerCajaDeJSON(JSON_CAJA_PATH);
 
-        try (Connection conn = getConnection();
-             PreparedStatement statement = conn.prepareStatement(query);
+        try (Connection con = credenciales.conectar();
+             PreparedStatement statement = con.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 Pokemon pokemon = new Pokemon();
@@ -73,8 +69,8 @@ public class PokemonDAO {
     public static Pokemon buscarPokemonPorNombre(String nombre) throws IOException, SQLException {
         Pokemon pokemon = null;
 
-        try (Connection conn = getConnection();
-             PreparedStatement sentencia = conn.prepareStatement("SELECT * FROM pokemon WHERE Nombre = ?")) {
+        try (Connection con = credenciales.conectar();
+             PreparedStatement sentencia = con.prepareStatement("SELECT * FROM pokemon WHERE Nombre = ?")) {
             sentencia.setString(1, nombre);
             ResultSet rs = sentencia.executeQuery();
             if (rs.next()) {
@@ -109,8 +105,8 @@ public class PokemonDAO {
     }
 
     public static void cambiarApodoPokemon(Pokemon pokemon, String nuevoApodo) throws IOException, SQLException {
-        try (Connection conn = getConnection();
-             PreparedStatement sentencia = conn.prepareStatement("UPDATE pokemon SET Nombre = ? WHERE ID = ?")) {
+        try (Connection con = credenciales.conectar();
+             PreparedStatement sentencia = con.prepareStatement("UPDATE pokemon SET Nombre = ? WHERE ID = ?")) {
             sentencia.setString(1, nuevoApodo);
             sentencia.setInt(2, pokemon.getID());
             sentencia.executeUpdate();
@@ -124,8 +120,8 @@ public class PokemonDAO {
 
     public static String devolverObjetoPokemon(Pokemon pokemon)  {
         String nombre = pokemon.getNombre();
-        try (Connection conn = getConnection();
-        PreparedStatement sentencia = conn.prepareStatement("SELECT Objeto FROM pokemon WHERE Nombre = ?")) {
+        try (Connection con = credenciales.conectar();
+        PreparedStatement sentencia = con.prepareStatement("SELECT Objeto FROM pokemon WHERE Nombre = ?")) {
             sentencia.setString(1, nombre);
             ResultSet rs = sentencia.executeQuery();
             if (rs.next()) {

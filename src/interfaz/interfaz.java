@@ -11,13 +11,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 class PCPokemonGUI extends JFrame {
+    private String usuario;
 
-    public static void main(String[] args) {
+    public PCPokemonGUI(String usuario) {
+        this.usuario = usuario;
+        ejecutarInterfaz();
+    }
+
+    private static void ejecutarInterfaz() {
         cargarPokemons();
         JFrame frame = new JFrame("PC Pokémon");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setLayout(new BorderLayout());
 
         JLabel titleLabel = new JLabel("PC de Pokémon", SwingConstants.CENTER);
@@ -126,6 +132,10 @@ class PCPokemonGUI extends JFrame {
         });
 
         frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        ejecutarInterfaz();
     }
 
     private static void cargarPokemons() {
@@ -259,8 +269,16 @@ class PCPokemonGUI extends JFrame {
     private static void mostrarDatos(JDialog parentDialog, String pokemonNombre) throws SQLException, IOException {
         Pokemon pokemon = obtenerDatosPokemonDesdeBD(pokemonNombre);
         JOptionPane.showMessageDialog(parentDialog,
-                "Nombre: " + pokemonNombre + "\nHP: " + pokemon.Hp + "\nAtaque: " + pokemon.Ataque +
-                        "\nDefensa: " + pokemon.Defensa + "\nNivel: " + pokemon.Nivel);
+                "Nombre: " + pokemonNombre + "\n" +
+                        "Nivel: " + pokemon.getNivel() + "\n" +
+                        "Habilidad: " + pokemon.getHabilidad() + "\n" +
+                        "Objeto: " + pokemon.getObjeto() + "\n" +
+                        "PS: " + pokemon.getHp() + "\n" +
+                        "Ataque: " + pokemon.getAtaque() + "\n" +
+                        "Defensa: " + pokemon.getDefensa() + "\n" +
+                        "Velocidad: " + pokemon.getVelocidad() + "\n" +
+                        "Ataque Especial: " + pokemon.getAtaqueEspecial() + "\n" +
+                        "Defensa Especial: " + pokemon.getDefensaEspecial());
     }
 
     private static void mostrarObjeto(JDialog parentDialog, Pokemon pokemon) {
@@ -614,7 +632,7 @@ class PCPokemonGUI extends JFrame {
                 } catch (SQLException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                Pokemon pokemonAnadido = null;
+                Pokemon pokemonAnadido;
                 try {
                     pokemonAnadido = CajaDAO.obtenerPokemonDeCaja(pokemonNombre);
                 } catch (IOException ex) {
@@ -674,25 +692,6 @@ class PCPokemonGUI extends JFrame {
         moverDialog.setVisible(true);
     }
 
-    private static void desconectar(JFrame parentFrame) {
-        JOptionPane.showMessageDialog(parentFrame, "Desconectando y guardando cambios...");
-        System.exit(0);
-    }
-
-    private static Equipo obtenerEquipoDesdeBD() {
-        try {
-            return EquipoDAO.getEquipo();
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al obtener el equipo: " + e.getMessage());
-            return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error en la base de datos: " + e.getMessage());
-            return null;
-        }
-    }
-
     private static Pokemon obtenerDatosPokemonDesdeBD(String pokemonNombre) throws SQLException, IOException {
         return PokemonDAO.buscarPokemonPorNombre(pokemonNombre);
     }
@@ -724,5 +723,10 @@ class PCPokemonGUI extends JFrame {
     private static boolean liberarPokemonDeBD(String pokemonNombre) throws SQLException, IOException {
         CajaDAO.liberarPokemon(pokemonNombre);
         return true;
+    }
+
+    private static void desconectar(JFrame parentFrame) {
+        JOptionPane.showMessageDialog(parentFrame, "Desconectando y guardando cambios...");
+        System.exit(0);
     }
 }

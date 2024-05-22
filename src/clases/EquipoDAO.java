@@ -26,7 +26,7 @@ public class EquipoDAO {
 
         for (Pokemon pokemon : equipo.getEquipo()) {
             String query = "UPDATE pokemon SET estaEnEquipo = 1 WHERE Id = ?";
-            try (Connection con = conector.conectar(); PreparedStatement sentencia = con.prepareStatement(query)) {
+            try (Connection con = credenciales.conectar(); PreparedStatement sentencia = con.prepareStatement(query)) {
                 sentencia.setInt(1, pokemon.getID());
                 sentencia.setString(2, pokemon.getNombre());
             } catch (SQLException e) {
@@ -42,7 +42,7 @@ public class EquipoDAO {
             guardarEquipo(equipo);
 
             String query = "UPDATE pokemon SET estaEnEquipo = 1, estaEnCaja = 0 WHERE Id = ?";
-            try (Connection con = conector.conectar();
+            try (Connection con = credenciales.conectar();
                  PreparedStatement sentencia = con.prepareStatement(query)) {
                 sentencia.setInt(1, pokemon.getID());
                 int filasActualizadas = sentencia.executeUpdate();
@@ -63,7 +63,7 @@ public class EquipoDAO {
         guardarEquipo(equipo);
 
         String query = "UPDATE pokemon SET estaEnEquipo = 0, estaEnCaja = 1 WHERE Id = ?";
-        try (Connection con = conector.conectar();
+        try (Connection con = credenciales.conectar();
              PreparedStatement sentencia = con.prepareStatement(query)) {
             sentencia.executeQuery();
         } catch (SQLException e) {
