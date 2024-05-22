@@ -281,10 +281,11 @@ class prueba extends JFrame {
         cajasDialog.setSize(500, 400);
         cajasDialog.setLayout(new GridLayout(5, 10, 5, 5));
 
-        String[] pokemonsEnCaja = obtenerPokemonsDesdeBD();
+        CajaDAO caja = new CajaDAO();
+        ArrayList<Pokemon> pokemonsEnCaja = caja.listaPokemon();
 
-        for (String pokemonNombre : pokemonsEnCaja) {
-            JButton pokemonButton = new JButton(pokemonNombre);
+        for (Pokemon pokemon : pokemonsEnCaja) {
+            JButton pokemonButton = new JButton(pokemon.getNombre());
             pokemonButton.setFont(new Font("Arial", Font.PLAIN, 12));
             cajasDialog.add(pokemonButton);
 
@@ -292,7 +293,7 @@ class prueba extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        mostrarOpcionesPC(cajasDialog, pokemonNombre);
+                        mostrarOpcionesPC(cajasDialog, pokemon.getNombre());
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     } catch (IOException ex) {
