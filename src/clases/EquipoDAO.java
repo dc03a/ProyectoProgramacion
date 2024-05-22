@@ -82,12 +82,4 @@ public class EquipoDAO {
     }
 
     // ... other methods for managing the team in the database and JSON files
-
-    private static Equipo leerEquipoDeJSON(String rutaArchivo) throws IOException {
-        Gson gson = new Gson();
-        FileReader reader = new FileReader(rutaArchivo);
-        Equipo equipo = gson.fromJson(reader, Equipo.class);
-        reader.close();
-        return equipo;
-    }
 }
