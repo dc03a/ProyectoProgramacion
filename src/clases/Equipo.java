@@ -31,7 +31,7 @@ public class Equipo {
             builder.append(", ");
         }
         if (!equipo.isEmpty()) {
-            builder.setLength(builder.length() - 2); // Eliminar la última coma y espacio
+            builder.setLength(builder.length() - 2);
         }
         builder.append("]");
         return builder.toString();

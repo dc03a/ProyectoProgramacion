@@ -651,18 +651,21 @@ class PCPokemonGUI extends JFrame {
         moverDialog.setSize(600, 400);
         moverDialog.setLayout(new GridLayout(3, 2, 10, 10));
 
-        Equipo pokemonList = EquipoDAO.getEquipo();
-
-        JComboBox<String> pokemonComboBox = new JComboBox<>((ComboBoxModel) pokemonList);
-        pokemonComboBox.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
-        moverDialog.add(pokemonComboBox);
+        Equipo equipo = EquipoDAO.getEquipo();
+        ArrayList<String> nombresPokemons = EquipoDAO.getNombresPokemons(equipo);
+        JComboBox<String> pokemonComboBox = new JComboBox<>(nombresPokemons.toArray(new String[0]));
 
         JLabel objetoLabel = new JLabel("Selecciona el objeto:");
         objetoLabel.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         moverDialog.add(objetoLabel);
 
-        String[] objetos = {"Objeto 1", "Objeto 2"};
-        JComboBox<String> objetoComboBox = new JComboBox<>(objetos);
+        ArrayList<String> objetos = new ArrayList<>();
+        try {
+            objetos = PokemonDAO.obtenerObjetosDisponiblesDesdeBD();
+        } catch (SQLException | IOException ex) {
+            JOptionPane.showMessageDialog(moverDialog, "Error al obtener los objetos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        JComboBox<String> objetoComboBox = new JComboBox<>(objetos.toArray(new String[0]));
         objetoComboBox.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         moverDialog.add(objetoComboBox);
 
@@ -679,6 +682,25 @@ class PCPokemonGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String pokemonNombre = (String) pokemonComboBox.getSelectedItem();
                 String objeto = (String) objetoComboBox.getSelectedItem();
+
+                try {
+                    Pokemon pokemon = PokemonDAO.buscarPokemonPorNombre(pokemonNombre);
+                    String objetoActual = PokemonDAO.devolverObjetoPokemon(pokemon);
+
+                    if (objetoActual != null) {
+                        PokemonDAO.cambiarObjetoPokemon(pokemon, objeto);
+                        JOptionPane.showMessageDialog(moverDialog, "Objeto intercambiado con éxito.");
+                    } else {
+                        PokemonDAO.asignarObjetoPokemon(pokemon, objeto);
+                        JOptionPane.showMessageDialog(moverDialog, "Objeto asignado con éxito.");
+                    }
+
+                    EquipoDAO.guardarEquipo(equipo);
+                } catch (SQLException | IOException ex) {
+                    JOptionPane.showMessageDialog(moverDialog, "Error al mover el objeto: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+                moverDialog.dispose();
             }
         });
 
@@ -700,6 +722,14 @@ class PCPokemonGUI extends JFrame {
         return PokemonDAO.devolverObjetoPokemon(pokemon);
     }
 
+    private static void moverObjetoEntrePokemones(String pokemonOrigen, String pokemonDestino, String objeto) throws SQLException, IOException {
+        // Aquí implementa la lógica para mover el objeto del Pokémon origen al Pokémon destino
+        // Puedes utilizar tus métodos DAO correspondientes para actualizar la información en la base de datos
+        // Por ejemplo:
+        // 1. Obtener el Pokémon origen y eliminar el objeto de su inventario
+        // 2. Obtener el Pokémon destino y agregar el objeto a su inventario
+    }
+
     private static void sacarPokemonDeBD(Pokemon pokemon) throws SQLException, IOException {
         if (EquipoDAO.equipoLleno(EquipoDAO.getEquipo().getEquipo())) {
             JOptionPane.showMessageDialog(null, "El equipo está lleno.");
@@ -713,6 +743,7 @@ class PCPokemonGUI extends JFrame {
     }
 
     private static void dejarPokemonEnBD(String pokemonNombre) throws SQLException, IOException {
+        EquipoDAO.quitarPokemon(PokemonDAO.buscarPokemonPorNombre(pokemonNombre));
         CajaDAO.meterPokemonACaja(pokemonNombre);
     }
 

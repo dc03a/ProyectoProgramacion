@@ -35,6 +35,14 @@ public class EquipoDAO {
         }
     }
 
+    public static ArrayList<String> getNombresPokemons(Equipo equipo) {
+        ArrayList<String> nombres = new ArrayList<>();
+        for (Pokemon pokemon : equipo.getEquipo()) {
+            nombres.add(pokemon.getNombre());
+        }
+        return nombres;
+    }
+
     public static void agregarPokemon(Pokemon pokemon) throws IOException, SQLException {
         Equipo equipo = getEquipo();
         if (!equipoLleno(equipo.getEquipo())) {
