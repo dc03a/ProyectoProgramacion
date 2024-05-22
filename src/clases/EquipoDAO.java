@@ -67,8 +67,17 @@ public class EquipoDAO {
     }
 
     public static void quitarPokemon(Pokemon pokemon) throws IOException, SQLException {
-        Equipo equipo = getEquipo();
-        equipo.getEquipo().removeIf(p -> p.getID() == pokemon.getID());
+        Equipo equipo = funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
+        ArrayList<Pokemon> listaPokemons = equipo.getEquipo();
+
+        for (int i = 0; i < listaPokemons.size(); i++) {
+            Pokemon p = listaPokemons.get(i);
+            if (p.getID() == pokemon.getID()) {
+                listaPokemons.remove(i);
+                break;
+            }
+        }
+
         guardarEquipo(equipo);
 
         String query = "UPDATE pokemon SET estaEnEquipo = 0, estaEnCaja = 1 WHERE Id = ?";
