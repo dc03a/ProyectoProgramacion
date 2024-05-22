@@ -25,6 +25,7 @@ class PCPokemonGUI extends JFrame {
         frame.setSize(600, 400);
         frame.setResizable(true);
         frame.setLayout(new BorderLayout());
+        frame.setLocationRelativeTo(null);
 
         JLabel titleLabel = new JLabel("PC de Pokémon", SwingConstants.CENTER);
         titleLabel.setFont(new Font("PokemonGb-RAeo", Font.BOLD, 24));
@@ -150,6 +151,8 @@ class PCPokemonGUI extends JFrame {
         JDialog equipoDialog = new JDialog(parentFrame, "Equipo", true);
         equipoDialog.setSize(500, 400);
         equipoDialog.setLayout(new BorderLayout());
+        equipoDialog.setResizable(true);
+        equipoDialog.setLocationRelativeTo(null);
 
         JPanel equipoPanel = new JPanel();
         equipoPanel.setLayout(new GridLayout(6, 1, 10, 10));
@@ -211,6 +214,8 @@ class PCPokemonGUI extends JFrame {
         JDialog opcionesDialog = new JDialog(parentDialog, pokemon.getNombre(), true);
         opcionesDialog.setSize(400, 300);
         opcionesDialog.setLayout(new GridLayout(4, 1, 10, 10));
+        opcionesDialog.setResizable(true);
+        opcionesDialog.setLocationRelativeTo(null);
 
         JButton datosButton = new JButton("Datos");
         JButton objetoButton = new JButton("Objeto");
@@ -299,6 +304,7 @@ class PCPokemonGUI extends JFrame {
         JDialog cajasDialog = new JDialog(parentFrame, "Cajas", true);
         cajasDialog.setSize(500, 400);
         cajasDialog.setLayout(new GridLayout(5, 10, 5, 5));
+        cajasDialog.setLocationRelativeTo(null);
 
         CajaDAO caja = new CajaDAO();
         ArrayList<Pokemon> pokemonsEnCaja = CajaDAO.listaPokemon();
@@ -333,6 +339,7 @@ class PCPokemonGUI extends JFrame {
         JDialog opcionesDialog = new JDialog(parentDialog, pokemonNombre, true);
         opcionesDialog.setSize(400, 300);
         opcionesDialog.setLayout(new GridLayout(5, 1, 10, 10));
+        opcionesDialog.setLocationRelativeTo(null);
 
         JButton sacarButton = new JButton("Sacar");
         JButton datosButton = new JButton("Datos");
@@ -450,6 +457,7 @@ class PCPokemonGUI extends JFrame {
         JDialog dejarDialog = new JDialog(parentFrame, "Dejar Pokémon", true);
         dejarDialog.setSize(400, 300);
         dejarDialog.setLayout(new GridLayout(6, 1, 10, 10));
+        dejarDialog.setLocationRelativeTo(null);
 
         ArrayList<Pokemon> equipo = EquipoDAO.getEquipo().getEquipo();
 
@@ -478,6 +486,7 @@ class PCPokemonGUI extends JFrame {
         JDialog opcionesDialog = new JDialog(parentDialog, pokemonNombre, true);
         opcionesDialog.setSize(400, 300);
         opcionesDialog.setLayout(new GridLayout(5, 1, 10, 10));
+        opcionesDialog.setLocationRelativeTo(null);
 
         JButton dejarButton = new JButton("Dejar");
         JButton datosButton = new JButton("Datos");
@@ -576,6 +585,7 @@ class PCPokemonGUI extends JFrame {
         JDialog moverDialog = new JDialog(parentFrame, "Mover Pokémon", true);
         moverDialog.setSize(600, 400);
         moverDialog.setLayout(new GridLayout(3, 1, 10, 10));
+        moverDialog.setLocationRelativeTo(null);
 
         ArrayList<Pokemon> listaEquipo = EquipoDAO.getEquipo().getEquipo();
         ArrayList<String> nombres = new ArrayList<>();
@@ -650,6 +660,7 @@ class PCPokemonGUI extends JFrame {
         JDialog moverDialog = new JDialog(parentFrame, "Mover Objetos", true);
         moverDialog.setSize(600, 400);
         moverDialog.setLayout(new GridLayout(3, 2, 10, 10));
+        moverDialog.setLocationRelativeTo(null);
 
         Equipo equipo = EquipoDAO.getEquipo();
         ArrayList<String> nombresPokemons = EquipoDAO.getNombresPokemons(equipo);
@@ -722,14 +733,6 @@ class PCPokemonGUI extends JFrame {
         return PokemonDAO.devolverObjetoPokemon(pokemon);
     }
 
-    private static void moverObjetoEntrePokemones(String pokemonOrigen, String pokemonDestino, String objeto) throws SQLException, IOException {
-        // Aquí implementa la lógica para mover el objeto del Pokémon origen al Pokémon destino
-        // Puedes utilizar tus métodos DAO correspondientes para actualizar la información en la base de datos
-        // Por ejemplo:
-        // 1. Obtener el Pokémon origen y eliminar el objeto de su inventario
-        // 2. Obtener el Pokémon destino y agregar el objeto a su inventario
-    }
-
     private static void sacarPokemonDeBD(Pokemon pokemon) throws SQLException, IOException {
         if (EquipoDAO.equipoLleno(EquipoDAO.getEquipo().getEquipo())) {
             JOptionPane.showMessageDialog(null, "El equipo está lleno.");
@@ -744,7 +747,6 @@ class PCPokemonGUI extends JFrame {
 
     private static void dejarPokemonEnBD(String pokemonNombre) throws SQLException, IOException {
         EquipoDAO.quitarPokemon(PokemonDAO.buscarPokemonPorNombre(pokemonNombre));
-        CajaDAO.meterPokemonACaja(pokemonNombre);
     }
 
     private static void cambiarApodoEnBD(Pokemon pokemon, String nuevoNombre) throws SQLException, IOException {

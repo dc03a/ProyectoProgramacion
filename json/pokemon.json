@@ -1,19 +1,12 @@
 {
-  "ID": 1,
-  "Nombre": "Bulbasaur",
-  "Habilidad": "Espesura",
-  "Tipo1": "Planta",
-  "Tipo2": "Veneno",
+  "ID": 0,
   "Nivel": 50,
-  "Hp": 45,
-  "Ataque": 49,
-  "Defensa": 49,
-  "AtaqueEspecial": 65,
-  "DefensaEspecial": 65,
-  "Velocidad": 45,
-  "Movimiento1": "Placaje",
-  "Movimiento2": "Gruñido",
-  "Objeto": "Baya Aranja",
+  "Hp": 0,
+  "Ataque": 0,
+  "Defensa": 0,
+  "AtaqueEspecial": 0,
+  "DefensaEspecial": 0,
+  "Velocidad": 0,
   "estaEnEquipo": false,
-  "estaEnCaja": true
+  "estaEnCaja": false
 }
