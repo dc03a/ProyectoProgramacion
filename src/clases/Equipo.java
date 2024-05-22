@@ -21,4 +21,19 @@ public class Equipo {
     public void setNombre(String nombre) {
         Nombre = nombre;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Equipo: [");
+        for (Pokemon pokemon : equipo) {
+            builder.append(pokemon.toString());
+            builder.append(", ");
+        }
+        if (!equipo.isEmpty()) {
+            builder.setLength(builder.length() - 2); // Eliminar la última coma y espacio
+        }
+        builder.append("]");
+        return builder.toString();
+    }
 }

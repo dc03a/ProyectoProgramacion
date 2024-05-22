@@ -13,6 +13,7 @@ import java.util.ArrayList;
 class prueba extends JFrame {
 
     public static void main(String[] args) {
+        cargarPokemons();
         JFrame frame = new JFrame("PC Pokémon");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
@@ -127,6 +128,17 @@ class prueba extends JFrame {
         frame.setVisible(true);
     }
 
+    private static void cargarPokemons() {
+        try {
+            ArrayList<Pokemon> pokemons = PokemonDAO.seleccionarTodosLosPokemon();
+            for (Pokemon pokemon : pokemons) {
+                System.out.println(pokemon);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static void mostrarEquipo(JFrame parentFrame) throws IOException {
         JDialog equipoDialog = new JDialog(parentFrame, "Equipo", true);
         equipoDialog.setSize(500, 400);
@@ -140,31 +152,46 @@ class prueba extends JFrame {
         try {
             equipo = funcionesJSON.leerEquipoDeJSON("json/equipo.json");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            JOptionPane.showMessageDialog(parentFrame, "Error al leer el equipo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
-        if (equipo != null) {
+        if (equipo != null && equipo.getEquipo() != null && !equipo.getEquipo().isEmpty()) {
             for (Pokemon pokemon : equipo.getEquipo()) {
-                String pokemonNombre = pokemon.getNombre();
-                JButton pokemonButton = new JButton(pokemonNombre);
-                pokemonButton.setFont(new Font("Arial", Font.PLAIN, 16));
-                equipoPanel.add(pokemonButton);
+                if (pokemon != null) {
+                    String pokemonNombre = pokemon.getNombre();
+                    if (pokemonNombre != null) {
+                        JButton pokemonButton = new JButton(pokemonNombre);
+                        pokemonButton.setFont(new Font("Arial", Font.PLAIN, 16));
+                        equipoPanel.add(pokemonButton);
 
-                pokemonButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (!pokemonNombre.startsWith("Empty")) {
-                            mostrarOpcionesPokemon(equipoDialog, pokemon);
-                        } else {
-                            JOptionPane.showMessageDialog(equipoDialog, "No hay Pokémon en este slot.");
-                        }
+                        pokemonButton.addActionListener(e -> {
+                            if (!pokemonNombre.startsWith("Empty")) {
+                                mostrarOpcionesPokemon(equipoDialog, pokemon);
+                            } else {
+                                JOptionPane.showMessageDialog(equipoDialog, "No hay Pokémon en este slot.");
+                            }
+                        });
+                    } else {
+                        System.err.println("Advertencia: Se encontró un Pokémon con nombre nulo.");
                     }
-                });
+                } else {
+                    System.err.println("Advertencia: Se encontró un objeto Pokémon nulo.");
+                }
             }
         } else {
             JOptionPane.showMessageDialog(equipoDialog, "El equipo está vacío.");
         }
+
+        equipoPanel.revalidate();
+        equipoPanel.repaint();
         equipoDialog.setVisible(true);
+
+        System.out.println("Equipo cargado: " + equipo);
+        assert equipo != null;
+        for (Pokemon pokemon : equipo.getEquipo()) {
+            System.out.println("Pokemon: " + pokemon);
+        }
     }
 
     private static void mostrarOpcionesPokemon(JDialog parentDialog, Pokemon pokemon) {

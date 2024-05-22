@@ -2,39 +2,66 @@ package clases;
 
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
+
 import utilidades.*;
 
 public class PokemonDAO {
-    private static final String JSON_EQUIPO_PATH = "json/equipo.json";
     private static final String JSON_POKEMON_PATH = "json/pokemon.json";
+    private static final String JSON_EQUIPO_PATH = "json/equipo.json";
+    private static final String JSON_CAJA_PATH = "json/caja.json";
 
     private static Connection getConnection() throws SQLException {
         return conector.conectar();
     }
 
-    public static void guardarPokemon(Pokemon pokemon) throws IOException, SQLException {
+    public static ArrayList<Pokemon> seleccionarTodosLosPokemon() throws SQLException {
+        ArrayList<Pokemon> listaPokemon = new ArrayList<>();
+        String query = "SELECT * FROM pokemon";
+
         try (Connection conn = getConnection();
-             PreparedStatement sentencia = conn.prepareStatement("INSERT INTO pokemon (ID, Nombre, Habilidad, Tipo1, Tipo2, Nivel, Hp, Ataque, Defensa, AtaqueEspecial, DefensaEspecial, Velocidad, Movimiento1, Movimiento2, Objeto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
-            sentencia.setInt(1, pokemon.getID());
-            sentencia.setString(2, pokemon.getNombre());
-            sentencia.setString(3, pokemon.getHabilidad());
-            sentencia.setString(4, pokemon.getTipo1());
-            sentencia.setString(5, pokemon.getTipo2());
-            sentencia.setInt(6, pokemon.getNivel());
-            sentencia.setInt(7, pokemon.getHp());
-            sentencia.setInt(8, pokemon.getAtaque());
-            sentencia.setInt(9, pokemon.getDefensa());
-            sentencia.setInt(10, pokemon.getAtaqueEspecial());
-            sentencia.setInt(11, pokemon.getDefensaEspecial());
-            sentencia.setInt(12, pokemon.getVelocidad());
-            sentencia.setString(13, pokemon.getMovimiento1());
-            sentencia.setString(14, pokemon.getMovimiento2());
-            sentencia.setString(15, pokemon.getObjeto());
-            sentencia.executeUpdate();
-        } catch (SQLException e) {
+             PreparedStatement statement = conn.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                Pokemon pokemon = new Pokemon();
+                pokemon.setID(resultSet.getInt("ID"));
+                pokemon.setNombre(resultSet.getString("Nombre"));
+                pokemon.setHabilidad(resultSet.getString("Habilidad"));
+                pokemon.setTipo1(resultSet.getString("Tipo1"));
+                pokemon.setTipo2(resultSet.getString("Tipo2"));
+                pokemon.setNivel(resultSet.getInt("Nivel"));
+                pokemon.setHp(resultSet.getInt("Hp"));
+                pokemon.setAtaque(resultSet.getInt("Ataque"));
+                pokemon.setDefensa(resultSet.getInt("Defensa"));
+                pokemon.setAtaqueEspecial(resultSet.getInt("AtaqueEspecial"));
+                pokemon.setDefensaEspecial(resultSet.getInt("DefensaEspecial"));
+                pokemon.setVelocidad(resultSet.getInt("Velocidad"));
+                pokemon.setMovimiento1(resultSet.getString("Movimiento1"));
+                pokemon.setMovimiento2(resultSet.getString("Movimiento2"));
+                pokemon.setObjeto(resultSet.getString("Objeto"));
+                pokemon.setEstaEnEquipo(resultSet.getBoolean("EstaEnEquipo"));
+                pokemon.setEstaEnCaja(resultSet.getBoolean("EstaEnCaja"));
+
+                funcionesJSON.escribirPokemonAJSON(pokemon, JSON_POKEMON_PATH);
+
+                if (pokemon.isEstaEnEquipo()) {
+                    Equipo equipo = funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
+                    equipo.getEquipo().add(pokemon);
+                    funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
+                }
+
+                if (pokemon.isEstaEnCaja()) {
+                    Caja caja = funcionesJSON.leerCajaDeJSON(JSON_CAJA_PATH);
+                    caja.getListaCaja().add(pokemon);
+                    funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
+                }
+
+                listaPokemon.add(pokemon);
+            }
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
-        funcionesJSON.escribirPokemonAJSON(pokemon, JSON_POKEMON_PATH);
+        return listaPokemon;
     }
 
     public static Pokemon buscarPokemonPorNombre(String nombre) throws IOException, SQLException {
@@ -84,7 +111,6 @@ public class PokemonDAO {
         }
 
         pokemon.setNombre(nuevoApodo);
-
         funcionesJSON.escribirPokemonAJSON(pokemon, JSON_POKEMON_PATH);
     }
 

@@ -160,4 +160,27 @@ public class Pokemon {
 
     public Pokemon(int id, String nombre) {
     }
+
+    @Override
+    public String toString() {
+        return "Pokemon{" +
+                "ID=" + ID +
+                ", Nombre='" + Nombre + '\'' +
+                ", Habilidad='" + Habilidad + '\'' +
+                ", Tipo1='" + Tipo1 + '\'' +
+                ", Tipo2='" + Tipo2 + '\'' +
+                ", Nivel=" + Nivel +
+                ", Hp=" + Hp +
+                ", Ataque=" + Ataque +
+                ", Defensa=" + Defensa +
+                ", AtaqueEspecial=" + AtaqueEspecial +
+                ", DefensaEspecial=" + DefensaEspecial +
+                ", Velocidad=" + Velocidad +
+                ", Movimiento1='" + Movimiento1 + '\'' +
+                ", Movimiento2='" + Movimiento2 + '\'' +
+                ", Objeto='" + Objeto + '\'' +
+                ", estaEnEquipo=" + estaEnEquipo +
+                ", estaEnCaja=" + estaEnCaja +
+                '}';
+    }
 }

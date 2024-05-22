@@ -3,15 +3,13 @@ package clases;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
+
 import utilidades.*;
 
 public class CajaDAO {
-
-    /*** METODOS PARA CAJAS ***/
-
     private static final String JSON_CAJA_PATH = "json/caja.json";
     private static final String JSON_EQUIPO_PATH = "json/caja.json";
+    private static final String JSON_POKEMON_PATH = "json/pokemon.json";
 
     private static Connection conectar() {
         Connection con = null;
@@ -29,38 +27,24 @@ public class CajaDAO {
         return lista.size() < 30;
     }
 
-    public static void moverPokemonCajaAEquipo(String nombre) throws IOException {
+    public static void moverPokemonCajaAEquipo(String nombre) throws IOException, SQLException {
         Caja caja = funcionesJSON.leerCajaDeJSON(JSON_CAJA_PATH);
-        Equipo equipo = funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
-
         Pokemon pokemon = null;
-        for (Pokemon p : caja.getListaCaja()) {
-            if (p.getNombre().equalsIgnoreCase(nombre)) {
-                pokemon = p;
+
+        for (Pokemon pok : caja.getListaCaja()) {
+            if (pok.getNombre().equalsIgnoreCase(nombre)) {
+                pokemon = pok;
                 break;
             }
         }
 
         if (pokemon == null) {
-            throw new IllegalArgumentException("El Pokémon con el nombre " + nombre + " no se encuentra en la caja.");
+            throw new IllegalArgumentException("El Pokémon con nombre " + nombre + " no se encuentra en la caja.");
         }
 
         caja.getListaCaja().remove(pokemon);
-        equipo.getEquipo().add(pokemon);
-
         funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
-        funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
-
-        String sql = "UPDATE pokemon SET estaEnequipo = true AND estaEnCaja = false WHERE NOMBRE = ? ";
-        try{
-            Connection con = conectar();
-            PreparedStatement sentencia = con.prepareStatement(sql);
-            sentencia.setString(1, nombre);
-            sentencia.executeUpdate();
-
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
+        EquipoDAO.agregarPokemon(pokemon);
     }
 
     /* Para generar la lista de pokemons de la caja que le pasemos */
@@ -79,9 +63,9 @@ public class CajaDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         Caja caja = new Caja();
         caja.setListaCaja(cajaPok);
-
         funcionesJSON.escribirCajaAJSON(caja,JSON_CAJA_PATH );
 
         return cajaPok;
@@ -89,14 +73,13 @@ public class CajaDAO {
 
     public static void meterPokemonACaja(String pokemonNombre) throws IOException, SQLException {
         Caja caja = funcionesJSON.leerCajaDeJSON(JSON_CAJA_PATH);
-
         Pokemon pokemon = PokemonDAO.buscarPokemonPorNombre(pokemonNombre);
+
         if (pokemon == null) {
             throw new IllegalArgumentException("El Pokémon con el nombre " + pokemonNombre + " no existe.");
         }
 
         caja.getListaCaja().add(pokemon);
-
         funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
 
         String query = "UPDATE pokemon SET estaEnCaja = true, estaEnEquipo = false WHERE NOMBRE = ?";
@@ -111,8 +94,8 @@ public class CajaDAO {
 
     public static void sacarPokemonCaja(String pokemonNombre) throws IOException {
         Caja caja = funcionesJSON.leerCajaDeJSON(JSON_CAJA_PATH);
-
         boolean quitado = caja.getListaCaja().removeIf(pokemon -> pokemon.getNombre().equalsIgnoreCase(pokemonNombre));
+
         if (!quitado) {
             throw new IllegalArgumentException("El Pokémon con el nombre " + pokemonNombre + " no está en la caja.");
         }
