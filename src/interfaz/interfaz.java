@@ -163,6 +163,12 @@ class prueba extends JFrame {
                     if (pokemonNombre != null) {
                         JButton pokemonButton = new JButton(pokemonNombre);
                         pokemonButton.setFont(new Font("Arial", Font.PLAIN, 16));
+
+                        //Cargar imagen
+                        String imgPokemonPath = "pokemonImagenes/" + pokemonNombre.toLowerCase() + ".png";
+                        ImageIcon imgPokemon = new ImageIcon(imgPokemonPath);
+                        Image scaledImage = imgPokemon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                        pokemonButton.setIcon(new ImageIcon(scaledImage));
                         equipoPanel.add(pokemonButton);
 
                         pokemonButton.addActionListener(e -> {
@@ -287,6 +293,11 @@ class prueba extends JFrame {
         for (Pokemon pokemon : pokemonsEnCaja) {
             JButton pokemonButton = new JButton(pokemon.getNombre());
             pokemonButton.setFont(new Font("Arial", Font.PLAIN, 12));
+            //Cargar imagen
+            String imgPokemonPath = "pokemonImagenes/" + pokemon.getNombre().toLowerCase() + ".png";
+            ImageIcon imgPokemon = new ImageIcon(imgPokemonPath);
+            Image scaledImage = imgPokemon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            pokemonButton.setIcon(new ImageIcon(scaledImage));
             cajasDialog.add(pokemonButton);
 
             pokemonButton.addActionListener(new ActionListener() {
