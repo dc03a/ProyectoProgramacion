@@ -3,7 +3,7 @@ package clases;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
-import com.google.gson.*;
+
 import utilidades.*;
 
 public class EquipoDAO {
@@ -56,10 +56,20 @@ public class EquipoDAO {
     }
 
     public static void guardarEquipo(Equipo equipo) throws IOException {
-        funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
-
-        // Update the team in the database (optional)
-        // You'll need to implement this based on your database schema
+        Equipo equipoAux = equipo;
+        equipoAux = funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
+        for (Pokemon pokemon : equipoAux.getEquipo()) {
+            if (pokemon.isEstaEnEquipo()) {
+                String query = "UPDATE pokemon SET estaEnEquipo = true WHERE Id = ?";
+                try (Connection con = conector.conectar(); PreparedStatement sentencia = con.prepareStatement(query)) {
+                    sentencia.setInt(1, pokemon.getID());
+                    sentencia.setString(2, pokemon.getNombre());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        funcionesJSON.escribirEquipoAJSON(equipoAux, JSON_EQUIPO_PATH);
     }
 
     public static void agregarPokemon(Pokemon pokemon) throws IOException, SQLException {
