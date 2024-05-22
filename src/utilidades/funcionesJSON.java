@@ -3,23 +3,19 @@ package utilidades;
 import clases.*;
 import com.google.gson.Gson;
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
-
 import java.io.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class funcionesJSON {
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    private static boolean escribirJson(Object objeto, String rutaArchivo) {
+    private static void escribirJson(Object objeto, String rutaArchivo) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo))) {
             String json = gson.toJson(objeto);
             bw.write(json);
-            return true;
+            System.out.println("Archivo JSON escrito correctamente: " + rutaArchivo);
         } catch (IOException e) {
-            System.out.println("Error al escribir el archivo JSON: " + e.getMessage());
-            return false;
+            throw new RuntimeException(e);
         }
     }
 
@@ -30,8 +26,34 @@ public class funcionesJSON {
     }
 
     public static void escribirEquipoAJSON(Equipo equipo, String rutaArchivo) throws IOException {
-        escribirJson(equipo, rutaArchivo);
-        System.out.println("Equipo guardado en el archivo: " + rutaArchivo);
+        Equipo equipoExistente = leerObjetoDeJSON(rutaArchivo, Equipo.class);
+
+        if (equipoExistente == null) {
+            escribirJson(equipo, rutaArchivo);
+            System.out.println("Equipo guardado en el archivo: " + rutaArchivo);
+        } else {
+            boolean cambiosRealizados = false;
+            for (Pokemon nuevoPokemon : equipo.getEquipo()) {
+                boolean encontrado = false;
+                for (Pokemon existentePokemon : equipoExistente.getEquipo()) {
+                    if (nuevoPokemon.getID() == existentePokemon.getID()) {
+                        encontrado = true;
+                        break;
+                    }
+                }
+                if (!encontrado) {
+                    equipoExistente.getEquipo().add(nuevoPokemon);
+                    cambiosRealizados = true;
+                }
+            }
+
+            if (cambiosRealizados) {
+                escribirJson(equipoExistente, rutaArchivo);
+                System.out.println("Equipo actualizado y guardado en el archivo: " + rutaArchivo);
+            } else {
+                System.out.println("El objeto ya está presente en el archivo.");
+            }
+        }
     }
 
     public static Equipo leerEquipoDeJSON(String rutaArchivo) throws IOException {

@@ -173,11 +173,11 @@ public class Pokemon {
                 ", Hp=" + Hp +
                 ", Ataque=" + Ataque +
                 ", Defensa=" + Defensa +
-                ", AtaqueEspecial=" + AtaqueEspecial +
-                ", DefensaEspecial=" + DefensaEspecial +
+                ", Ataque Especial=" + AtaqueEspecial +
+                ", Defensa Especial=" + DefensaEspecial +
                 ", Velocidad=" + Velocidad +
-                ", Movimiento1='" + Movimiento1 + '\'' +
-                ", Movimiento2='" + Movimiento2 + '\'' +
+                ", Movimiento 1='" + Movimiento1 + '\'' +
+                ", Movimiento 2='" + Movimiento2 + '\'' +
                 ", Objeto='" + Objeto + '\'' +
                 ", estaEnEquipo=" + estaEnEquipo +
                 ", estaEnCaja=" + estaEnCaja +

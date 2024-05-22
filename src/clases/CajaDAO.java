@@ -39,7 +39,7 @@ public class CajaDAO {
     /* Para generar la lista de pokemons de la caja que le pasemos */
     public static ArrayList<Pokemon> listaPokemon() throws IOException {
         ArrayList<Pokemon> cajaPok = new ArrayList<>();
-        String sql = "SELECT * FROM pokemon WHERE estaEnCaja = true";
+        String sql = "SELECT * FROM pokemon WHERE estaEnCaja = 1";
 
         try (Connection con = conector.conectar();
              PreparedStatement sentencia = con.prepareStatement(sql);
@@ -71,10 +71,10 @@ public class CajaDAO {
         caja.getListaCaja().add(pokemon);
         funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
 
-        String query = "UPDATE pokemon SET estaEnCaja = true, estaEnEquipo = false WHERE NOMBRE = ?";
+        String query = "UPDATE pokemon SET estaEnCaja = 1, estaEnEquipo = 0 WHERE ID = ?";
         try (Connection con = conector.conectar();
              PreparedStatement sentencia = con.prepareStatement(query);) {
-            sentencia.setString(1, pokemonNombre);
+            sentencia.setInt(1, pokemon.getID());
             sentencia.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -91,7 +91,7 @@ public class CajaDAO {
 
         funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
 
-        String query = "UPDATE pokemon SET estaEnCaja = false WHERE NOMBRE = ?";
+        String query = "UPDATE pokemon SET estaEnCaja = 0, estaEnEquipo = 1 WHERE NOMBRE = ?";
         try (Connection con = conector.conectar();
              PreparedStatement sentencia = con.prepareStatement(query)) {
             sentencia.setString(1, pokemonNombre);
@@ -118,7 +118,7 @@ public class CajaDAO {
             return;
         }
 
-        String query = "UPDATE pokemon SET estaEnEquipo = false, estaEnCaja = false WHERE NOMBRE = ?";
+        String query = "UPDATE pokemon SET estaEnEquipo = 0, estaEnCaja = 0 WHERE NOMBRE = ?";
         try (Connection con = conector.conectar(); PreparedStatement sentencia = con.prepareStatement(query)) {
             sentencia.setString(1, nombrePokemon);
             sentencia.executeUpdate();
@@ -128,7 +128,7 @@ public class CajaDAO {
     }
 
     private static boolean seEncuentraestaEnCaja(String pokemonNombre) {
-        String query = "SELECT * FROM pokemon WHERE Nombre = ? AND estaEnCaja = true";
+        String query = "SELECT * FROM pokemon WHERE Nombre = ? AND estaEnCaja = 1";
         try (Connection con = conector.conectar(); PreparedStatement sentencia = con.prepareStatement(query)) {
             sentencia.setString(1, pokemonNombre);
             try (ResultSet rs = sentencia.executeQuery()) {

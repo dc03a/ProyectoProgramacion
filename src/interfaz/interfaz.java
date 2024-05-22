@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-class prueba extends JFrame {
+class PCPokemonGUI extends JFrame {
 
     public static void main(String[] args) {
         cargarPokemons();
@@ -36,13 +36,13 @@ class prueba extends JFrame {
         JButton moverObjetosButton = new JButton("Mover Objetos");
         JButton desconectarButton = new JButton("Desconectar");
 
-        equipoButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        cajasButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        sacarPokemonButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        dejarPokemonButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        moverPokemonButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        moverObjetosButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        desconectarButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        equipoButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        cajasButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        sacarPokemonButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        dejarPokemonButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        moverPokemonButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        moverObjetosButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        desconectarButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
         mainMenuPanel.add(equipoButton);
         mainMenuPanel.add(cajasButton);
@@ -78,7 +78,7 @@ class prueba extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    sacarPokemon(frame);
+                    mostrarCajas(frame);
                 } catch (SQLException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -131,23 +131,8 @@ class prueba extends JFrame {
     private static void cargarPokemons() {
         try {
             ArrayList<Pokemon> pokemons = PokemonDAO.seleccionarTodosLosPokemon();
-            Equipo equipo = funcionesJSON.leerEquipoDeJSON("json/equipo.json");
-
-            for (Pokemon pokemon : pokemons) {
-                if (pokemon.isEstaEnEquipo()) {
-                    if (equipo.getEquipo().size() < 6 && !equipo.equipo.contains(pokemon)) {
-                        equipo.getEquipo().add(pokemon);
-                    } else if (equipo.getEquipo().size() >= 6) {
-                        JOptionPane.showMessageDialog(null, "No se puede añadir más Pokémon. El equipo está lleno.");
-                        break;
-                    }
-                }
-                System.out.println(pokemon);
-            }
-            funcionesJSON.escribirEquipoAJSON(equipo, "json/equipo.json");
         } catch (SQLException | IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al cargar los equipos");
+            JOptionPane.showMessageDialog(null, "Error al cargar los equipos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -174,7 +159,7 @@ class prueba extends JFrame {
                     String pokemonNombre = pokemon.getNombre();
                     if (pokemonNombre != null) {
                         JButton pokemonButton = new JButton(pokemonNombre);
-                        pokemonButton.setFont(new Font("Arial", Font.PLAIN, 16));
+                        pokemonButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
                         //Cargar imagen
                         String imgPokemonPath = "pokemonImagenes/" + pokemonNombre.toLowerCase() + ".png";
@@ -222,10 +207,10 @@ class prueba extends JFrame {
         JButton moverButton = new JButton("Mover");
         JButton atrasButton = new JButton("Atrás");
 
-        datosButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        objetoButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        moverButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        atrasButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        datosButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        objetoButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        moverButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        atrasButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
         opcionesDialog.add(datosButton);
         opcionesDialog.add(objetoButton);
@@ -255,9 +240,7 @@ class prueba extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     moverPokemonEquipo(opcionesDialog, pokemon);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (IOException ex) {
+                } catch (SQLException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }
@@ -300,11 +283,11 @@ class prueba extends JFrame {
         cajasDialog.setLayout(new GridLayout(5, 10, 5, 5));
 
         CajaDAO caja = new CajaDAO();
-        ArrayList<Pokemon> pokemonsEnCaja = caja.listaPokemon();
+        ArrayList<Pokemon> pokemonsEnCaja = CajaDAO.listaPokemon();
 
         for (Pokemon pokemon : pokemonsEnCaja) {
             JButton pokemonButton = new JButton(pokemon.getNombre());
-            pokemonButton.setFont(new Font("Arial", Font.PLAIN, 12));
+            pokemonButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 12));
             //Cargar imagen
             String imgPokemonPath = "pokemonImagenes/" + pokemon.getNombre().toLowerCase() + ".png";
             ImageIcon imgPokemon = new ImageIcon(imgPokemonPath);
@@ -317,9 +300,7 @@ class prueba extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     try {
                         mostrarOpcionesPC(cajasDialog, pokemon.getNombre());
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (IOException ex) {
+                    } catch (SQLException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 }
@@ -341,11 +322,11 @@ class prueba extends JFrame {
         JButton liberarButton = new JButton("Liberar");
         JButton salirButton = new JButton("Salir");
 
-        sacarButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        datosButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        cambiarApodoButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        liberarButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        salirButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        sacarButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        datosButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        cambiarApodoButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        liberarButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        salirButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
         opcionesDialog.add(sacarButton);
         opcionesDialog.add(datosButton);
@@ -408,9 +389,7 @@ class prueba extends JFrame {
                     if (pokemonACambiar != null) {
                         try {
                             cambiarApodoEnBD(pokemonACambiar, nuevoNombre);
-                        } catch (SQLException ex) {
-                            throw new RuntimeException(ex);
-                        } catch (IOException ex) {
+                        } catch (SQLException | IOException ex) {
                             throw new RuntimeException(ex);
                         }
                         opcionesDialog.dispose();
@@ -432,9 +411,7 @@ class prueba extends JFrame {
                         } else {
                             JOptionPane.showMessageDialog(opcionesDialog, "Error al liberar el Pokémon.");
                         }
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (IOException ex) {
+                    } catch (SQLException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 }
@@ -451,11 +428,6 @@ class prueba extends JFrame {
         opcionesDialog.setVisible(true);
     }
 
-    private static void sacarPokemon(JFrame parentFrame) throws SQLException, IOException {
-        CajaDAO.sacarPokemonCaja("Caterpie");
-        mostrarCajas(parentFrame);
-    }
-
     private static void dejarPokemon(JFrame parentFrame) throws SQLException, IOException {
         JDialog dejarDialog = new JDialog(parentFrame, "Dejar Pokémon", true);
         dejarDialog.setSize(400, 300);
@@ -465,7 +437,7 @@ class prueba extends JFrame {
 
         for (Pokemon pokemonNombre : equipo) {
             JButton pokemonButton = new JButton(String.valueOf(pokemonNombre));
-            pokemonButton.setFont(new Font("Arial", Font.PLAIN, 16));
+            pokemonButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
             dejarDialog.add(pokemonButton);
 
             pokemonButton.addActionListener(new ActionListener() {
@@ -495,11 +467,11 @@ class prueba extends JFrame {
         JButton liberarButton = new JButton("Liberar");
         JButton salirButton = new JButton("Salir");
 
-        dejarButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        datosButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        cambiarApodoButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        liberarButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        salirButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        dejarButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        datosButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        cambiarApodoButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        liberarButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        salirButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
         opcionesDialog.add(dejarButton);
         opcionesDialog.add(datosButton);
@@ -512,9 +484,7 @@ class prueba extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     dejarPokemonEnBD(pokemonNombre);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (IOException ex) {
+                } catch (SQLException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 opcionesDialog.dispose();
@@ -566,9 +536,7 @@ class prueba extends JFrame {
                 if (confirm == JOptionPane.YES_OPTION) {
                     try {
                         liberarPokemonDeBD(pokemonNombre);
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (IOException ex) {
+                    } catch (SQLException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                     opcionesDialog.dispose();
@@ -597,13 +565,13 @@ class prueba extends JFrame {
             nombres.add(pokemon.getNombre());
         }
         JComboBox<String> pokemonComboBox = new JComboBox<>(nombres.toArray(new String[0]));
-        pokemonComboBox.setFont(new Font("Arial", Font.PLAIN, 16));
+        pokemonComboBox.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
         JButton equipoButton = new JButton("Mover desde equipo");
         JButton pcButton = new JButton("Mover desde PC");
 
-        equipoButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        pcButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        equipoButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        pcButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
         moverDialog.add(pokemonComboBox);
         moverDialog.add(equipoButton);
@@ -643,9 +611,7 @@ class prueba extends JFrame {
                 String pokemonNombre = (String) pokemonComboBox.getSelectedItem();
                 try {
                     dejarPokemonEnBD(pokemonNombre);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (IOException ex) {
+                } catch (SQLException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 Pokemon pokemonAnadido = null;
@@ -670,24 +636,24 @@ class prueba extends JFrame {
         Equipo pokemonList = EquipoDAO.getEquipo();
 
         JComboBox<String> pokemonComboBox = new JComboBox<>((ComboBoxModel) pokemonList);
-        pokemonComboBox.setFont(new Font("Arial", Font.PLAIN, 16));
+        pokemonComboBox.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         moverDialog.add(pokemonComboBox);
 
         JLabel objetoLabel = new JLabel("Selecciona el objeto:");
-        objetoLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        objetoLabel.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         moverDialog.add(objetoLabel);
 
         String[] objetos = {"Objeto 1", "Objeto 2"};
         JComboBox<String> objetoComboBox = new JComboBox<>(objetos);
-        objetoComboBox.setFont(new Font("Arial", Font.PLAIN, 16));
+        objetoComboBox.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         moverDialog.add(objetoComboBox);
 
         JButton moverButton = new JButton("Mover");
-        moverButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        moverButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         moverDialog.add(moverButton);
 
         JButton cancelarButton = new JButton("Cancelar");
-        cancelarButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        cancelarButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         moverDialog.add(cancelarButton);
 
         moverButton.addActionListener(new ActionListener() {
@@ -725,15 +691,6 @@ class prueba extends JFrame {
             JOptionPane.showMessageDialog(null, "Error en la base de datos: " + e.getMessage());
             return null;
         }
-    }
-
-    private static String[] obtenerPokemonsDesdeBD() throws SQLException, IOException {
-        ArrayList<Pokemon> equipo = EquipoDAO.getEquipo().getEquipo();
-        String[] listaPokemon = new String[equipo.size()];
-        for (int i = 0; i < equipo.size(); i++) {
-            listaPokemon[i] = equipo.get(i).getNombre();
-        }
-        return listaPokemon;
     }
 
     private static Pokemon obtenerDatosPokemonDesdeBD(String pokemonNombre) throws SQLException, IOException {

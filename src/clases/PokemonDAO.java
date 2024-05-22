@@ -20,6 +20,8 @@ public class PokemonDAO {
     public static ArrayList<Pokemon> seleccionarTodosLosPokemon() throws SQLException, IOException {
         ArrayList<Pokemon> listaPokemon = new ArrayList<>();
         String query = "SELECT * FROM pokemon";
+        Equipo equipo = funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
+        Caja caja = funcionesJSON.leerCajaDeJSON(JSON_CAJA_PATH);
 
         try (Connection conn = getConnection();
              PreparedStatement statement = conn.prepareStatement(query);
@@ -45,41 +47,25 @@ public class PokemonDAO {
                 pokemon.setEstaEnCaja(resultSet.getBoolean("EstaEnCaja"));
                 listaPokemon.add(pokemon);
 
-                if (EquipoDAO.estaEnEquipo(pokemon)) {
-                    Equipo equipo = funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
-                    boolean idRepetido = false;
-                    for (Pokemon pok : equipo.getEquipo()) {
-                        if (pok.getID() == pokemon.getID()) {
-                            idRepetido = true;
-                        } else {
-                            idRepetido = false;
-                        }
-                    }
-
-                    if (!idRepetido) {
-                        if (equipo.getEquipo().size() < 6) {
-                            equipo.getEquipo().add(pokemon);
-                            funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "No se puede añadir más Pokémon. El equipo está lleno.");
-                        }
+                if (pokemon.isEstaEnEquipo() && !equipo.getEquipo().contains(pokemon)) {
+                    if (equipo.getEquipo().size() < 6) {
+                        equipo.getEquipo().add(pokemon);
                     } else {
-                        JOptionPane.showMessageDialog(null, "El Pokémon ya estás en el equipo.");
+                        System.out.println("No se puede añadir más Pokémon. El equipo está lleno.");
+                        break;
                     }
-
                 }
 
                 if (CajaDAO.estaEnCaja(pokemon)) {
-                    Caja caja = funcionesJSON.leerCajaDeJSON(JSON_CAJA_PATH);
                     caja.getListaCaja().add(pokemon);
-                    funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
                 }
-
-                funcionesJSON.escribirPokemonAJSON(pokemon, JSON_POKEMON_PATH);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
+        funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
 
         return listaPokemon;
     }

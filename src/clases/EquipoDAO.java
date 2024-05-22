@@ -10,39 +10,10 @@ public class EquipoDAO {
     private static final String JSON_EQUIPO_PATH = "json/equipo.json";
 
     public static Equipo getEquipo() throws IOException, SQLException {
-        if (new File(JSON_EQUIPO_PATH).exists()) {
-            return funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
+        Equipo equipo = funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
+        if (equipo == null) {
+            equipo = new Equipo();
         }
-
-        Equipo equipo = new Equipo();
-        try (Connection conn = conector.conectar();
-             Statement sentencia = conn.createStatement()) {
-            ResultSet rs = sentencia.executeQuery("SELECT * FROM pokemon WHERE estaEnEquipo = 1");
-            while (rs.next()) {
-                Pokemon pokemon = new Pokemon();
-                pokemon.setID(rs.getInt("id"));
-                pokemon.setNombre(rs.getString("nombre"));
-                pokemon.setHabilidad(rs.getString("habilidad"));
-                pokemon.setTipo1(rs.getString("tipo1"));
-                pokemon.setTipo2(rs.getString("tipo2"));
-                pokemon.setNivel(rs.getInt("nivel"));
-                pokemon.setHp(rs.getInt("hp"));
-                pokemon.setAtaque(rs.getInt("ataque"));
-                pokemon.setDefensa(rs.getInt("defensa"));
-                pokemon.setAtaqueEspecial(rs.getInt("ataque_especial"));
-                pokemon.setDefensaEspecial(rs.getInt("defensa_especial"));
-                pokemon.setVelocidad(rs.getInt("velocidad"));
-                pokemon.setMovimiento1(rs.getString("movimiento1"));
-                pokemon.setMovimiento2(rs.getString("movimiento2"));
-                pokemon.setObjeto(rs.getString("objeto"));
-                equipo.getEquipo().add(pokemon);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
-
         return equipo;
     }
 
@@ -54,7 +25,7 @@ public class EquipoDAO {
         funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
 
         for (Pokemon pokemon : equipo.getEquipo()) {
-            String query = "UPDATE pokemon SET estaEnEquipo = true WHERE Id = ?";
+            String query = "UPDATE pokemon SET estaEnEquipo = 1 WHERE Id = ?";
             try (Connection con = conector.conectar(); PreparedStatement sentencia = con.prepareStatement(query)) {
                 sentencia.setInt(1, pokemon.getID());
                 sentencia.setString(2, pokemon.getNombre());
@@ -70,15 +41,19 @@ public class EquipoDAO {
             equipo.getEquipo().add(pokemon);
             guardarEquipo(equipo);
 
-            String query = "UPDATE pokemon SET estaEnEquipo = true AND estaEnCaja = false WHERE Id = ?";
+            String query = "UPDATE pokemon SET estaEnEquipo = 1, estaEnCaja = 0 WHERE Id = ?";
             try (Connection con = conector.conectar();
                  PreparedStatement sentencia = con.prepareStatement(query)) {
-                sentencia.executeQuery();
+                sentencia.setInt(1, pokemon.getID());
+                int filasActualizadas = sentencia.executeUpdate();
+                if (filasActualizadas == 0) {
+                    System.out.println("No se pudo actualizar el estado del Pokémon en la base de datos.");
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("El equipo esta lleno");
+            System.out.println("El equipo está lleno");
         }
     }
 
@@ -87,7 +62,7 @@ public class EquipoDAO {
         equipo.getEquipo().removeIf(p -> p.getID() == pokemon.getID());
         guardarEquipo(equipo);
 
-        String query = "UPDATE pokemon SET estaEnEquipo = false WHERE Id = ?";
+        String query = "UPDATE pokemon SET estaEnEquipo = 0, estaEnCaja = 1 WHERE Id = ?";
         try (Connection con = conector.conectar();
              PreparedStatement sentencia = con.prepareStatement(query)) {
             sentencia.executeQuery();
