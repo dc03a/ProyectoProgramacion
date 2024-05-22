@@ -16,7 +16,7 @@ public class EquipoDAO {
 
     public static Equipo getEquipo() throws IOException, SQLException {
         if (new File(JSON_EQUIPO_PATH).exists()) {
-            return leerEquipoDeJSON(JSON_EQUIPO_PATH);
+            return funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
         }
 
         Equipo equipo = new Equipo();
@@ -80,6 +80,18 @@ public class EquipoDAO {
         // Update the database (optional)
         // You'll need to implement this based on your database schema
     }
+
+    public static boolean estaEnEquipo(String pokemonNombre) throws SQLException, IOException {
+        Equipo equipo = getEquipo();
+
+        for (Pokemon pokemon : equipo.getEquipo()) {
+            if (pokemon.getNombre().equalsIgnoreCase(pokemonNombre)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     // ... other methods for managing the team in the database and JSON files
 }

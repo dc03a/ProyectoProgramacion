@@ -38,7 +38,6 @@ public class PokemonDAO {
     public static Pokemon buscarPokemonPorNombre(String nombre) throws IOException, SQLException {
         Pokemon pokemon = null;
 
-        // Connect to the database
         try (Connection conn = getConnection();
              PreparedStatement sentencia = conn.prepareStatement("SELECT * FROM pokemon WHERE Nombre = ?")) {
             sentencia.setString(1, nombre);
