@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import utilidades.*;
 
+import javax.swing.*;
+
 public class PokemonDAO {
     private static final String JSON_POKEMON_PATH = "json/pokemon.json";
     private static final String JSON_EQUIPO_PATH = "json/equipo.json";
@@ -42,26 +44,41 @@ public class PokemonDAO {
                 pokemon.setEstaEnEquipo(resultSet.getBoolean("EstaEnEquipo"));
                 pokemon.setEstaEnCaja(resultSet.getBoolean("EstaEnCaja"));
                 listaPokemon.add(pokemon);
+
+                if (EquipoDAO.estaEnEquipo(pokemon)) {
+                    Equipo equipo = funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
+                    boolean idRepetido = false;
+                    for (Pokemon pok : equipo.getEquipo()) {
+                        if (pok.getID() == pokemon.getID()) {
+                            idRepetido = true;
+                        } else {
+                            idRepetido = false;
+                        }
+                    }
+
+                    if (!idRepetido) {
+                        if (equipo.getEquipo().size() < 6) {
+                            equipo.getEquipo().add(pokemon);
+                            funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No se puede añadir más Pokémon. El equipo está lleno.");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "El Pokémon ya estás en el equipo.");
+                    }
+
+                }
+
+                if (CajaDAO.estaEnCaja(pokemon)) {
+                    Caja caja = funcionesJSON.leerCajaDeJSON(JSON_CAJA_PATH);
+                    caja.getListaCaja().add(pokemon);
+                    funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
+                }
+
+                funcionesJSON.escribirPokemonAJSON(pokemon, JSON_POKEMON_PATH);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-
-        // Iterar sobre la lista de Pokémon y agregar al equipo o caja según corresponda
-        for (Pokemon pokemon : listaPokemon) {
-            if (EquipoDAO.estaEnEquipo(pokemon)) {
-                Equipo equipo = funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
-                equipo.getEquipo().add(pokemon);
-                funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
-            }
-
-            if (CajaDAO.estaEnCaja(pokemon)) {
-                Caja caja = funcionesJSON.leerCajaDeJSON(JSON_CAJA_PATH);
-                caja.getListaCaja().add(pokemon);
-                funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
-            }
-
-            funcionesJSON.escribirPokemonAJSON(pokemon, JSON_POKEMON_PATH);
         }
 
         return listaPokemon;
@@ -76,21 +93,23 @@ public class PokemonDAO {
             ResultSet rs = sentencia.executeQuery();
             if (rs.next()) {
                 pokemon = new Pokemon();
-                pokemon.setID(rs.getInt("id"));
-                pokemon.setNombre(rs.getString("nombre"));
-                pokemon.setHabilidad(rs.getString("habilidad"));
-                pokemon.setTipo1(rs.getString("tipo1"));
-                pokemon.setTipo2(rs.getString("tipo2"));
-                pokemon.setNivel(rs.getInt("nivel"));
-                pokemon.setHp(rs.getInt("hp"));
-                pokemon.setAtaque(rs.getInt("ataque"));
-                pokemon.setDefensa(rs.getInt("defensa"));
-                pokemon.setAtaqueEspecial(rs.getInt("ataque_especial"));
-                pokemon.setDefensaEspecial(rs.getInt("defensa_especial"));
-                pokemon.setVelocidad(rs.getInt("velocidad"));
-                pokemon.setMovimiento1(rs.getString("movimiento1"));
-                pokemon.setMovimiento2(rs.getString("movimiento2"));
-                pokemon.setObjeto(rs.getString("objeto"));
+                pokemon.setID(rs.getInt("Id"));
+                pokemon.setNombre(rs.getString("Nombre"));
+                pokemon.setHabilidad(rs.getString("Habilidad"));
+                pokemon.setTipo1(rs.getString("Tipo1"));
+                pokemon.setTipo2(rs.getString("Tipo2"));
+                pokemon.setNivel(rs.getInt("Nivel"));
+                pokemon.setHp(rs.getInt("Hp"));
+                pokemon.setAtaque(rs.getInt("Ataque"));
+                pokemon.setDefensa(rs.getInt("Defensa"));
+                pokemon.setAtaqueEspecial(rs.getInt("AtaqueEspecial"));
+                pokemon.setDefensaEspecial(rs.getInt("DefensaEspecial"));
+                pokemon.setVelocidad(rs.getInt("Velocidad"));
+                pokemon.setMovimiento1(rs.getString("Movimiento1"));
+                pokemon.setMovimiento2(rs.getString("Movimiento2"));
+                pokemon.setObjeto(rs.getString("Objeto"));
+                pokemon.setEstaEnCaja(rs.getBoolean("estaEnCaja"));
+                pokemon.setEstaEnEquipo(rs.getBoolean("estaEnEquipo"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

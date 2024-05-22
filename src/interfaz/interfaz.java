@@ -131,11 +131,23 @@ class prueba extends JFrame {
     private static void cargarPokemons() {
         try {
             ArrayList<Pokemon> pokemons = PokemonDAO.seleccionarTodosLosPokemon();
+            Equipo equipo = funcionesJSON.leerEquipoDeJSON("json/equipo.json");
+
             for (Pokemon pokemon : pokemons) {
+                if (pokemon.isEstaEnEquipo()) {
+                    if (equipo.getEquipo().size() < 6 && !equipo.equipo.contains(pokemon)) {
+                        equipo.getEquipo().add(pokemon);
+                    } else if (equipo.getEquipo().size() >= 6) {
+                        JOptionPane.showMessageDialog(null, "No se puede añadir más Pokémon. El equipo está lleno.");
+                        break;
+                    }
+                }
                 System.out.println(pokemon);
             }
+            funcionesJSON.escribirEquipoAJSON(equipo, "json/equipo.json");
         } catch (SQLException | IOException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar los equipos");
         }
     }
 
