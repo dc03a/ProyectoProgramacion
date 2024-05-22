@@ -67,13 +67,14 @@ public class PokemonDAO {
     }
 
     public static Pokemon buscarPokemonPorNombre(String nombre) throws IOException, SQLException {
-        Pokemon pokemon = new Pokemon();
+        Pokemon pokemon = null;
 
         try (Connection con = credenciales.conectar();
-             PreparedStatement sentencia = con.prepareStatement("SELECT * FROM pokemon WHERE Nombre = ?")) {
+             PreparedStatement sentencia = con.prepareStatement("SELECT DISTINCT * FROM pokemon WHERE Nombre = ?")) {
             sentencia.setString(1, nombre);
             ResultSet rs = sentencia.executeQuery();
             if (rs.next()) {
+                pokemon = new Pokemon();
                 pokemon.setID(rs.getInt("Id"));
                 pokemon.setNombre(rs.getString("Nombre"));
                 pokemon.setHabilidad(rs.getString("Habilidad"));
