@@ -358,7 +358,8 @@ class PCPokemonGUI extends JFrame {
                         "Defensa: " + pokemonAux.getDefensa() + "\n" +
                         "Velocidad: " + pokemonAux.getVelocidad() + "\n" +
                         "Ataque Especial: " + pokemonAux.getAtaqueEspecial() + "\n" +
-                        "Defensa Especial: " + pokemonAux.getDefensaEspecial());
+                        "Defensa Especial: " + pokemonAux.getDefensaEspecial() + "\n" +
+                        "Apodo: " + pokemonAux.getApodo());
     }
 
 

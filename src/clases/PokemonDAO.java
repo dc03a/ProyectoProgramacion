@@ -39,6 +39,7 @@ public class PokemonDAO {
                 pokemon.setObjeto(resultSet.getString("Objeto"));
                 pokemon.setEstaEnEquipo(resultSet.getBoolean("EstaEnEquipo"));
                 pokemon.setEstaEnCaja(resultSet.getBoolean("EstaEnCaja"));
+                pokemon.setApodo(resultSet.getString("Apodo"));
                 listaPokemon.add(pokemon);
 
                 if (pokemon.isEstaEnEquipo() && !equipo.getEquipo().contains(pokemon)) {
@@ -104,7 +105,7 @@ public class PokemonDAO {
 
     public static void cambiarApodoPokemon(Pokemon pokemon, String nuevoApodo) throws IOException, SQLException {
         try (Connection con = credenciales.conectar();
-             PreparedStatement sentencia = con.prepareStatement("UPDATE pokemon SET Nombre = ? WHERE ID = ?")) {
+             PreparedStatement sentencia = con.prepareStatement("UPDATE pokemon SET Apodo = ? WHERE ID = ?")) {
             sentencia.setString(1, nuevoApodo);
             sentencia.setInt(2, pokemon.getID());
             sentencia.executeUpdate();
@@ -112,7 +113,7 @@ public class PokemonDAO {
             e.printStackTrace();
         }
 
-        pokemon.setNombre(nuevoApodo);
+        pokemon.setApodo(nuevoApodo);
         funcionesJSON.escribirPokemonAJSON(pokemon, JSON_POKEMON_PATH);
     }
 

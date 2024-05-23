@@ -18,6 +18,7 @@ public class Pokemon {
     public String Objeto;
     public boolean estaEnEquipo;
     public boolean estaEnCaja;
+    public String Apodo;
 
     public int getID() {
         return Id;
@@ -131,6 +132,14 @@ public class Pokemon {
         Movimiento2 = movimiento2;
     }
 
+    public String getApodo(){
+        return Apodo;
+    }
+
+    public void setApodo(String newApodo){
+        Apodo = newApodo;
+    }
+
     public String getObjeto() {
         return Objeto;
     }
@@ -181,15 +190,10 @@ public class Pokemon {
                 ", Objeto='" + Objeto + '\'' +
                 ", estaEnEquipo=" + estaEnEquipo +
                 ", estaEnCaja=" + estaEnCaja +
+                ", Apodo=" + Apodo +
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pokemon pokemon = (Pokemon) o;
-        return Id == pokemon.Id;
-    }
+
 
 }

@@ -36,6 +36,7 @@ public class CajaDAO {
                 pokemonAux.setObjeto(rs.getString("Objeto"));
                 pokemonAux.setEstaEnEquipo(rs.getBoolean("EstaEnEquipo"));
                 pokemonAux.setEstaEnCaja(rs.getBoolean("EstaEnCaja"));
+                pokemonAux.setApodo(rs.getString("Apodo"));
                 cajaPok.add(pokemonAux);
             }
         } catch (SQLException e) {

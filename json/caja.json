@@ -792,7 +792,8 @@
       "Movimiento2": "Gruñido",
       "Objeto": "Garra Rápida",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Alfonso"
     }
   ]
 }
