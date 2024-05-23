@@ -24,8 +24,24 @@ public class CajaDAO {
              PreparedStatement sentencia = con.prepareStatement(sql);
              ResultSet rs = sentencia.executeQuery(sql);) {
             while (rs.next()) {
-                Pokemon pokemonAux = new Pokemon(rs.getInt("Id"), rs.getString("Nombre"));
+                Pokemon pokemonAux = new Pokemon();
+                pokemonAux.setID(rs.getInt("ID"));
                 pokemonAux.setNombre(rs.getString("Nombre"));
+                pokemonAux.setHabilidad(rs.getString("Habilidad"));
+                pokemonAux.setTipo1(rs.getString("Tipo1"));
+                pokemonAux.setTipo2(rs.getString("Tipo2"));
+                pokemonAux.setNivel(rs.getInt("Nivel"));
+                pokemonAux.setHp(rs.getInt("Hp"));
+                pokemonAux.setAtaque(rs.getInt("Ataque"));
+                pokemonAux.setDefensa(rs.getInt("Defensa"));
+                pokemonAux.setAtaqueEspecial(rs.getInt("AtaqueEspecial"));
+                pokemonAux.setDefensaEspecial(rs.getInt("DefensaEspecial"));
+                pokemonAux.setVelocidad(rs.getInt("Velocidad"));
+                pokemonAux.setMovimiento1(rs.getString("Movimiento1"));
+                pokemonAux.setMovimiento2(rs.getString("Movimiento2"));
+                pokemonAux.setObjeto(rs.getString("Objeto"));
+                pokemonAux.setEstaEnEquipo(rs.getBoolean("EstaEnEquipo"));
+                pokemonAux.setEstaEnCaja(rs.getBoolean("EstaEnCaja"));
                 cajaPok.add(pokemonAux);
             }
         } catch (SQLException e) {
