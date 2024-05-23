@@ -84,7 +84,6 @@ public class CajaDAO {
             throw new IllegalArgumentException("El Pokémon con el nombre " + pokemonNombre + " no está en la caja.");
         }
 
-        funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
 
         String query = "UPDATE pokemon SET estaEnCaja = 0, estaEnEquipo = 1 WHERE NOMBRE = ?";
         try (Connection con = credenciales.conectar();
@@ -94,6 +93,7 @@ public class CajaDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
     }
 
     public static Pokemon obtenerPokemonDeCaja(String pokemonNombre) throws IOException {
@@ -120,6 +120,14 @@ public class CajaDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        Caja caja = funcionesJSON.leerCajaDeJSON(JSON_CAJA_PATH);
+
+        ArrayList<Pokemon> listaCaja = getCaja().getListaCaja();
+        listaCaja.removeIf(p -> p.getNombre().equalsIgnoreCase(pokemon.getNombre()));
+        caja.setListaCaja(listaCaja);
+
+        funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
     }
 
     private static boolean seEncuentraestaEnCaja(String pokemonNombre) {
@@ -148,5 +156,13 @@ public class CajaDAO {
         Caja caja = new Caja();
         caja.setListaCaja(lista);
         funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
+    }
+
+    public static Caja getCaja () throws IOException {
+        Caja caja = funcionesJSON.leerCajaDeJSON(JSON_CAJA_PATH);
+        if (caja != null) {
+            System.out.println("La caja se va a devolver vacía.");
+        }
+        return caja;
     }
 }

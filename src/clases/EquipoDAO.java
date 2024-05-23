@@ -28,19 +28,6 @@ public class EquipoDAO {
         return lista.size() == 6;
     }
 
-    public static void guardarEquipo(Equipo equipo) throws IOException {
-        funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
-
-        for (Pokemon pokemon : equipo.getEquipo()) {
-            String query = "UPDATE pokemon SET estaEnEquipo = 1 WHERE Id = ?";
-            try (Connection con = credenciales.conectar(); PreparedStatement sentencia = con.prepareStatement(query)) {
-                sentencia.setInt(1, pokemon.getID());
-                sentencia.setString(2, pokemon.getNombre());
-            } catch (SQLException e) {
-                    e.printStackTrace();
-            }
-        }
-    }
 
     public static ArrayList<String> getNombresPokemons(Equipo equipo) {
         ArrayList<String> nombres = new ArrayList<>();
@@ -54,7 +41,7 @@ public class EquipoDAO {
         Equipo equipo = getEquipo();
         if (equipoLleno(equipo.getEquipo())) {
             equipo.getEquipo().add(pokemon);
-            guardarEquipo(equipo);
+            funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
 
             String query = "UPDATE pokemon SET estaEnEquipo = 1, estaEnCaja = 0 WHERE Id = ?";
             try (Connection con = credenciales.conectar();
@@ -84,7 +71,7 @@ public class EquipoDAO {
             }
         }
 
-        guardarEquipo(equipo);
+        funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
 
         String query = "UPDATE pokemon SET estaEnEquipo = 0, estaEnCaja = 1 WHERE Id = ?";
         try (Connection con = credenciales.conectar();
