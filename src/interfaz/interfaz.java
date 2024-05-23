@@ -272,7 +272,7 @@ class PCPokemonGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    mostrarDatos(opcionesDialog, pokemon.getNombre());
+                    mostrarDatos(opcionesDialog, pokemon);
                 } catch (SQLException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -307,19 +307,19 @@ class PCPokemonGUI extends JFrame {
         opcionesDialog.setVisible(true);
     }
 
-    private static void mostrarDatos(JDialog parentDialog, String pokemonNombre) throws SQLException, IOException {
-        Pokemon pokemon = obtenerDatosPokemonDesdeBD(pokemonNombre);
+    private static void mostrarDatos(JDialog parentDialog, Pokemon pokemon) throws SQLException, IOException {
+        Pokemon pokemonAux = PokemonDAO.buscarPokemonPorNombre(pokemon.getNombre());
         JOptionPane.showMessageDialog(parentDialog,
-                "Nombre: " + pokemonNombre + "\n" +
-                        "Nivel: " + pokemon.getNivel() + "\n" +
-                        "Habilidad: " + pokemon.getHabilidad() + "\n" +
-                        "Objeto: " + pokemon.getObjeto() + "\n" +
-                        "PS: " + pokemon.getHp() + "\n" +
-                        "Ataque: " + pokemon.getAtaque() + "\n" +
-                        "Defensa: " + pokemon.getDefensa() + "\n" +
-                        "Velocidad: " + pokemon.getVelocidad() + "\n" +
-                        "Ataque Especial: " + pokemon.getAtaqueEspecial() + "\n" +
-                        "Defensa Especial: " + pokemon.getDefensaEspecial());
+                "Nombre: " + pokemonAux.getNombre() + "\n" +
+                        "Nivel: " + pokemonAux.getNivel() + "\n" +
+                        "Habilidad: " + pokemonAux.getHabilidad() + "\n" +
+                        "Objeto: " + pokemonAux.getObjeto() + "\n" +
+                        "PS: " + pokemonAux.getHp() + "\n" +
+                        "Ataque: " + pokemonAux.getAtaque() + "\n" +
+                        "Defensa: " + pokemonAux.getDefensa() + "\n" +
+                        "Velocidad: " + pokemonAux.getVelocidad() + "\n" +
+                        "Ataque Especial: " + pokemonAux.getAtaqueEspecial() + "\n" +
+                        "Defensa Especial: " + pokemonAux.getDefensaEspecial());
     }
 
     private static void mostrarObjeto(JDialog parentDialog, Pokemon pokemon) {
@@ -342,13 +342,11 @@ class PCPokemonGUI extends JFrame {
         cajasDialog.setLayout(new GridLayout(5, 10, 5, 5));
         cajasDialog.setLocationRelativeTo(null);
 
-        CajaDAO caja = new CajaDAO();
         ArrayList<Pokemon> pokemonsEnCaja = CajaDAO.listaPokemon();
 
         for (Pokemon pokemon : pokemonsEnCaja) {
             JButton pokemonButton = new JButton(pokemon.getNombre());
             pokemonButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 12));
-            //Cargar imagen
             String imgPokemonPath = "pokemonImagenes/" + pokemon.getNombre().toLowerCase() + ".png";
             ImageIcon imgPokemon = new ImageIcon(imgPokemonPath);
             Image scaledImage = imgPokemon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
@@ -359,7 +357,7 @@ class PCPokemonGUI extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        mostrarOpcionesPC(cajasDialog, pokemon.getNombre());
+                        mostrarOpcionesPC(cajasDialog, pokemon);
                     } catch (SQLException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -370,56 +368,39 @@ class PCPokemonGUI extends JFrame {
         cajasDialog.setVisible(true);
     }
 
-    private static void mostrarOpcionesPC(JDialog parentDialog, String pokemonNombre) throws SQLException, IOException {
-        ArrayList<Pokemon> listaEquipo = EquipoDAO.getEquipo().getEquipo();
-        JDialog opcionesDialog = new JDialog(parentDialog, pokemonNombre, true);
+    private static void mostrarOpcionesPC(JDialog parentDialog, Pokemon pokemon) throws SQLException, IOException {
+        JDialog opcionesDialog = new JDialog(parentDialog, pokemon.getNombre(), true);
         opcionesDialog.setSize(500, 400);
         opcionesDialog.setLayout(new GridLayout(5, 1, 10, 10));
         opcionesDialog.setLocationRelativeTo(null);
 
-        JButton sacarButton = new JButton("Sacar");
+        JButton depositarButton = new JButton("Depositar en la Caja");
         JButton datosButton = new JButton("Datos");
         JButton cambiarApodoButton = new JButton("Cambiar Apodo");
         JButton liberarButton = new JButton("Liberar");
         JButton salirButton = new JButton("Salir");
 
-        sacarButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        depositarButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         datosButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         cambiarApodoButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         liberarButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         salirButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
-        opcionesDialog.add(sacarButton);
+        opcionesDialog.add(depositarButton);
         opcionesDialog.add(datosButton);
         opcionesDialog.add(cambiarApodoButton);
         opcionesDialog.add(liberarButton);
         opcionesDialog.add(salirButton);
 
-        sacarButton.addActionListener(new ActionListener() {
+        depositarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!EquipoDAO.equipoLleno(listaEquipo)) {
-                    Pokemon pokemonASacar = null;
-                    for (Pokemon pokemon : listaEquipo) {
-                        if (pokemon.getNombre().equals(pokemonNombre)) {
-                            pokemonASacar = pokemon;
-                            break;
-                        }
-                    }
-
-                    if (pokemonASacar != null) {
-                        try {
-                            sacarPokemonDeBD(pokemonASacar);
-                        } catch (SQLException | IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                        opcionesDialog.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(opcionesDialog, pokemonNombre + " no está en el equipo.");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(opcionesDialog, "El equipo está lleno.");
+                try {
+                    dejarPokemonEnBD(pokemon);
+                } catch (SQLException | IOException ex) {
+                    throw new RuntimeException(ex);
                 }
+                opcionesDialog.dispose();
             }
         });
 
@@ -427,7 +408,7 @@ class PCPokemonGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    mostrarDatos(opcionesDialog, pokemonNombre);
+                    mostrarDatos(opcionesDialog, pokemon);
                 } catch (SQLException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -439,24 +420,12 @@ class PCPokemonGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String nuevoNombre = JOptionPane.showInputDialog(opcionesDialog, "Introduce el nuevo nombre:");
                 if (nuevoNombre != null && !nuevoNombre.trim().isEmpty()) {
-                    Pokemon pokemonACambiar = null;
-                    for (Pokemon pokemon : listaEquipo) {
-                        if (pokemon.getNombre().equals(pokemonNombre)) {
-                            pokemonACambiar = pokemon;
-                            break;
-                        }
+                    try {
+                        cambiarApodoEnBD(pokemon, nuevoNombre);
+                    } catch (SQLException | IOException ex) {
+                        throw new RuntimeException(ex);
                     }
-
-                    if (pokemonACambiar != null) {
-                        try {
-                            cambiarApodoEnBD(pokemonACambiar, nuevoNombre);
-                        } catch (SQLException | IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                        opcionesDialog.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(opcionesDialog, pokemonNombre + " no está en el equipo.");
-                    }
+                    opcionesDialog.dispose();
                 }
             }
         });
@@ -464,17 +433,14 @@ class PCPokemonGUI extends JFrame {
         liberarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int confirm = JOptionPane.showConfirmDialog(opcionesDialog, "¿Estás seguro de liberar " + pokemonNombre + "?", "Confirmar", JOptionPane.YES_NO_OPTION);
+                int confirm = JOptionPane.showConfirmDialog(opcionesDialog, "¿Estás seguro de liberar " + pokemon.getNombre() + "?", "Confirmar", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
                     try {
-                        if (liberarPokemonDeBD(pokemonNombre)) {
-                            opcionesDialog.dispose();
-                        } else {
-                            JOptionPane.showMessageDialog(opcionesDialog, "Error al liberar el Pokémon.");
-                        }
+                        liberarPokemonDeBD(pokemon);
                     } catch (SQLException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
+                    opcionesDialog.dispose();
                 }
             }
         });
@@ -506,7 +472,7 @@ class PCPokemonGUI extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        mostrarOpcionesDejar(dejarDialog, String.valueOf(pokemonNombre));
+                        mostrarOpcionesDejar(dejarDialog, pokemonNombre);
                     } catch (SQLException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -517,9 +483,8 @@ class PCPokemonGUI extends JFrame {
         dejarDialog.setVisible(true);
     }
 
-    private static void mostrarOpcionesDejar(JDialog parentDialog, String pokemonNombre) throws SQLException, IOException {
-        ArrayList<Pokemon> listaEquipo = EquipoDAO.getEquipo().getEquipo();
-        JDialog opcionesDialog = new JDialog(parentDialog, pokemonNombre, true);
+    private static void mostrarOpcionesDejar(JDialog parentDialog, Pokemon pokemon) throws SQLException, IOException {
+        JDialog opcionesDialog = new JDialog(parentDialog, pokemon.getNombre(), true);
         opcionesDialog.setSize(500, 400);
         opcionesDialog.setLayout(new GridLayout(5, 1, 10, 10));
         opcionesDialog.setLocationRelativeTo(null);
@@ -546,7 +511,7 @@ class PCPokemonGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    dejarPokemonEnBD(pokemonNombre);
+                    dejarPokemonEnBD(pokemon);
                 } catch (SQLException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -558,7 +523,7 @@ class PCPokemonGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    mostrarDatos(opcionesDialog, pokemonNombre);
+                    mostrarDatos(opcionesDialog, pokemon);
                 } catch (SQLException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -570,24 +535,12 @@ class PCPokemonGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String nuevoNombre = JOptionPane.showInputDialog(opcionesDialog, "Introduce el nuevo nombre:");
                 if (nuevoNombre != null && !nuevoNombre.trim().isEmpty()) {
-                    Pokemon pokemonACambiar = null;
-                    for (Pokemon pokemon : listaEquipo) {
-                        if (pokemon.getNombre().equals(pokemonNombre)) {
-                            pokemonACambiar = pokemon;
-                            break;
-                        }
+                    try {
+                        cambiarApodoEnBD(pokemon, nuevoNombre); // Pasar el objeto Pokemon directamente
+                    } catch (SQLException | IOException ex) {
+                        throw new RuntimeException(ex);
                     }
-
-                    if (pokemonACambiar != null) {
-                        try {
-                            cambiarApodoEnBD(pokemonACambiar, nuevoNombre);
-                        } catch (SQLException | IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                        opcionesDialog.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(opcionesDialog, pokemonNombre + " no está en el equipo.");
-                    }
+                    opcionesDialog.dispose();
                 }
             }
         });
@@ -595,10 +548,10 @@ class PCPokemonGUI extends JFrame {
         liberarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int confirm = JOptionPane.showConfirmDialog(opcionesDialog, "¿Estás seguro de liberar " + pokemonNombre + "?", "Confirmar", JOptionPane.YES_NO_OPTION);
+                int confirm = JOptionPane.showConfirmDialog(opcionesDialog, "¿Estás seguro de liberar " + pokemon.getNombre() + "?", "Confirmar", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
                     try {
-                        liberarPokemonDeBD(pokemonNombre);
+                        liberarPokemonDeBD(pokemon);
                     } catch (SQLException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -624,11 +577,7 @@ class PCPokemonGUI extends JFrame {
         moverDialog.setLocationRelativeTo(null);
 
         ArrayList<Pokemon> listaEquipo = EquipoDAO.getEquipo().getEquipo();
-        ArrayList<String> nombres = new ArrayList<>();
-        for (Pokemon pokemon : listaEquipo) {
-            nombres.add(pokemon.getNombre());
-        }
-        JComboBox<String> pokemonComboBox = new JComboBox<>(nombres.toArray(new String[0]));
+        JComboBox<Pokemon> pokemonComboBox = new JComboBox<>(listaEquipo.toArray(new Pokemon[0]));
         pokemonComboBox.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
         JButton equipoButton = new JButton("Mover desde equipo");
@@ -644,27 +593,17 @@ class PCPokemonGUI extends JFrame {
         equipoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String pokemonNombre = (String) pokemonComboBox.getSelectedItem();
-
-                Pokemon pokemonASacar = null;
-                for (Pokemon pokemon : listaEquipo) {
-                    if (pokemon.getNombre().equals(pokemonNombre)) {
-                        pokemonASacar = pokemon;
-                        break;
-                    }
-                }
-
+                Pokemon pokemonASacar = (Pokemon) pokemonComboBox.getSelectedItem();
                 if (pokemonASacar != null) {
                     try {
                         sacarPokemonDeBD(pokemonASacar);
                         listaEquipo.remove(pokemonASacar);
-                        listaEquipo.remove(pokemonASacar.getNombre());
-                        pokemonComboBox.setModel(new DefaultComboBoxModel<>(listaEquipo.toArray(new String[0])));
+                        pokemonComboBox.setModel(new DefaultComboBoxModel<>(listaEquipo.toArray(new Pokemon[0])));
                     } catch (SQLException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(moverDialog, "Error: Pokémon no encontrado.");
+                    JOptionPane.showMessageDialog(moverDialog, "Error: Pokémon no seleccionado.");
                 }
             }
         });
@@ -672,89 +611,79 @@ class PCPokemonGUI extends JFrame {
         pcButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String pokemonNombre = (String) pokemonComboBox.getSelectedItem();
-                try {
-                    dejarPokemonEnBD(pokemonNombre);
-                } catch (SQLException | IOException ex) {
-                    throw new RuntimeException(ex);
+                Pokemon pokemonSeleccionado = (Pokemon) pokemonComboBox.getSelectedItem();
+                if (pokemonSeleccionado != null) {
+                    try {
+                        dejarPokemonEnBD(pokemonSeleccionado);
+                        Pokemon pokemonAnadido = CajaDAO.obtenerPokemonDeCaja(pokemonSeleccionado.getNombre());
+                        listaEquipo.add(pokemonAnadido);
+                        pokemonComboBox.setModel(new DefaultComboBoxModel<>(listaEquipo.toArray(new Pokemon[0])));
+                    } catch (SQLException | IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(moverDialog, "Error: Pokémon no seleccionado.");
                 }
-                Pokemon pokemonAnadido;
-                try {
-                    pokemonAnadido = CajaDAO.obtenerPokemonDeCaja(pokemonNombre);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                listaEquipo.add(pokemonAnadido);
-                listaEquipo.add(pokemonAnadido);
-                pokemonComboBox.setModel(new DefaultComboBoxModel<>(listaEquipo.toArray(new String[0])));
             }
         });
+
         moverDialog.setVisible(true);
     }
 
     private static void moverObjetos(JFrame parentFrame) throws SQLException, IOException {
-        JDialog moverDialog = new JDialog(parentFrame, "Mover Objetos", true);
-        moverDialog.setSize(700, 500);
-        moverDialog.setLayout(new GridLayout(3, 2, 10, 10));
+        JDialog moverDialog = new JDialog(parentFrame, "Mover Pokémon", true);
+        moverDialog.setSize(800, 500);
+        moverDialog.setLayout(new GridLayout(3, 1, 10, 10));
         moverDialog.setLocationRelativeTo(null);
 
-        Equipo equipo = EquipoDAO.getEquipo();
-        ArrayList<String> nombresPokemons = EquipoDAO.getNombresPokemons(equipo);
-        JComboBox<String> pokemonComboBox = new JComboBox<>(nombresPokemons.toArray(new String[0]));
+        ArrayList<Pokemon> listaEquipo = EquipoDAO.getEquipo().getEquipo();
+        JComboBox<Pokemon> pokemonComboBox = new JComboBox<>(listaEquipo.toArray(new Pokemon[0]));
+        pokemonComboBox.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
-        JLabel objetoLabel = new JLabel("Selecciona el objeto:");
-        objetoLabel.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
-        moverDialog.add(objetoLabel);
+        JButton equipoButton = new JButton("Mover desde equipo");
+        JButton pcButton = new JButton("Mover desde PC");
 
-        ArrayList<String> objetos = new ArrayList<>();
-        try {
-            objetos = PokemonDAO.obtenerObjetosDisponiblesDesdeBD();
-        } catch (SQLException | IOException ex) {
-            JOptionPane.showMessageDialog(moverDialog, "Error al obtener los objetos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        JComboBox<String> objetoComboBox = new JComboBox<>(objetos.toArray(new String[0]));
-        objetoComboBox.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
-        moverDialog.add(objetoComboBox);
+        equipoButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        pcButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
-        JButton moverButton = new JButton("Mover");
-        moverButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
-        moverDialog.add(moverButton);
+        moverDialog.add(pokemonComboBox);
+        moverDialog.add(equipoButton);
+        moverDialog.add(pcButton);
 
-        JButton cancelarButton = new JButton("Cancelar");
-        cancelarButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
-        moverDialog.add(cancelarButton);
-
-        moverButton.addActionListener(new ActionListener() {
+        equipoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String pokemonNombre = (String) pokemonComboBox.getSelectedItem();
-                String objeto = (String) objetoComboBox.getSelectedItem();
-
-                try {
-                    Pokemon pokemon = PokemonDAO.buscarPokemonPorNombre(pokemonNombre);
-                    String objetoActual = PokemonDAO.devolverObjetoPokemon(pokemon);
-
-                    if (objetoActual != null) {
-                        PokemonDAO.cambiarObjetoPokemon(pokemon, objeto);
-                        JOptionPane.showMessageDialog(moverDialog, "Objeto intercambiado con éxito.");
-                    } else {
-                        PokemonDAO.asignarObjetoPokemon(pokemon, objeto);
-                        JOptionPane.showMessageDialog(moverDialog, "Objeto asignado con éxito.");
+                Pokemon pokemonASacar = (Pokemon) pokemonComboBox.getSelectedItem();
+                if (pokemonASacar != null) {
+                    try {
+                        sacarPokemonDeBD(pokemonASacar);
+                        listaEquipo.remove(pokemonASacar);
+                        pokemonComboBox.setModel(new DefaultComboBoxModel<>(listaEquipo.toArray(new Pokemon[0])));
+                    } catch (SQLException | IOException ex) {
+                        throw new RuntimeException(ex);
                     }
-
-                    EquipoDAO.guardarEquipo(equipo);
-                } catch (SQLException | IOException ex) {
-                    JOptionPane.showMessageDialog(moverDialog, "Error al mover el objeto: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(moverDialog, "Error: Pokémon no seleccionado.");
                 }
-
-                moverDialog.dispose();
             }
         });
 
-        cancelarButton.addActionListener(new ActionListener() {
+        pcButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                moverDialog.dispose();
+                Pokemon pokemonSeleccionado = (Pokemon) pokemonComboBox.getSelectedItem();
+                if (pokemonSeleccionado != null) {
+                    try {
+                        dejarPokemonEnBD(pokemonSeleccionado);
+                        Pokemon pokemonAnadido = CajaDAO.obtenerPokemonDeCaja(pokemonSeleccionado.getNombre());
+                        listaEquipo.add(pokemonAnadido);
+                        pokemonComboBox.setModel(new DefaultComboBoxModel<>(listaEquipo.toArray(new Pokemon[0])));
+                    } catch (SQLException | IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(moverDialog, "Error: Pokémon no seleccionado.");
+                }
             }
         });
 
@@ -781,16 +710,30 @@ class PCPokemonGUI extends JFrame {
 
     }
 
-    private static void dejarPokemonEnBD(String pokemonNombre) throws SQLException, IOException {
-        EquipoDAO.quitarPokemon(PokemonDAO.buscarPokemonPorNombre(pokemonNombre));
+    private static void dejarPokemonEnBD(Pokemon pokemon) throws SQLException, IOException {
+        try {
+            Equipo equipo = EquipoDAO.getEquipo();
+
+            if (pokemon != null) {
+                EquipoDAO.quitarPokemon(pokemon);
+                EquipoDAO.guardarEquipo(equipo);
+
+                JOptionPane.showMessageDialog(null, pokemon.getNombre() + "ha sido transferido correctamente a la caja");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se ha encontrado ningún Pokémon con el nombre en el equipo");
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al intentar transferir el Pokémon: pokemonNombre");
+        }
     }
 
     private static void cambiarApodoEnBD(Pokemon pokemon, String nuevoNombre) throws SQLException, IOException {
         PokemonDAO.cambiarApodoPokemon(pokemon, nuevoNombre);
     }
 
-    private static boolean liberarPokemonDeBD(String pokemonNombre) throws SQLException, IOException {
-        CajaDAO.liberarPokemon(pokemonNombre);
+    private static boolean liberarPokemonDeBD(Pokemon pokemon) throws SQLException, IOException {
+        CajaDAO.liberarPokemon(pokemon);
         return true;
     }
 

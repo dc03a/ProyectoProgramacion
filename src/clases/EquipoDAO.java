@@ -3,6 +3,7 @@ package clases;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import utilidades.*;
 
@@ -51,7 +52,7 @@ public class EquipoDAO {
     }
 
     public static void agregarPokemon(Pokemon pokemon) throws IOException, SQLException {
-        Equipo equipo = getEquipo();
+        Equipo equipo = funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
         if (!equipoLleno(equipo.getEquipo())) {
             equipo.getEquipo().add(pokemon);
             guardarEquipo(equipo);
@@ -75,6 +76,13 @@ public class EquipoDAO {
     public static void quitarPokemon(Pokemon pokemon) throws IOException, SQLException {
         Equipo equipo = funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
         ArrayList<Pokemon> listaPokemons = equipo.getEquipo();
+        equipo.setEquipo(listaPokemons);
+
+        if (equipo == null || equipo.getEquipo() == null) {
+            System.out.println("EL EQUIPO ES NULO");
+            return;
+        }
+
 
         for (int i = 0; i < listaPokemons.size(); i++) {
             Pokemon p = listaPokemons.get(i);
@@ -97,6 +105,8 @@ public class EquipoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        CajaDAO.meterPokemonACaja(pokemon.getNombre());
     }
 
     public static boolean estaEnEquipo(Pokemon pokemon) throws IOException {

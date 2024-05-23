@@ -91,15 +91,15 @@ public class CajaDAO {
         return null;
     }
 
-    public static void liberarPokemon(String nombrePokemon) throws SQLException, IOException {
-        if (!seEncuentraestaEnCaja(nombrePokemon)) {
+    public static void liberarPokemon(Pokemon pokemon) throws SQLException, IOException {
+        if (!seEncuentraestaEnCaja(pokemon.getNombre())) {
             System.out.println("El Pokémon no está en la caja. No se puede liberar desde aquí.");
             return;
         }
 
         String query = "UPDATE pokemon SET estaEnEquipo = 0, estaEnCaja = 0 WHERE NOMBRE = ?";
         try (Connection con = credenciales.conectar(); PreparedStatement sentencia = con.prepareStatement(query)) {
-            sentencia.setString(1, nombrePokemon);
+            sentencia.setString(1, pokemon.getNombre());
             sentencia.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
