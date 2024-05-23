@@ -3,17 +3,29 @@ package clases;
 import java.util.ArrayList;
 
 public class Equipo {
-    public int ID_POKEMON;
-    public Objetos objeto;
-    public ArrayList<Pokemon> EquipoPokemon;
+    public ArrayList<Pokemon> equipo;
+    public String Nombre;
 
-    public Equipo(){
-        EquipoPokemon = new ArrayList<>();
+    public ArrayList<Pokemon> getEquipo() {
+        return equipo;
     }
 
-    public Equipo(int id, Objetos obj) {
-        this.ID_POKEMON = id;
-        this.objeto = obj;
-        this.EquipoPokemon = new ArrayList<>(6);
+    public void setEquipo(ArrayList<Pokemon> equipo) {
+        this.equipo = equipo;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Equipo: [");
+        for (Pokemon pokemon : equipo) {
+            builder.append(pokemon.toString());
+            builder.append(", ");
+        }
+        if (!equipo.isEmpty()) {
+            builder.setLength(builder.length() - 2);
+        }
+        builder.append("]");
+        return builder.toString();
     }
 }

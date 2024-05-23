@@ -1,248 +1,199 @@
 package clases;
 
-import java.sql.*;
-
-public class Pokemon{
-    String url= "jdbc:mysql://localhost:3306/proyectoprogramacion";
-    String usuario="root";
-    String password = "7645";
-
-    public int ID;
-    public int num_pokedex;
+public class Pokemon {
+    public int Id;
     public String Nombre;
-    public String habilidad;
-    public int nivel;
-    public String tipo1;
-    public String tipo2;
-    public String objeto;
-    public int HP;
-    public int ataque;
-    public int defensa;
-    public int ataqueEspecial;
-    public int defensaEspecial;
-    public int velocidad;
-    public String mov1;
-    public String mov2;
-    public int id_Caja;
+    public String Habilidad;
+    public String Tipo1;
+    public String Tipo2;
+    public int Nivel = 50;
+    public int Hp;
+    public int Ataque;
+    public int Defensa;
+    public int AtaqueEspecial;
+    public int DefensaEspecial;
+    public int Velocidad;
+    public String Movimiento1;
+    public String Movimiento2;
+    public String Objeto;
     public boolean estaEnEquipo;
-    public int id_habilibidad;
-    public int id_mov1;
-    public int id_mov2;
-    public int id_objeto;
+    public boolean estaEnCaja;
+    public String Apodo;
 
-    public Pokemon(){
+    public int getID() {
+        return Id;
     }
 
-    public Pokemon(int id){
-
-        this.ID = id;
-    }
-
-    public Pokemon(int num_pokedex, String nombre, String habilidad, int nivel, String tipo1, String tipo2,
-                   int HP, int ataque, int defensa, int ataqueEspecial, int defensaEspecial, int velocidad,
-                   String objeto){
-        setNum_pokedex(num_pokedex);
-        setNombre(nombre);
-        setHabilidad(habilidad);
-        setNivel(nivel);
-        setTipo1(tipo1);
-        setTipo2(tipo2);
-        setHP(HP);
-        setAtaque(ataque);
-        setDefensa(defensa);
-        setAtaqueEspecial(ataqueEspecial);
-        setDefensaEspecial(defensaEspecial);
-        setVelocidad(velocidad);
-        setObjeto(objeto);
-    }
-    public boolean isEstaEnEquipo() {
-        return estaEnEquipo;
-    }
-
-    public int getId_Caja() {
-        return id_Caja;
-    }
-
-    public String getMov2() {
-        return mov2;
-    }
-
-    public void setMov2(String mov2) {
-        this.mov2 = mov2;
-
-    }
-
-    public String getMov1() {
-        return mov1;
-    }
-
-    public void setMov1(String mov1) {
-        this.mov1 = mov1;
-    }
-
-    public int getVelocidad() {
-        return velocidad;
-    }
-
-    public int getDefensaEspecial() {
-        return defensaEspecial;
-    }
-
-    public int getAtaqueEspecial() {
-        return ataqueEspecial;
-    }
-
-    public int getDefensa() {
-        return defensa;
-    }
-
-    public int getAtaque() {
-        return ataque;
-    }
-
-    public int getHP() {
-        return HP;
-    }
-
-    public String getObjeto() {
-        return objeto;
-    }
-
-    public String getTipo2() {
-        return tipo2;
-    }
-
-    public String getTipo1() {
-        return tipo1;
-    }
-
-    public int getNivel() {
-        return nivel;
-    }
-
-    public String getHabilidad() {
-        return habilidad;
+    public void setID(int ID) {
+        this.Id = ID;
     }
 
     public String getNombre() {
         return Nombre;
     }
 
-    public int getNum_pokedex() {
-        return num_pokedex;
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    /* aqui estan todos los setters usados en CajaDao */
-
-    public void setNumPokedex(int numPokedex) {
-        this.num_pokedex = numPokedex;
-    }
-
-    public void setId_habilibidad(int hab){
-        this.id_habilibidad = hab;
-    }
-
-    public void setId_mov1(int mov1){
-        this.id_mov1 = mov1;
-    }
-
-    public void setDefensa(int defensa) {
-        this.defensa = defensa;
-    }
-
-    public void setId_mov2(int mov2){
-        this.id_mov2 = mov2;
-    }
-
-    public void setDefensaEspecial(int defensaEspecial) {
-        this.defensaEspecial = defensaEspecial;
-    }
-
-    public void setId_Caja(int id_Caja) {
-        this.id_Caja = id_Caja;
-    }
-
-    public void setId_objeto(int obj){
-        this.id_objeto = obj;
-    }
-
-    public void setAtaqueEspecial(int ataqueEspecial) {
-        this.ataqueEspecial = ataqueEspecial;
-    }
-
-    public void setNum_pokedex(int num_pokedex) {
-        this.num_pokedex = num_pokedex;
-    }
-
     public void setNombre(String nombre) {
         Nombre = nombre;
     }
 
-    public void setTipo1(String tipo1) {
-        this.tipo1 = tipo1;
+    public String getHabilidad() {
+        return Habilidad;
     }
 
     public void setHabilidad(String habilidad) {
-        this.habilidad = habilidad;
+        Habilidad = habilidad;
     }
 
-    public void setAtaque(int ataque) {
-        this.ataque = ataque;
+    public String getTipo1() {
+        return Tipo1;
+    }
+
+    public void setTipo1(String tipo1) {
+        Tipo1 = tipo1;
+    }
+
+    public String getTipo2() {
+        return Tipo2;
     }
 
     public void setTipo2(String tipo2) {
-        this.tipo2 = tipo2;
+        Tipo2 = tipo2;
     }
 
-    public void setHP(int HP) {
-        this.HP = HP;
+    public int getNivel() {
+        return Nivel;
     }
 
     public void setNivel(int nivel) {
-        this.nivel = nivel;
+        this.Nivel = nivel;
+    }
+
+    public int getHp() {
+        return Hp;
+    }
+
+    public void setHp(int hp) {
+        Hp = hp;
+    }
+
+    public int getAtaque() {
+        return Ataque;
+    }
+
+    public void setAtaque(int ataque) {
+        Ataque = ataque;
+    }
+
+    public int getDefensa() {
+        return Defensa;
+    }
+
+    public void setDefensa(int defensa) {
+        Defensa = defensa;
+    }
+
+    public int getAtaqueEspecial() {
+        return AtaqueEspecial;
+    }
+
+    public void setAtaqueEspecial(int ataqueEspecial) {
+        AtaqueEspecial = ataqueEspecial;
+    }
+
+    public int getDefensaEspecial() {
+        return DefensaEspecial;
+    }
+
+    public void setDefensaEspecial(int defensaEspecial) {
+        DefensaEspecial = defensaEspecial;
+    }
+
+    public int getVelocidad() {
+        return Velocidad;
+    }
+
+    public void setVelocidad(int velocidad) {
+        Velocidad = velocidad;
+    }
+
+    public String getMovimiento1() {
+        return Movimiento1;
+    }
+
+    public void setMovimiento1(String movimiento1) {
+        Movimiento1 = movimiento1;
+    }
+
+    public String getMovimiento2() {
+        return Movimiento2;
+    }
+
+    public void setMovimiento2(String movimiento2) {
+        Movimiento2 = movimiento2;
+    }
+
+    public String getApodo(){
+        return Apodo;
+    }
+
+    public void setApodo(String newApodo){
+        Apodo = newApodo;
+    }
+
+    public String getObjeto() {
+        return Objeto;
     }
 
     public void setObjeto(String objeto) {
-        this.objeto = objeto;
+        Objeto = objeto;
+    }
+
+    public boolean isEstaEnEquipo() {
+        return estaEnEquipo;
     }
 
     public void setEstaEnEquipo(boolean estaEnEquipo) {
         this.estaEnEquipo = estaEnEquipo;
     }
 
-    public void setVelocidad(int velocidad) {
-        this.velocidad = velocidad;
+    public boolean isEstaEnCaja() {
+        return estaEnCaja;
     }
+
+    public void setEstaEnCaja(boolean estaEnCaja) {
+        this.estaEnCaja = estaEnCaja;
+    }
+
+    public Pokemon() {
+    }
+
+    public Pokemon(int id, String nombre) {
+    }
+
+    @Override
+    public String toString() {
+        return "Pokemon{" +
+                "ID=" + Id +
+                ", Nombre='" + Nombre + '\'' +
+                ", Habilidad='" + Habilidad + '\'' +
+                ", Tipo1='" + Tipo1 + '\'' +
+                ", Tipo2='" + Tipo2 + '\'' +
+                ", Nivel=" + Nivel +
+                ", Hp=" + Hp +
+                ", Ataque=" + Ataque +
+                ", Defensa=" + Defensa +
+                ", Ataque Especial=" + AtaqueEspecial +
+                ", Defensa Especial=" + DefensaEspecial +
+                ", Velocidad=" + Velocidad +
+                ", Movimiento 1='" + Movimiento1 + '\'' +
+                ", Movimiento 2='" + Movimiento2 + '\'' +
+                ", Objeto='" + Objeto + '\'' +
+                ", estaEnEquipo=" + estaEnEquipo +
+                ", estaEnCaja=" + estaEnCaja +
+                ", Apodo=" + Apodo +
+                '}';
+    }
+
+
+
 }

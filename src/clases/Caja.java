@@ -1,33 +1,32 @@
 package clases;
-import java.sql.*;
+
 import java.util.ArrayList;
 
 public class Caja {
+    public ArrayList<Pokemon> listaCaja;
+    public String Nombre;
 
-    public ArrayList<Pokemon> caja = new ArrayList<>();
-    public int ID_CAJA;
-    public String NOMBRE;
-    public int CAPACIDAD = 30;
-
-    public Caja(int ID_CAJA) {
-        this.ID_CAJA = ID_CAJA;
+    public ArrayList<Pokemon> getListaCaja() {
+        return listaCaja;
     }
 
-    public void setCapacidad(){
-        this.CAPACIDAD = 30;
-    }
-    public void setNombre(String NOMBRE) {
-        this.NOMBRE = NOMBRE;
+    public void setListaCaja(ArrayList<Pokemon> listaCaja) {
+        this.listaCaja = listaCaja;
     }
 
-    public String getNombreCaja(){
-        String nombre = "";
-
-        return nombre;
+    public String getNombre() {
+        return Nombre;
     }
 
-    public int getID_CAJA() {
-        return ID_CAJA;
+    public void setNombre(String nombre) {
+        Nombre = nombre;
     }
 
+    @Override
+    public String toString() {
+        return "Caja{" +
+                "listaCaja=" + listaCaja +
+                ", Nombre='" + Nombre + '\'' +
+                '}';
+    }
 }
