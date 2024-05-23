@@ -2,19 +2,6 @@
   "listaCaja": [
     {
       "ID": 0,
-      "Nombre": "Bulbasaur",
-      "Nivel": 50,
-      "Hp": 0,
-      "Ataque": 0,
-      "Defensa": 0,
-      "AtaqueEspecial": 0,
-      "DefensaEspecial": 0,
-      "Velocidad": 0,
-      "estaEnEquipo": false,
-      "estaEnCaja": false
-    },
-    {
-      "ID": 0,
       "Nombre": "Ivysaur",
       "Nivel": 50,
       "Hp": 0,
@@ -81,6 +68,19 @@
     {
       "ID": 0,
       "Nombre": "Blastoise",
+      "Nivel": 50,
+      "Hp": 0,
+      "Ataque": 0,
+      "Defensa": 0,
+      "AtaqueEspecial": 0,
+      "DefensaEspecial": 0,
+      "Velocidad": 0,
+      "estaEnEquipo": false,
+      "estaEnCaja": false
+    },
+    {
+      "ID": 0,
+      "Nombre": "Caterpie",
       "Nivel": 50,
       "Hp": 0,
       "Ataque": 0,

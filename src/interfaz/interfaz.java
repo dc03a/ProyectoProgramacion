@@ -6,9 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 class PCPokemonGUI extends JFrame {
     private String usuario;
@@ -19,10 +22,9 @@ class PCPokemonGUI extends JFrame {
     }
 
     private static void ejecutarInterfaz() {
-        cargarPokemons();
         JFrame frame = new JFrame("PC Pokémon");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 400);
+        frame.setSize(800, 600);
         frame.setResizable(true);
         frame.setLayout(new BorderLayout());
         frame.setLocationRelativeTo(null);
@@ -136,12 +138,47 @@ class PCPokemonGUI extends JFrame {
     }
 
     public static void main(String[] args) {
+        usarFuentes();
+        cargarPokemons();
         ejecutarInterfaz();
+    }
+
+    static void usarFuentes() {
+        GraphicsEnvironment GE = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        java.util.List<String> AVAILABLE_FONT_FAMILY_NAMES = Arrays.asList(GE.getAvailableFontFamilyNames());
+        try {
+            List<File> LIST = Arrays.asList(
+                    new File("fuentes/PokemonGb-RAeo.ttf")
+            );
+            for (File LIST_ITEM : LIST) {
+                if (LIST_ITEM.exists()) {
+                    Font FONT = Font.createFont(Font.TRUETYPE_FONT, LIST_ITEM);
+                    if (!AVAILABLE_FONT_FAMILY_NAMES.contains(FONT.getFontName())) {
+                        GE.registerFont(FONT);
+                    }
+                }
+            }
+        } catch (FontFormatException | IOException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+        }
     }
 
     private static void cargarPokemons() {
         try {
             ArrayList<Pokemon> pokemons = PokemonDAO.seleccionarTodosLosPokemon();
+            ArrayList<Pokemon> equipo = new ArrayList<>();
+            ArrayList<Pokemon> caja = new ArrayList<>();
+
+            for (Pokemon pokemon : pokemons) {
+                if (pokemon.isEstaEnEquipo()) {
+                    equipo.add(pokemon);
+                } else if (pokemon.isEstaEnCaja()) {
+                    caja.add(pokemon);
+                }
+            }
+
+            EquipoDAO.setEquipo(equipo);
+            CajaDAO.setCaja(caja);
         } catch (SQLException | IOException e) {
             JOptionPane.showMessageDialog(null, "Error al cargar los equipos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -149,7 +186,7 @@ class PCPokemonGUI extends JFrame {
 
     private static void mostrarEquipo(JFrame parentFrame) throws IOException {
         JDialog equipoDialog = new JDialog(parentFrame, "Equipo", true);
-        equipoDialog.setSize(500, 400);
+        equipoDialog.setSize(600, 500);
         equipoDialog.setLayout(new BorderLayout());
         equipoDialog.setResizable(true);
         equipoDialog.setLocationRelativeTo(null);
@@ -174,7 +211,6 @@ class PCPokemonGUI extends JFrame {
                         JButton pokemonButton = new JButton(pokemonNombre);
                         pokemonButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
-                        //Cargar imagen
                         String imgPokemonPath = "pokemonImagenes/" + pokemonNombre.toLowerCase() + ".png";
                         ImageIcon imgPokemon = new ImageIcon(imgPokemonPath);
                         Image scaledImage = imgPokemon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
@@ -212,7 +248,7 @@ class PCPokemonGUI extends JFrame {
 
     private static void mostrarOpcionesPokemon(JDialog parentDialog, Pokemon pokemon) {
         JDialog opcionesDialog = new JDialog(parentDialog, pokemon.getNombre(), true);
-        opcionesDialog.setSize(400, 300);
+        opcionesDialog.setSize(500, 400);
         opcionesDialog.setLayout(new GridLayout(4, 1, 10, 10));
         opcionesDialog.setResizable(true);
         opcionesDialog.setLocationRelativeTo(null);
@@ -302,7 +338,7 @@ class PCPokemonGUI extends JFrame {
 
     private static void mostrarCajas(JFrame parentFrame) throws SQLException, IOException {
         JDialog cajasDialog = new JDialog(parentFrame, "Cajas", true);
-        cajasDialog.setSize(500, 400);
+        cajasDialog.setSize(800, 500);
         cajasDialog.setLayout(new GridLayout(5, 10, 5, 5));
         cajasDialog.setLocationRelativeTo(null);
 
@@ -337,7 +373,7 @@ class PCPokemonGUI extends JFrame {
     private static void mostrarOpcionesPC(JDialog parentDialog, String pokemonNombre) throws SQLException, IOException {
         ArrayList<Pokemon> listaEquipo = EquipoDAO.getEquipo().getEquipo();
         JDialog opcionesDialog = new JDialog(parentDialog, pokemonNombre, true);
-        opcionesDialog.setSize(400, 300);
+        opcionesDialog.setSize(500, 400);
         opcionesDialog.setLayout(new GridLayout(5, 1, 10, 10));
         opcionesDialog.setLocationRelativeTo(null);
 
@@ -455,7 +491,7 @@ class PCPokemonGUI extends JFrame {
 
     private static void dejarPokemon(JFrame parentFrame) throws SQLException, IOException {
         JDialog dejarDialog = new JDialog(parentFrame, "Dejar Pokémon", true);
-        dejarDialog.setSize(400, 300);
+        dejarDialog.setSize(500, 400);
         dejarDialog.setLayout(new GridLayout(6, 1, 10, 10));
         dejarDialog.setLocationRelativeTo(null);
 
@@ -484,7 +520,7 @@ class PCPokemonGUI extends JFrame {
     private static void mostrarOpcionesDejar(JDialog parentDialog, String pokemonNombre) throws SQLException, IOException {
         ArrayList<Pokemon> listaEquipo = EquipoDAO.getEquipo().getEquipo();
         JDialog opcionesDialog = new JDialog(parentDialog, pokemonNombre, true);
-        opcionesDialog.setSize(400, 300);
+        opcionesDialog.setSize(500, 400);
         opcionesDialog.setLayout(new GridLayout(5, 1, 10, 10));
         opcionesDialog.setLocationRelativeTo(null);
 
@@ -583,7 +619,7 @@ class PCPokemonGUI extends JFrame {
 
     private static void moverPokemon(JFrame parentFrame) throws SQLException, IOException {
         JDialog moverDialog = new JDialog(parentFrame, "Mover Pokémon", true);
-        moverDialog.setSize(600, 400);
+        moverDialog.setSize(800, 500);
         moverDialog.setLayout(new GridLayout(3, 1, 10, 10));
         moverDialog.setLocationRelativeTo(null);
 
@@ -658,7 +694,7 @@ class PCPokemonGUI extends JFrame {
 
     private static void moverObjetos(JFrame parentFrame) throws SQLException, IOException {
         JDialog moverDialog = new JDialog(parentFrame, "Mover Objetos", true);
-        moverDialog.setSize(600, 400);
+        moverDialog.setSize(700, 500);
         moverDialog.setLayout(new GridLayout(3, 2, 10, 10));
         moverDialog.setLocationRelativeTo(null);
 

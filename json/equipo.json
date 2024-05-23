@@ -1,6 +1,25 @@
 {
   "equipo": [
     {
+      "ID": 1,
+      "Nombre": "Bulbasaur",
+      "Habilidad": "Espesura",
+      "Tipo1": "Planta",
+      "Tipo2": "Veneno",
+      "Nivel": 50,
+      "Hp": 45,
+      "Ataque": 49,
+      "Defensa": 49,
+      "AtaqueEspecial": 65,
+      "DefensaEspecial": 65,
+      "Velocidad": 45,
+      "Movimiento1": "Placaje",
+      "Movimiento2": "Gruñido",
+      "Objeto": "Baya Aranja",
+      "estaEnEquipo": true,
+      "estaEnCaja": false
+    },
+    {
       "ID": 4,
       "Nombre": "Charmander",
       "Habilidad": "Mar Llamas",
@@ -33,24 +52,6 @@
       "Movimiento1": "Placaje",
       "Movimiento2": "Látigo",
       "Objeto": "Chaleco Asalto",
-      "estaEnEquipo": true,
-      "estaEnCaja": false
-    },
-    {
-      "ID": 10,
-      "Nombre": "Caterpie",
-      "Habilidad": "Polvo Escudo",
-      "Tipo1": "Bicho",
-      "Nivel": 50,
-      "Hp": 45,
-      "Ataque": 30,
-      "Defensa": 35,
-      "AtaqueEspecial": 20,
-      "DefensaEspecial": 20,
-      "Velocidad": 45,
-      "Movimiento1": "Placaje",
-      "Movimiento2": "Disparo Demora",
-      "Objeto": "Baya Aranja",
       "estaEnEquipo": true,
       "estaEnCaja": false
     }

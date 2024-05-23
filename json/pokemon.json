@@ -1,12 +1,19 @@
 {
-  "ID": 0,
+  "ID": 3,
+  "Nombre": "Venusaur",
+  "Habilidad": "Espesura",
+  "Tipo1": "Planta",
+  "Tipo2": "Veneno",
   "Nivel": 50,
-  "Hp": 0,
-  "Ataque": 0,
-  "Defensa": 0,
-  "AtaqueEspecial": 0,
-  "DefensaEspecial": 0,
-  "Velocidad": 0,
+  "Hp": 80,
+  "Ataque": 82,
+  "Defensa": 83,
+  "AtaqueEspecial": 100,
+  "DefensaEspecial": 100,
+  "Velocidad": 80,
+  "Movimiento1": "Placaje",
+  "Movimiento2": "Gruñido",
+  "Objeto": "Hierba Mental",
   "estaEnEquipo": false,
-  "estaEnCaja": false
+  "estaEnCaja": true
 }

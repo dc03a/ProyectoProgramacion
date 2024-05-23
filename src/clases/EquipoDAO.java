@@ -18,6 +18,12 @@ public class EquipoDAO {
         return equipo;
     }
 
+    public static void setEquipo(ArrayList<Pokemon> lista) throws IOException, SQLException {
+        Equipo equipo = new Equipo();
+        equipo.setEquipo(lista);
+        funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
+    }
+
     public static boolean equipoLleno(ArrayList<Pokemon> lista) {
         return lista.size() < 6;
     }

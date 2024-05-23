@@ -15,26 +15,6 @@ public class CajaDAO {
         return lista.size() < 30;
     }
 
-    public static void moverPokemonCajaAEquipo(String nombre) throws IOException, SQLException {
-        Caja caja = funcionesJSON.leerCajaDeJSON(JSON_CAJA_PATH);
-        Pokemon pokemon = null;
-
-        for (Pokemon pok : caja.getListaCaja()) {
-            if (pok.getNombre().equalsIgnoreCase(nombre)) {
-                pokemon = pok;
-                break;
-            }
-        }
-
-        if (pokemon == null) {
-            throw new IllegalArgumentException("El Pokémon con nombre " + nombre + " no se encuentra en la caja.");
-        }
-
-        caja.getListaCaja().remove(pokemon);
-        funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
-        EquipoDAO.agregarPokemon(pokemon);
-    }
-
     /* Para generar la lista de pokemons de la caja que le pasemos */
     public static ArrayList<Pokemon> listaPokemon() throws IOException {
         ArrayList<Pokemon> cajaPok = new ArrayList<>();
@@ -146,5 +126,11 @@ public class CajaDAO {
         } else {
             return false;
         }
+    }
+
+    public static void setCaja (ArrayList<Pokemon> lista) throws IOException {
+        Caja caja = new Caja();
+        caja.setListaCaja(lista);
+        funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
     }
 }
