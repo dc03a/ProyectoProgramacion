@@ -463,16 +463,23 @@ class PCPokemonGUI extends JFrame {
 
         ArrayList<Pokemon> equipo = EquipoDAO.getEquipo().getEquipo();
 
-        for (Pokemon pokemonNombre : equipo) {
-            JButton pokemonButton = new JButton(String.valueOf(pokemonNombre));
+        for (Pokemon pokemon : equipo) {
+            JButton pokemonButton = new JButton(pokemon.getNombre());
             pokemonButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+
+            // Cargar la imagen del Pokémon
+            String imgPokemonPath = "pokemonImagenes/" + pokemon.getNombre().toLowerCase() + ".png";
+            ImageIcon imgPokemon = new ImageIcon(imgPokemonPath);
+            Image scaledImage = imgPokemon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+            pokemonButton.setIcon(new ImageIcon(scaledImage));
+
             dejarDialog.add(pokemonButton);
 
             pokemonButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        mostrarOpcionesDejar(dejarDialog, pokemonNombre);
+                        mostrarOpcionesDejar(dejarDialog, pokemon);
                     } catch (SQLException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
