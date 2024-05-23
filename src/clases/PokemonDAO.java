@@ -134,24 +134,6 @@ public class PokemonDAO {
         return null;
     }
 
-    public static ArrayList<String> obtenerObjetosDisponiblesDesdeBD() throws SQLException, IOException {
-        ArrayList<String> objetos = new ArrayList<>();
-        String query = "SELECT DISTINCT Objeto FROM pokemon";
-        try (Connection con = credenciales.conectar();
-             PreparedStatement statement = con.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
-            while (resultSet.next()) {
-                String objeto = resultSet.getString("Objeto");
-                if (objeto != null && !objeto.isEmpty()) {
-                    objetos.add(objeto);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return objetos;
-    }
-
     public static void cambiarObjetoPokemon(Pokemon pokemon, String nuevoObjeto) throws IOException, SQLException {
         try (Connection con = credenciales.conectar();
              PreparedStatement sentencia = con.prepareStatement("UPDATE pokemon SET Objeto = ? WHERE ID = ?")) {
