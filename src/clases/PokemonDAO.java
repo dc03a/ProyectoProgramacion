@@ -91,6 +91,7 @@ public class PokemonDAO {
                 pokemon.setObjeto(rs.getString("Objeto"));
                 pokemon.setEstaEnCaja(rs.getBoolean("estaEnCaja"));
                 pokemon.setEstaEnEquipo(rs.getBoolean("estaEnEquipo"));
+                pokemon.setApodo(rs.getString("Apodo"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

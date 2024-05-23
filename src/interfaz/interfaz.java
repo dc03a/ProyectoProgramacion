@@ -14,21 +14,17 @@ import java.util.Arrays;
 import java.util.List;
 
 class PCPokemonGUI extends JFrame {
-    private String usuario;
 
     public PCPokemonGUI(String usuario) {
-        this.usuario = usuario;
         ejecutarInterfaz();
+        utilidades.credenciales.conectar();
+        cargarPokemons();
     }
-
 
 
     public static void main(String[] args) {
         usarFuentes();
-        cargarPokemons();
-        ejecutarInterfaz();
     }
-
 
 
     private static void ejecutarInterfaz() {
