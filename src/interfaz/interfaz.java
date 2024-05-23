@@ -47,7 +47,7 @@ class PCPokemonGUI extends JFrame {
         frame.add(titleLabel, BorderLayout.NORTH);
 
         JPanel mainMenuPanel = new JPanel();
-        mainMenuPanel.setLayout(new GridLayout(10, 1, 10, 10));
+        mainMenuPanel.setLayout(new GridLayout(7, 1, 10, 10));
         mainMenuPanel.setBackground(Color.WHITE);
         frame.add(mainMenuPanel, BorderLayout.CENTER);
 
@@ -247,7 +247,7 @@ class PCPokemonGUI extends JFrame {
                             if (!pokemonNombre.startsWith("Empty")) {
                                 try {
                                     mostrarOpcionesPokemon(equipoDialog, pokemon);
-                                    actualizarVistaEquipo(equipoDialog, equipoPanel); // Refrescar la vista después de realizar cambios
+                                    actualizarVistaEquipo(equipoDialog, equipoPanel);
                                 } catch (IOException ex) {
                                     throw new RuntimeException(ex);
                                 }
@@ -294,7 +294,7 @@ class PCPokemonGUI extends JFrame {
     private static void mostrarOpcionesPokemon(JDialog parentDialog, Pokemon pokemon) {
         JDialog opcionesDialog = new JDialog(parentDialog, pokemon.getNombre(), true);
         opcionesDialog.setSize(500, 400);
-        opcionesDialog.setLayout(new GridLayout(4, 1, 10, 10));
+        opcionesDialog.setLayout(new GridLayout(3, 1, 10, 10));
         opcionesDialog.setResizable(true);
         opcionesDialog.setLocationRelativeTo(null);
         opcionesDialog.getContentPane().setBackground(new Color(0x003A70));

@@ -25,9 +25,12 @@ public class EquipoDAO {
         funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
     }
 
+
+
     public static boolean equipoLleno(ArrayList<Pokemon> lista) {
         return lista.size() == 6;
     }
+
 
 
     public static ArrayList<String> getNombresPokemons(Equipo equipo) {
@@ -37,6 +40,8 @@ public class EquipoDAO {
         }
         return nombres;
     }
+
+
 
     public static void agregarPokemon(Pokemon pokemon) throws IOException, SQLException {
         Equipo equipo = getEquipo();
@@ -60,8 +65,9 @@ public class EquipoDAO {
         }
     }
 
-    public static void quitarPokemon(Pokemon pokemon) throws IOException, SQLException {
 
+
+    public static void quitarPokemon(Pokemon pokemon) throws IOException, SQLException {
         String query = "UPDATE pokemon SET estaEnEquipo = 0, estaEnCaja = 1 WHERE Id = ?";
         try (Connection con = credenciales.conectar();
              PreparedStatement sentencia = con.prepareStatement(query)) {
@@ -77,7 +83,6 @@ public class EquipoDAO {
         Equipo equipo = funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);
         ArrayList<Pokemon> listaPokemons = equipo.getEquipo();
 
-        // Verificar si el Pokémon está presente en el equipo JSON y eliminarlo
         Iterator<Pokemon> it = listaPokemons.iterator();
         while(it.hasNext()){
             Pokemon p = it.next();
@@ -86,10 +91,8 @@ public class EquipoDAO {
             }
             System.out.println("El Pokémon fue eliminado del equipo en el archivo JSON.");
             funcionesJSON.escribirEquipoAJSON(equipo, JSON_EQUIPO_PATH);
-            return; // Salir del método después de eliminar el Pokémon
+            return;
         }
-
-
     }
 
 

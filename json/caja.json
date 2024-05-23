@@ -17,7 +17,8 @@
       "Movimiento2": "Gruñido",
       "Objeto": "Baya Ziuela",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 3,
@@ -36,7 +37,8 @@
       "Movimiento2": "Gruñido",
       "Objeto": "Hierba Mental",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 5,
@@ -54,7 +56,8 @@
       "Movimiento2": "Gruñido",
       "Objeto": "Baya Ziuela",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 6,
@@ -73,7 +76,8 @@
       "Movimiento2": "Gruñido",
       "Objeto": "Garra Rápida",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Pepito"
     },
     {
       "Id": 8,
@@ -91,7 +95,8 @@
       "Movimiento2": "Látigo",
       "Objeto": "Baya Atania",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 9,
@@ -109,7 +114,8 @@
       "Movimiento2": "Látigo",
       "Objeto": "Periscopio",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 10,
@@ -127,7 +133,8 @@
       "Movimiento2": "Disparo Demora",
       "Objeto": "Baya Aranja",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 11,
@@ -144,7 +151,8 @@
       "Movimiento1": "Fortaleza",
       "Objeto": "Baya Zidra",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 12,
@@ -163,7 +171,8 @@
       "Movimiento2": "Fortaleza",
       "Objeto": "Restos",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 13,
@@ -182,7 +191,8 @@
       "Movimiento2": "Disparo Demora",
       "Objeto": "Baya Ziuela",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 14,
@@ -200,7 +210,8 @@
       "Movimiento1": "Fortaleza",
       "Objeto": "Baya Zidra",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 15,
@@ -219,7 +230,8 @@
       "Movimiento2": "Furia",
       "Objeto": "Periscopio",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 16,
@@ -238,7 +250,8 @@
       "Movimiento2": "Ataque Arena",
       "Objeto": "Baya Atania",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 17,
@@ -257,7 +270,8 @@
       "Movimiento2": "Ataque Rápido",
       "Objeto": "Chaleco Asalto",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 18,
@@ -276,7 +290,8 @@
       "Movimiento2": "Ataque Ala",
       "Objeto": "Garra Rápida",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 19,
@@ -294,7 +309,8 @@
       "Movimiento2": "Látigo",
       "Objeto": "Baya Aranja",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 20,
@@ -312,7 +328,8 @@
       "Movimiento2": "Ataque Rápido",
       "Objeto": "Baya Ziuela",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 21,
@@ -331,7 +348,8 @@
       "Movimiento2": "Gruñido",
       "Objeto": "Garra Rápida",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 22,
@@ -350,7 +368,8 @@
       "Movimiento2": "Furia",
       "Objeto": "Baya Zidra",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 23,
@@ -368,7 +387,8 @@
       "Movimiento2": "Malicioso",
       "Objeto": "Chaleco Asalto",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 24,
@@ -386,7 +406,8 @@
       "Movimiento2": "Mordisco",
       "Objeto": "Periscopio",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 25,
@@ -404,7 +425,8 @@
       "Movimiento2": "Gruñido",
       "Objeto": "Restos",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 26,
@@ -422,7 +444,8 @@
       "Movimiento2": "Ataque Rápido",
       "Objeto": "Baya Atania",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 27,
@@ -440,7 +463,8 @@
       "Movimiento2": "Rizo Defensa",
       "Objeto": "Chaleco Asalto",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 28,
@@ -458,7 +482,8 @@
       "Movimiento2": "Terremoto",
       "Objeto": "Baya Zidra",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 29,
@@ -476,7 +501,8 @@
       "Movimiento2": "Malicioso",
       "Objeto": "Periscopio",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 30,
@@ -494,7 +520,8 @@
       "Movimiento2": "Doble Patada",
       "Objeto": "Baya Aranja",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 31,
@@ -513,7 +540,8 @@
       "Movimiento2": "Golpe Cabeza",
       "Objeto": "Baya Atania",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 32,
@@ -531,7 +559,8 @@
       "Movimiento2": "Malicioso",
       "Objeto": "Restos",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 33,
@@ -549,7 +578,8 @@
       "Movimiento2": "Doble Patada",
       "Objeto": "Garra Rápida",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 34,
@@ -568,7 +598,8 @@
       "Movimiento2": "Golpe Cabeza",
       "Objeto": "Baya Zidra",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 35,
@@ -586,7 +617,8 @@
       "Movimiento2": "Beso Amoroso",
       "Objeto": "Chaleco Asalto",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 36,
@@ -604,7 +636,8 @@
       "Movimiento2": "Beso Amoroso",
       "Objeto": "Periscopio",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 37,
@@ -622,7 +655,8 @@
       "Movimiento2": "Ataque Rápido",
       "Objeto": "Baya Ziuela",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 38,
@@ -640,7 +674,8 @@
       "Movimiento2": "Lanzallamas",
       "Objeto": "Baya Atania",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 39,
@@ -659,7 +694,8 @@
       "Movimiento2": "Beso Amoroso",
       "Objeto": "Restos",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 40,
@@ -678,7 +714,8 @@
       "Movimiento2": "Beso Amoroso",
       "Objeto": "Garra Rápida",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 41,
@@ -697,7 +734,8 @@
       "Movimiento2": "Supersónico",
       "Objeto": "Periscopio",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 42,
@@ -716,7 +754,8 @@
       "Movimiento2": "Confusión",
       "Objeto": "Baya Aranja",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 43,
@@ -735,7 +774,8 @@
       "Movimiento2": "Ácido",
       "Objeto": "Restos",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 44,
@@ -754,7 +794,8 @@
       "Movimiento2": "Ácido",
       "Objeto": "Baya Atania",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 45,
@@ -773,7 +814,8 @@
       "Movimiento2": "Ácido",
       "Objeto": "Baya Ziuela",
       "estaEnEquipo": false,
-      "estaEnCaja": true
+      "estaEnCaja": true,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 46,
@@ -793,7 +835,7 @@
       "Objeto": "Garra Rápida",
       "estaEnEquipo": false,
       "estaEnCaja": true,
-      "Apodo": "Alfonso"
+      "Apodo": "Sin apodo"
     }
   ]
 }

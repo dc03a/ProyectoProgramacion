@@ -17,7 +17,8 @@
       "Movimiento2": "Gruñido",
       "Objeto": "Baya Aranja",
       "estaEnEquipo": true,
-      "estaEnCaja": false
+      "estaEnCaja": false,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 4,
@@ -35,7 +36,8 @@
       "Movimiento2": "Gruñido",
       "Objeto": "Restos",
       "estaEnEquipo": true,
-      "estaEnCaja": false
+      "estaEnCaja": false,
+      "Apodo": "Sin apodo"
     },
     {
       "Id": 7,
@@ -53,7 +55,8 @@
       "Movimiento2": "Látigo",
       "Objeto": "Chaleco Asalto",
       "estaEnEquipo": true,
-      "estaEnCaja": false
+      "estaEnCaja": false,
+      "Apodo": "Sin apodo"
     }
   ]
 }
