@@ -22,6 +22,8 @@ public class Equipo {
         Nombre = nombre;
     }
 
+
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
