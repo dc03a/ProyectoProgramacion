@@ -25,7 +25,7 @@ public class EquipoDAO {
     }
 
     public static boolean equipoLleno(ArrayList<Pokemon> lista) {
-        return lista.size() < 6;
+        return lista.size() == 6;
     }
 
     public static void guardarEquipo(Equipo equipo) throws IOException {
@@ -52,7 +52,7 @@ public class EquipoDAO {
 
     public static void agregarPokemon(Pokemon pokemon) throws IOException, SQLException {
         Equipo equipo = getEquipo();
-        if (!equipoLleno(equipo.getEquipo())) {
+        if (equipoLleno(equipo.getEquipo())) {
             equipo.getEquipo().add(pokemon);
             guardarEquipo(equipo);
 
