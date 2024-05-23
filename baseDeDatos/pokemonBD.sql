@@ -129,7 +129,7 @@ BEGIN
     DECLARE idPk INT;
     DECLARE nombrePk VARCHAR(100);
     DECLARE eqPk BOOLEAN;
-    SET idPk = NEW.Id;
+    SET idPk = Id;
     SET nombrePk = NEW.Nombre;
     SET eqPk = NEW.estaEnEquipo;
     IF eqPk = 1 THEN

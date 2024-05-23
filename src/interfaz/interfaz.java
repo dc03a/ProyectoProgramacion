@@ -807,74 +807,73 @@ class PCPokemonGUI extends JFrame {
 
 
 
-    private static void actualizarVistaMoverObjetos(JDialog moverDialog, ArrayList<Pokemon> listaEquipo) {
-        moverDialog.getContentPane().removeAll();
-        moverDialog.setLayout(new GridLayout(3, 1, 10, 10));
+    private static void actualizarVistaCambiarObjeto(JDialog cambiarObjetoDialog, ArrayList<Pokemon> listaEquipo) {
+        cambiarObjetoDialog.getContentPane().removeAll();
+        cambiarObjetoDialog.setLayout(new GridLayout(4, 1, 10, 10));
 
-        JComboBox<Pokemon> pokemonComboBox = new JComboBox<>(listaEquipo.toArray(new Pokemon[0]));
-        pokemonComboBox.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        JLabel pokemonLabel = new JLabel("Dime el Pokemon a cambiar el Objeto:");
+        JTextField pokemonTextField = new JTextField();
 
-        JButton equipoButton = new JButton("Mover desde equipo");
-        JButton pcButton = new JButton("Mover desde PC");
+        JLabel objetoLabel = new JLabel("Dime el nuevo objeto:");
+        JTextField objetoTextField = new JTextField();
 
-        equipoButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
-        pcButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        JButton cambiarObjetoButton = new JButton("Cambiar Objeto");
 
-        moverDialog.add(pokemonComboBox);
-        moverDialog.add(equipoButton);
-        moverDialog.add(pcButton);
+        pokemonLabel.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        pokemonTextField.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        objetoLabel.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        objetoTextField.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        cambiarObjetoButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
-        equipoButton.addActionListener(new ActionListener() {
+        cambiarObjetoDialog.add(pokemonLabel);
+        cambiarObjetoDialog.add(pokemonTextField);
+        cambiarObjetoDialog.add(objetoLabel);
+        cambiarObjetoDialog.add(objetoTextField);
+        cambiarObjetoDialog.add(cambiarObjetoButton);
+
+        cambiarObjetoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Pokemon pokemonASacar = (Pokemon) pokemonComboBox.getSelectedItem();
-                if (pokemonASacar != null) {
+                String nombrePokemon = pokemonTextField.getText();
+                String nuevoObjeto = objetoTextField.getText();
+                PokemonDAO pk = null;
+
+                if (nombrePokemon.isEmpty() || nuevoObjeto.isEmpty()) {
+                    JOptionPane.showMessageDialog(cambiarObjetoDialog, "Error: Pokémon o objeto no especificado.");
+                    return;
+                }
+
+                Pokemon pokemonACambiar = listaEquipo.stream()
+                        .filter(p -> p.getNombre().equalsIgnoreCase(nombrePokemon))
+                        .findFirst()
+                        .orElse(null);
+
+                if (pokemonACambiar != null) {
                     try {
-                        sacarPokemonDeBD(pokemonASacar);
-                        listaEquipo.remove(pokemonASacar);
-                        pokemonComboBox.setModel(new DefaultComboBoxModel<>(listaEquipo.toArray(new Pokemon[0])));
+                        pk.cambiarObjetoPokemon(pokemonACambiar, nuevoObjeto);
+                        JOptionPane.showMessageDialog(cambiarObjetoDialog, "Objeto cambiado exitosamente.");
                     } catch (SQLException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(moverDialog, "Error: Pokémon no seleccionado.");
+                    JOptionPane.showMessageDialog(cambiarObjetoDialog, "Error: Pokémon no encontrado en el equipo.");
                 }
             }
         });
 
-        pcButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Pokemon pokemonSeleccionado = (Pokemon) pokemonComboBox.getSelectedItem();
-                if (pokemonSeleccionado != null) {
-                    try {
-                        dejarPokemonEnBD(pokemonSeleccionado);
-                        Pokemon pokemonAnadido = CajaDAO.obtenerPokemonDeCaja(pokemonSeleccionado.getNombre());
-                        listaEquipo.add(pokemonAnadido);
-                        pokemonComboBox.setModel(new DefaultComboBoxModel<>(listaEquipo.toArray(new Pokemon[0])));
-                    } catch (SQLException | IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(moverDialog, "Error: Pokémon no seleccionado.");
-                }
-            }
-        });
-
-        moverDialog.revalidate();
-        moverDialog.repaint();
+        cambiarObjetoDialog.revalidate();
+        cambiarObjetoDialog.repaint();
     }
 
 
 
     private static void moverObjetos(JFrame parentFrame) throws SQLException, IOException {
-        JDialog moverDialog = new JDialog(parentFrame, "Mover Pokémon", true);
+        JDialog moverDialog = new JDialog(parentFrame, "Mover Objetos", true);
         moverDialog.setSize(800, 500);
         moverDialog.setLocationRelativeTo(null);
 
         ArrayList<Pokemon> listaEquipo = EquipoDAO.getEquipo().getEquipo();
-
-        actualizarVistaMoverObjetos(moverDialog, listaEquipo);
+        actualizarVistaCambiarObjeto(moverDialog, listaEquipo);
 
         moverDialog.setVisible(true);
     }

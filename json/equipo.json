@@ -54,24 +54,6 @@
       "Objeto": "Chaleco Asalto",
       "estaEnEquipo": true,
       "estaEnCaja": false
-    },
-    {
-      "ID": 8,
-      "Nombre": "Wartortle",
-      "Habilidad": "Torrente",
-      "Tipo1": "Agua",
-      "Nivel": 50,
-      "Hp": 59,
-      "Ataque": 63,
-      "Defensa": 80,
-      "AtaqueEspecial": 65,
-      "DefensaEspecial": 80,
-      "Velocidad": 58,
-      "Movimiento1": "Placaje",
-      "Movimiento2": "Látigo",
-      "Objeto": "Baya Atania",
-      "estaEnEquipo": false,
-      "estaEnCaja": true
     }
   ]
 }
