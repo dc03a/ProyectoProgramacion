@@ -374,7 +374,7 @@ class PCPokemonGUI extends JFrame {
         opcionesDialog.setLayout(new GridLayout(5, 1, 10, 10));
         opcionesDialog.setLocationRelativeTo(null);
 
-        JButton depositarButton = new JButton("Depositar en la Caja");
+        JButton depositarButton = new JButton("Sacar de la caja");
         JButton datosButton = new JButton("Datos");
         JButton cambiarApodoButton = new JButton("Cambiar Apodo");
         JButton liberarButton = new JButton("Liberar");
@@ -396,7 +396,7 @@ class PCPokemonGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    dejarPokemonEnBD(pokemon);
+                    sacarPokemonDeBD(pokemon);
                 } catch (SQLException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -710,11 +710,9 @@ class PCPokemonGUI extends JFrame {
             JOptionPane.showMessageDialog(null, "El equipo está lleno.");
             return;
         }
-
         CajaDAO.sacarPokemonCaja(pokemon.getNombre());
         EquipoDAO.agregarPokemon(pokemon);
         CajaDAO.meterPokemonACaja(pokemon.getNombre());
-
     }
 
     private static void dejarPokemonEnBD(Pokemon pokemon) throws SQLException, IOException {
