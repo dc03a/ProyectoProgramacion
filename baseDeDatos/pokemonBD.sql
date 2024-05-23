@@ -120,21 +120,23 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
+
+
 CREATE TRIGGER mover
-BEFORE UPDATE ON pokemon
-FOR EACH ROW
+    BEFORE UPDATE ON pokemon
+    FOR EACH ROW
 BEGIN
     DECLARE idPk INT;
     DECLARE nombrePk VARCHAR(100);
     DECLARE eqPk BOOLEAN;
-    SET idPk = (SELECT new.Id FROM pokemon WHERE Id = new.Id);
-    SET nombrePk = (SELECT new.Nombre FROM pokemon WHERE Id = new.Id);
-    SET eqPk = (SELECT new.estaEnEquipo FROM pokemon WHERE Id = new.Id);
+    SET idPk = NEW.Id;
+    SET nombrePk = NEW.Nombre;
+    SET eqPk = NEW.estaEnEquipo;
     IF eqPk = 1 THEN
-        DELETE FROM caja WHERE IdPokemon = idPk;
-        INSERT INTO equipo(IdPokemon, Nombre) VALUES(idPk, nombrePk);
-    else
         DELETE FROM equipo WHERE IdPokemon = idPk;
+        INSERT INTO equipo(IdPokemon, Nombre) VALUES(idPk, nombrePk);
+    ELSE
+        DELETE FROM caja WHERE IdPokemon = idPk;
         INSERT INTO caja(IdPokemon, NombrePokemon) VALUES(idPk, nombrePk);
     END IF;
 END $$

@@ -39,12 +39,16 @@ class PCPokemonGUI extends JFrame {
         frame.setLayout(new BorderLayout());
         frame.setLocationRelativeTo(null);
 
+        frame.getContentPane().setBackground(new Color(0x003A70));
+
         JLabel titleLabel = new JLabel("PC de Pokémon", SwingConstants.CENTER);
+        titleLabel.setForeground(Color.WHITE);
         titleLabel.setFont(new Font("PokemonGb-RAeo", Font.BOLD, 24));
         frame.add(titleLabel, BorderLayout.NORTH);
 
         JPanel mainMenuPanel = new JPanel();
         mainMenuPanel.setLayout(new GridLayout(10, 1, 10, 10));
+        mainMenuPanel.setBackground(Color.WHITE);
         frame.add(mainMenuPanel, BorderLayout.CENTER);
 
         JButton equipoButton = new JButton("Equipo");
@@ -54,6 +58,23 @@ class PCPokemonGUI extends JFrame {
         JButton moverPokemonButton = new JButton("Mover Pokémon");
         JButton moverObjetosButton = new JButton("Mover Objetos");
         JButton desconectarButton = new JButton("Desconectar");
+
+        equipoButton.setForeground(Color.BLACK);
+        cajasButton.setForeground(Color.BLACK);
+        sacarPokemonButton.setForeground(Color.BLACK);
+        dejarPokemonButton.setForeground(Color.BLACK);
+        moverPokemonButton.setForeground(Color.BLACK);
+        moverObjetosButton.setForeground(Color.BLACK);
+        desconectarButton.setForeground(Color.BLACK);
+
+        Insets margen = new Insets(50, 50, 50, 50);
+        equipoButton.setMargin(margen);
+        cajasButton.setMargin(margen);
+        sacarPokemonButton.setMargin(margen);
+        dejarPokemonButton.setMargin(margen);
+        moverPokemonButton.setMargin(margen);
+        moverObjetosButton.setMargin(margen);
+        desconectarButton.setMargin(margen);
 
         equipoButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         cajasButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
@@ -276,11 +297,17 @@ class PCPokemonGUI extends JFrame {
         opcionesDialog.setLayout(new GridLayout(4, 1, 10, 10));
         opcionesDialog.setResizable(true);
         opcionesDialog.setLocationRelativeTo(null);
+        opcionesDialog.getContentPane().setBackground(new Color(0x003A70));
 
         JButton datosButton = new JButton("Datos");
         JButton objetoButton = new JButton("Objeto");
         JButton moverButton = new JButton("Mover");
         JButton atrasButton = new JButton("Atrás");
+
+        datosButton.setForeground(Color.BLACK);
+        objetoButton.setForeground(Color.BLACK);
+        moverButton.setForeground(Color.BLACK);
+        atrasButton.setForeground(Color.BLACK);
 
         datosButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         objetoButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
@@ -418,37 +445,31 @@ class PCPokemonGUI extends JFrame {
         opcionesDialog.setSize(500, 400);
         opcionesDialog.setLayout(new GridLayout(5, 1, 10, 10));
         opcionesDialog.setLocationRelativeTo(null);
+        opcionesDialog.getContentPane().setBackground(new Color(0x003A70));
 
-        JButton depositarButton = new JButton("Sacar de la caja");
         JButton datosButton = new JButton("Datos");
+        JButton sacarPokemonButton = new JButton("Sacar Pokémon");
         JButton cambiarApodoButton = new JButton("Cambiar Apodo");
         JButton liberarButton = new JButton("Liberar");
         JButton salirButton = new JButton("Salir");
 
-        depositarButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        datosButton.setForeground(Color.BLACK);
+        sacarPokemonButton.setForeground(Color.BLACK);
+        cambiarApodoButton.setForeground(Color.BLACK);
+        liberarButton.setForeground(Color.BLACK);
+        salirButton.setForeground(Color.BLACK);
+
         datosButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+        sacarPokemonButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         cambiarApodoButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         liberarButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         salirButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
-        opcionesDialog.add(depositarButton);
         opcionesDialog.add(datosButton);
         opcionesDialog.add(cambiarApodoButton);
         opcionesDialog.add(liberarButton);
+        opcionesDialog.add(sacarPokemonButton);
         opcionesDialog.add(salirButton);
-
-        depositarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    sacarPokemonDeBD(pokemon);
-                } catch (SQLException | IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                opcionesDialog.dispose();
-
-            }
-        });
 
         datosButton.addActionListener(new ActionListener() {
             @Override
@@ -458,6 +479,18 @@ class PCPokemonGUI extends JFrame {
                 } catch (SQLException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+        });
+
+        sacarPokemonButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    sacarPokemonDeBD(pokemon);
+                } catch (SQLException | IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                opcionesDialog.dispose();
             }
         });
 
@@ -491,6 +524,7 @@ class PCPokemonGUI extends JFrame {
             }
         });
 
+
         salirButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -513,7 +547,6 @@ class PCPokemonGUI extends JFrame {
             JButton pokemonButton = new JButton(pokemon.getNombre());
             pokemonButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
-            // Cargar la imagen del Pokémon
             String imgPokemonPath = "pokemonImagenes/" + pokemon.getNombre().toLowerCase() + ".png";
             ImageIcon imgPokemon = new ImageIcon(imgPokemonPath);
             Image scaledImage = imgPokemon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
@@ -526,7 +559,7 @@ class PCPokemonGUI extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     try {
                         mostrarOpcionesDejar(dejarDialog, pokemon);
-                        actualizarVistaDejar(dejarDialog); // Refrescar la vista después de realizar cambios
+                        actualizarVistaDejar(dejarDialog);
                     } catch (SQLException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -557,12 +590,19 @@ class PCPokemonGUI extends JFrame {
         opcionesDialog.setSize(500, 400);
         opcionesDialog.setLayout(new GridLayout(5, 1, 10, 10));
         opcionesDialog.setLocationRelativeTo(null);
+        opcionesDialog.getContentPane().setBackground(new Color(0x003A70));
 
         JButton dejarButton = new JButton("Dejar");
         JButton datosButton = new JButton("Datos");
         JButton cambiarApodoButton = new JButton("Cambiar Apodo");
         JButton liberarButton = new JButton("Liberar");
         JButton salirButton = new JButton("Salir");
+
+        dejarButton.setForeground(Color.BLACK);
+        datosButton.setForeground(Color.BLACK);
+        cambiarApodoButton.setForeground(Color.BLACK);
+        liberarButton.setForeground(Color.BLACK);
+        salirButton.setForeground(Color.BLACK);
 
         dejarButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         datosButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
@@ -645,7 +685,9 @@ class PCPokemonGUI extends JFrame {
         moverDialog.getContentPane().removeAll();
         moverDialog.setLayout(new GridLayout(3, 1, 10, 10));
 
-        JComboBox<Pokemon> pokemonComboBox = new JComboBox<>(listaEquipo.toArray(new Pokemon[0]));
+        String[] nombresEquipo = listaEquipo.stream().map(Pokemon::getNombre).toArray(String[]::new);
+
+        JComboBox<String> pokemonComboBox = new JComboBox<>(nombresEquipo);
         pokemonComboBox.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
         JButton equipoButton = new JButton("Mover desde equipo");
@@ -661,33 +703,35 @@ class PCPokemonGUI extends JFrame {
         equipoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Pokemon pokemonASacar = (Pokemon) pokemonComboBox.getSelectedItem();
-                if (pokemonASacar != null) {
-                    try {
-                        sacarPokemonDeBD(pokemonASacar);
-                        listaEquipo.remove(pokemonASacar);
-                        pokemonComboBox.setModel(new DefaultComboBoxModel<>(listaEquipo.toArray(new Pokemon[0])));
-                    } catch (SQLException | IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(moverDialog, "Error: Pokémon no seleccionado.");
-                }
+
             }
         });
 
         pcButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Pokemon pokemonSeleccionado = (Pokemon) pokemonComboBox.getSelectedItem();
-                if (pokemonSeleccionado != null) {
+                String nombrePokemonSeleccionado = (String) pokemonComboBox.getSelectedItem();
+                if (nombrePokemonSeleccionado != null) {
+                    Pokemon pokemonSeleccionado = listaEquipo.stream().filter(p -> p.getNombre().equals(nombrePokemonSeleccionado)).findFirst().orElse(null);
+                    Pokemon pokemonASacar = null;
                     try {
-                        dejarPokemonEnBD(pokemonSeleccionado);
-                        Pokemon pokemonAnadido = CajaDAO.obtenerPokemonDeCaja(pokemonSeleccionado.getNombre());
-                        listaEquipo.add(pokemonAnadido);
-                        pokemonComboBox.setModel(new DefaultComboBoxModel<>(listaEquipo.toArray(new Pokemon[0])));
-                    } catch (SQLException | IOException ex) {
+                        pokemonASacar = obtenerPokemonASacarDelEquipo(moverDialog, listaEquipo);
+                    } catch (IOException ex) {
                         throw new RuntimeException(ex);
+                    }
+                    if (pokemonASacar != null) {
+                        try {
+                            dejarPokemonEnBD(pokemonSeleccionado);
+                            listaEquipo.remove(pokemonSeleccionado);
+                            listaEquipo.add(pokemonASacar);
+                            pokemonComboBox.setModel(new DefaultComboBoxModel<>(listaEquipo.stream().map(Pokemon::getNombre).toArray(String[]::new)));
+
+                            EquipoDAO.quitarPokemon(pokemonSeleccionado);
+                            CajaDAO.meterPokemonACaja(pokemonASacar.getNombre());
+                        } catch (SQLException | IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        actualizarVistaMover(moverDialog, listaEquipo);
                     }
                 } else {
                     JOptionPane.showMessageDialog(moverDialog, "Error: Pokémon no seleccionado.");
@@ -697,6 +741,54 @@ class PCPokemonGUI extends JFrame {
 
         moverDialog.revalidate();
         moverDialog.repaint();
+    }
+
+
+
+    private static Pokemon obtenerPokemonASacarDelEquipo(JDialog moverDialog, ArrayList<Pokemon> listaEquipo) throws IOException {
+        ArrayList<Pokemon> listaCaja = CajaDAO.listaPokemon();
+
+        String[] nombresEquipo = listaEquipo.stream().map(Pokemon::getNombre).toArray(String[]::new);
+        String[] nombresCaja = listaCaja.stream().map(Pokemon::getNombre).toArray(String[]::new);
+
+        JComboBox<String> equipoComboBox = new JComboBox<>(nombresEquipo);
+        JComboBox<String> cajaComboBox = new JComboBox<>(nombresCaja);
+
+        JPanel panel = new JPanel(new GridLayout(2, 2));
+        panel.add(new JLabel("Selecciona el Pokémon del equipo:"));
+        panel.add(equipoComboBox);
+        panel.add(new JLabel("Selecciona el Pokémon de la caja:"));
+        panel.add(cajaComboBox);
+
+        int result = JOptionPane.showConfirmDialog(moverDialog, panel, "Seleccionar Pokémon", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            String nombrePokemonEquipo = (String) equipoComboBox.getSelectedItem();
+            String nombrePokemonCaja = (String) cajaComboBox.getSelectedItem();
+            if (nombrePokemonEquipo != null && nombrePokemonCaja != null) {
+                Pokemon pokemonEquipo = listaEquipo.stream().filter(p -> p.getNombre().equals(nombrePokemonEquipo)).findFirst().orElse(null);
+                Pokemon pokemonCaja = listaCaja.stream().filter(p -> p.getNombre().equals(nombrePokemonCaja)).findFirst().orElse(null);
+                if (pokemonEquipo != null && pokemonCaja != null) {
+                    try {
+                        listaEquipo.remove(pokemonEquipo);
+                        listaEquipo.add(pokemonCaja);
+                        listaCaja.remove(pokemonCaja);
+
+                        sacarPokemonDeBD(pokemonCaja);
+                        dejarPokemonEnBD(pokemonEquipo);
+
+                        EquipoDAO.setEquipo(listaEquipo);
+                        CajaDAO.setCaja(listaCaja);
+                    } catch (SQLException | IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(moverDialog, "Error: No se encontró el Pokémon seleccionado.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(moverDialog, "Error: Selecciona un Pokémon del equipo y de la caja.");
+            }
+        }
+        return listaEquipo.stream().filter(p -> p.getNombre().equals((String) equipoComboBox.getSelectedItem())).findFirst().orElse(null);
     }
 
 

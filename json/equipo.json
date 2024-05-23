@@ -56,22 +56,22 @@
       "estaEnCaja": false
     },
     {
-      "ID": 10,
-      "Nombre": "Caterpie",
-      "Habilidad": "Polvo Escudo",
-      "Tipo1": "Bicho",
+      "ID": 8,
+      "Nombre": "Wartortle",
+      "Habilidad": "Torrente",
+      "Tipo1": "Agua",
       "Nivel": 50,
-      "Hp": 45,
-      "Ataque": 30,
-      "Defensa": 35,
-      "AtaqueEspecial": 20,
-      "DefensaEspecial": 20,
-      "Velocidad": 45,
+      "Hp": 59,
+      "Ataque": 63,
+      "Defensa": 80,
+      "AtaqueEspecial": 65,
+      "DefensaEspecial": 80,
+      "Velocidad": 58,
       "Movimiento1": "Placaje",
-      "Movimiento2": "Disparo Demora",
-      "Objeto": "Baya Aranja",
-      "estaEnEquipo": true,
-      "estaEnCaja": false
+      "Movimiento2": "Látigo",
+      "Objeto": "Baya Atania",
+      "estaEnEquipo": false,
+      "estaEnCaja": true
     }
   ]
 }
