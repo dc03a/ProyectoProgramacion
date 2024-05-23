@@ -301,22 +301,19 @@ class PCPokemonGUI extends JFrame {
 
         JButton datosButton = new JButton("Datos");
         JButton objetoButton = new JButton("Objeto");
-        JButton moverButton = new JButton("Mover");
         JButton atrasButton = new JButton("Atrás");
 
         datosButton.setForeground(Color.BLACK);
         objetoButton.setForeground(Color.BLACK);
-        moverButton.setForeground(Color.BLACK);
         atrasButton.setForeground(Color.BLACK);
 
         datosButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
         objetoButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
-        moverButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
+
         atrasButton.setFont(new Font("PokemonGb-RAeo", Font.PLAIN, 16));
 
         opcionesDialog.add(datosButton);
         opcionesDialog.add(objetoButton);
-        opcionesDialog.add(moverButton);
         opcionesDialog.add(atrasButton);
 
         datosButton.addActionListener(new ActionListener() {
@@ -334,17 +331,6 @@ class PCPokemonGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mostrarObjeto(opcionesDialog, pokemon);
-            }
-        });
-
-        moverButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    moverPokemonEquipo(opcionesDialog, pokemon);
-                } catch (SQLException | IOException ex) {
-                    throw new RuntimeException(ex);
-                }
             }
         });
 
@@ -384,13 +370,6 @@ class PCPokemonGUI extends JFrame {
         } else {
             JOptionPane.showMessageDialog(parentDialog, pokemon.getNombre() + " porta el objeto: " + objeto);
         }
-    }
-
-
-
-    private static void moverPokemonEquipo(JDialog parentDialog, Pokemon pokemon) throws SQLException, IOException {
-        EquipoDAO.agregarPokemon(pokemon);
-        JOptionPane.showMessageDialog(parentDialog, "Funcionalidad para mover " + pokemon.getNombre() + " en el equipo.");
     }
 
 

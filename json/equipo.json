@@ -1,6 +1,25 @@
 {
   "equipo": [
     {
+      "Id": 1,
+      "Nombre": "Bulbasaur",
+      "Habilidad": "Espesura",
+      "Tipo1": "Planta",
+      "Tipo2": "Veneno",
+      "Nivel": 50,
+      "Hp": 45,
+      "Ataque": 49,
+      "Defensa": 49,
+      "AtaqueEspecial": 65,
+      "DefensaEspecial": 65,
+      "Velocidad": 45,
+      "Movimiento1": "Placaje",
+      "Movimiento2": "Gruñido",
+      "Objeto": "Picha",
+      "estaEnEquipo": true,
+      "estaEnCaja": false
+    },
+    {
       "Id": 4,
       "Nombre": "Charmander",
       "Habilidad": "Mar Llamas",
@@ -35,25 +54,6 @@
       "Objeto": "Chaleco Asalto",
       "estaEnEquipo": true,
       "estaEnCaja": false
-    },
-    {
-      "Id": 1,
-      "Nombre": "Bulbasaur",
-      "Habilidad": "Espesura",
-      "Tipo1": "Planta",
-      "Tipo2": "Veneno",
-      "Nivel": 50,
-      "Hp": 45,
-      "Ataque": 49,
-      "Defensa": 49,
-      "AtaqueEspecial": 65,
-      "DefensaEspecial": 65,
-      "Velocidad": 45,
-      "Movimiento1": "Placaje",
-      "Movimiento2": "Gruñido",
-      "Objeto": "Baya Aranja",
-      "estaEnEquipo": false,
-      "estaEnCaja": true
     }
   ]
 }
