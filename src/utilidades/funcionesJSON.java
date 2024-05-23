@@ -52,8 +52,4 @@ public class funcionesJSON {
         escribirJson(pokemon, rutaArchivo);
         System.out.println("Pokemon guardado en el archivo: " + rutaArchivo);
     }
-
-    public static Pokemon leerPokemonDeJSON(String rutaArchivo) throws IOException {
-        return leerObjetoDeJSON(rutaArchivo, Pokemon.class);
-    }
 }

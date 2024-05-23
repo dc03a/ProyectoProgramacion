@@ -1,26 +1,7 @@
 {
   "listaCaja": [
     {
-      "ID": 1,
-      "Nombre": "Bulbasaur",
-      "Habilidad": "Espesura",
-      "Tipo1": "Planta",
-      "Tipo2": "Veneno",
-      "Nivel": 50,
-      "Hp": 45,
-      "Ataque": 49,
-      "Defensa": 49,
-      "AtaqueEspecial": 65,
-      "DefensaEspecial": 65,
-      "Velocidad": 45,
-      "Movimiento1": "Placaje",
-      "Movimiento2": "Gruñido",
-      "Objeto": "Baya Aranja",
-      "estaEnEquipo": false,
-      "estaEnCaja": true
-    },
-    {
-      "ID": 2,
+      "Id": 2,
       "Nombre": "Ivysaur",
       "Habilidad": "Espesura",
       "Tipo1": "Planta",
@@ -39,7 +20,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 3,
+      "Id": 3,
       "Nombre": "Venusaur",
       "Habilidad": "Espesura",
       "Tipo1": "Planta",
@@ -58,25 +39,25 @@
       "estaEnCaja": true
     },
     {
-      "ID": 4,
-      "Nombre": "Charmander",
+      "Id": 5,
+      "Nombre": "Charmeleon",
       "Habilidad": "Mar Llamas",
       "Tipo1": "Fuego",
       "Nivel": 50,
-      "Hp": 39,
-      "Ataque": 52,
-      "Defensa": 43,
-      "AtaqueEspecial": 60,
-      "DefensaEspecial": 50,
-      "Velocidad": 65,
+      "Hp": 58,
+      "Ataque": 64,
+      "Defensa": 58,
+      "AtaqueEspecial": 80,
+      "DefensaEspecial": 65,
+      "Velocidad": 80,
       "Movimiento1": "Arañazo",
       "Movimiento2": "Gruñido",
-      "Objeto": "Restos",
+      "Objeto": "Baya Ziuela",
       "estaEnEquipo": false,
       "estaEnCaja": true
     },
     {
-      "ID": 6,
+      "Id": 6,
       "Nombre": "Charizard",
       "Habilidad": "Mar Llamas",
       "Tipo1": "Fuego",
@@ -95,25 +76,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 7,
-      "Nombre": "Squirtle",
-      "Habilidad": "Torrente",
-      "Tipo1": "Agua",
-      "Nivel": 50,
-      "Hp": 44,
-      "Ataque": 48,
-      "Defensa": 65,
-      "AtaqueEspecial": 50,
-      "DefensaEspecial": 64,
-      "Velocidad": 43,
-      "Movimiento1": "Placaje",
-      "Movimiento2": "Látigo",
-      "Objeto": "Chaleco Asalto",
-      "estaEnEquipo": false,
-      "estaEnCaja": true
-    },
-    {
-      "ID": 8,
+      "Id": 8,
       "Nombre": "Wartortle",
       "Habilidad": "Torrente",
       "Tipo1": "Agua",
@@ -131,7 +94,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 9,
+      "Id": 9,
       "Nombre": "Blastoise",
       "Habilidad": "Torrente",
       "Tipo1": "Agua",
@@ -149,7 +112,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 10,
+      "Id": 10,
       "Nombre": "Caterpie",
       "Habilidad": "Polvo Escudo",
       "Tipo1": "Bicho",
@@ -167,7 +130,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 11,
+      "Id": 11,
       "Nombre": "Metapod",
       "Habilidad": "Mudar",
       "Tipo1": "Bicho",
@@ -184,7 +147,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 12,
+      "Id": 12,
       "Nombre": "Butterfree",
       "Habilidad": "Ojo Compuesto",
       "Tipo1": "Bicho",
@@ -203,7 +166,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 13,
+      "Id": 13,
       "Nombre": "Weedle",
       "Habilidad": "Polvo Escudo",
       "Tipo1": "Bicho",
@@ -222,7 +185,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 14,
+      "Id": 14,
       "Nombre": "Kakuna",
       "Habilidad": "Mudar",
       "Tipo1": "Bicho",
@@ -240,7 +203,45 @@
       "estaEnCaja": true
     },
     {
-      "ID": 17,
+      "Id": 15,
+      "Nombre": "Beedrill",
+      "Habilidad": "Enjambre",
+      "Tipo1": "Bicho",
+      "Tipo2": "Veneno",
+      "Nivel": 50,
+      "Hp": 65,
+      "Ataque": 90,
+      "Defensa": 40,
+      "AtaqueEspecial": 45,
+      "DefensaEspecial": 80,
+      "Velocidad": 75,
+      "Movimiento1": "Doble Ataque",
+      "Movimiento2": "Furia",
+      "Objeto": "Periscopio",
+      "estaEnEquipo": false,
+      "estaEnCaja": true
+    },
+    {
+      "Id": 16,
+      "Nombre": "Pidgey",
+      "Habilidad": "Vista Lince",
+      "Tipo1": "Normal",
+      "Tipo2": "Volador",
+      "Nivel": 50,
+      "Hp": 40,
+      "Ataque": 45,
+      "Defensa": 40,
+      "AtaqueEspecial": 35,
+      "DefensaEspecial": 35,
+      "Velocidad": 56,
+      "Movimiento1": "Tornado",
+      "Movimiento2": "Ataque Arena",
+      "Objeto": "Baya Atania",
+      "estaEnEquipo": false,
+      "estaEnCaja": true
+    },
+    {
+      "Id": 17,
       "Nombre": "Pidgeotto",
       "Habilidad": "Vista Lince",
       "Tipo1": "Normal",
@@ -259,7 +260,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 18,
+      "Id": 18,
       "Nombre": "Pidgeot",
       "Habilidad": "Vista Lince",
       "Tipo1": "Normal",
@@ -278,7 +279,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 19,
+      "Id": 19,
       "Nombre": "Rattata",
       "Habilidad": "Fuga",
       "Tipo1": "Normal",
@@ -296,7 +297,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 20,
+      "Id": 20,
       "Nombre": "Raticate",
       "Habilidad": "Fuga",
       "Tipo1": "Normal",
@@ -314,7 +315,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 21,
+      "Id": 21,
       "Nombre": "Spearow",
       "Habilidad": "Vista Lince",
       "Tipo1": "Normal",
@@ -333,7 +334,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 22,
+      "Id": 22,
       "Nombre": "Fearow",
       "Habilidad": "Vista Lince",
       "Tipo1": "Normal",
@@ -352,7 +353,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 23,
+      "Id": 23,
       "Nombre": "Ekans",
       "Habilidad": "Intimidación",
       "Tipo1": "Veneno",
@@ -370,7 +371,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 24,
+      "Id": 24,
       "Nombre": "Arbok",
       "Habilidad": "Intimidación",
       "Tipo1": "Veneno",
@@ -388,7 +389,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 25,
+      "Id": 25,
       "Nombre": "Pikachu",
       "Habilidad": "Electricidad Estática",
       "Tipo1": "Eléctrico",
@@ -406,7 +407,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 26,
+      "Id": 26,
       "Nombre": "Raichu",
       "Habilidad": "Electricidad Estática",
       "Tipo1": "Eléctrico",
@@ -424,7 +425,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 27,
+      "Id": 27,
       "Nombre": "Sandshrew",
       "Habilidad": "Velo Arena",
       "Tipo1": "Tierra",
@@ -442,7 +443,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 28,
+      "Id": 28,
       "Nombre": "Sandslash",
       "Habilidad": "Velo Arena",
       "Tipo1": "Tierra",
@@ -460,7 +461,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 29,
+      "Id": 29,
       "Nombre": "Nidoran♀",
       "Habilidad": "Punto Tóxico",
       "Tipo1": "Veneno",
@@ -478,7 +479,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 30,
+      "Id": 30,
       "Nombre": "Nidorina",
       "Habilidad": "Punto Tóxico",
       "Tipo1": "Veneno",
@@ -496,7 +497,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 31,
+      "Id": 31,
       "Nombre": "Nidoqueen",
       "Habilidad": "Punto Tóxico",
       "Tipo1": "Veneno",
@@ -515,7 +516,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 32,
+      "Id": 32,
       "Nombre": "Nidoran♂",
       "Habilidad": "Punto Tóxico",
       "Tipo1": "Veneno",
@@ -533,7 +534,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 33,
+      "Id": 33,
       "Nombre": "Nidorino",
       "Habilidad": "Punto Tóxico",
       "Tipo1": "Veneno",
@@ -551,7 +552,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 34,
+      "Id": 34,
       "Nombre": "Nidoking",
       "Habilidad": "Punto Tóxico",
       "Tipo1": "Veneno",
@@ -570,7 +571,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 35,
+      "Id": 35,
       "Nombre": "Clefairy",
       "Habilidad": "Gran Encanto",
       "Tipo1": "Hada",
@@ -588,7 +589,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 36,
+      "Id": 36,
       "Nombre": "Clefable",
       "Habilidad": "Gran Encanto",
       "Tipo1": "Hada",
@@ -606,7 +607,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 37,
+      "Id": 37,
       "Nombre": "Vulpix",
       "Habilidad": "Absorbe Fuego",
       "Tipo1": "Fuego",
@@ -624,7 +625,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 38,
+      "Id": 38,
       "Nombre": "Ninetales",
       "Habilidad": "Absorbe Fuego",
       "Tipo1": "Fuego",
@@ -642,7 +643,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 39,
+      "Id": 39,
       "Nombre": "Jigglypuff",
       "Habilidad": "Gran Encanto",
       "Tipo1": "Normal",
@@ -661,7 +662,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 40,
+      "Id": 40,
       "Nombre": "Wigglytuff",
       "Habilidad": "Gran Encanto",
       "Tipo1": "Normal",
@@ -680,7 +681,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 41,
+      "Id": 41,
       "Nombre": "Zubat",
       "Habilidad": "Foco Interno",
       "Tipo1": "Veneno",
@@ -699,7 +700,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 42,
+      "Id": 42,
       "Nombre": "Golbat",
       "Habilidad": "Foco Interno",
       "Tipo1": "Veneno",
@@ -718,7 +719,7 @@
       "estaEnCaja": true
     },
     {
-      "ID": 43,
+      "Id": 43,
       "Nombre": "Oddish",
       "Habilidad": "Clorofila",
       "Tipo1": "Planta",
@@ -733,6 +734,63 @@
       "Movimiento1": "Absorber",
       "Movimiento2": "Ácido",
       "Objeto": "Restos",
+      "estaEnEquipo": false,
+      "estaEnCaja": true
+    },
+    {
+      "Id": 44,
+      "Nombre": "Gloom",
+      "Habilidad": "Clorofila",
+      "Tipo1": "Planta",
+      "Tipo2": "Veneno",
+      "Nivel": 50,
+      "Hp": 60,
+      "Ataque": 65,
+      "Defensa": 70,
+      "AtaqueEspecial": 85,
+      "DefensaEspecial": 75,
+      "Velocidad": 40,
+      "Movimiento1": "Absorber",
+      "Movimiento2": "Ácido",
+      "Objeto": "Baya Atania",
+      "estaEnEquipo": false,
+      "estaEnCaja": true
+    },
+    {
+      "Id": 45,
+      "Nombre": "Vileplume",
+      "Habilidad": "Clorofila",
+      "Tipo1": "Planta",
+      "Tipo2": "Veneno",
+      "Nivel": 50,
+      "Hp": 75,
+      "Ataque": 80,
+      "Defensa": 85,
+      "AtaqueEspecial": 110,
+      "DefensaEspecial": 90,
+      "Velocidad": 50,
+      "Movimiento1": "Absorber",
+      "Movimiento2": "Ácido",
+      "Objeto": "Baya Ziuela",
+      "estaEnEquipo": false,
+      "estaEnCaja": true
+    },
+    {
+      "Id": 46,
+      "Nombre": "Paras",
+      "Habilidad": "Efecto Espora",
+      "Tipo1": "Bicho",
+      "Tipo2": "Planta",
+      "Nivel": 50,
+      "Hp": 35,
+      "Ataque": 70,
+      "Defensa": 55,
+      "AtaqueEspecial": 45,
+      "DefensaEspecial": 55,
+      "Velocidad": 25,
+      "Movimiento1": "Arañazo",
+      "Movimiento2": "Gruñido",
+      "Objeto": "Garra Rápida",
       "estaEnEquipo": false,
       "estaEnCaja": true
     }

@@ -38,7 +38,7 @@ public class EquipoDAO {
         return nombres;
     }
 
-    public static boolean agregarPokemon(Pokemon pokemon) throws IOException, SQLException {
+    public static void agregarPokemon(Pokemon pokemon) throws IOException, SQLException {
         Equipo equipo = getEquipo();
         if (!equipoLleno(equipo.getEquipo())) {
             equipo.getEquipo().add(pokemon);
@@ -52,14 +52,11 @@ public class EquipoDAO {
                 if (filasActualizadas == 0) {
                     System.out.println("No se pudo actualizar el estado del Pokémon en la base de datos.");
                 }
-                return true;
             } catch (SQLException e) {
                 e.printStackTrace();
-                return false;
             }
         } else {
             System.out.println("El equipo está lleno");
-            return false;
         }
     }
 

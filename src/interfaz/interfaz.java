@@ -395,7 +395,7 @@ class PCPokemonGUI extends JFrame {
 
 
 
-    private static void actualizarVistaCajas (JDialog cajasDialog) throws IOException {
+    public static void actualizarVistaCajas (JDialog cajasDialog) throws IOException {
         cajasDialog.getContentPane().removeAll();
         cajasDialog.setLayout(new GridLayout(5, 10, 5, 5));
 
@@ -889,17 +889,16 @@ class PCPokemonGUI extends JFrame {
     private static void sacarPokemonDeBD(Pokemon pokemon) throws SQLException, IOException {
         if (EquipoDAO.equipoLleno(EquipoDAO.getEquipo().getEquipo())) {
             JOptionPane.showMessageDialog(null, "El equipo está lleno.");
-            return;
+        } else {
+            CajaDAO.sacarPokemonCaja(pokemon.getNombre());
+            EquipoDAO.agregarPokemon(pokemon);
+
+            Equipo equipo = EquipoDAO.getEquipo();
+            Caja caja = CajaDAO.getCaja();
+
+            funcionesJSON.escribirCajaAJSON(caja, "json/caja.json");
+            funcionesJSON.escribirEquipoAJSON(equipo, "json/equipo.json");
         }
-
-        CajaDAO.sacarPokemonCaja(pokemon.getNombre());
-        EquipoDAO.agregarPokemon(pokemon);
-
-        Equipo equipo = EquipoDAO.getEquipo();
-        Caja caja = CajaDAO.getCaja();
-
-        funcionesJSON.escribirEquipoAJSON(equipo, "json/equipo.json");
-        funcionesJSON.escribirCajaAJSON(caja, "json/caja.json");
     }
 
 
@@ -915,6 +914,8 @@ class PCPokemonGUI extends JFrame {
 
                 if (eliminado) {
                     equipo.setEquipo(listaEquipo);
+                    EquipoDAO.quitarPokemon(pokemon);
+                    CajaDAO.meterPokemonACaja(pokemon.getNombre());
                     funcionesJSON.escribirEquipoAJSON(equipo, "json/equipo.json");
                     JOptionPane.showMessageDialog(null, pokemon.getNombre() + " ha sido transferido correctamente a la caja");
                 } else {

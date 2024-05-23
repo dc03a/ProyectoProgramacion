@@ -1,7 +1,7 @@
 package clases;
 
 public class Pokemon {
-    public int ID;
+    public int Id;
     public String Nombre;
     public String Habilidad;
     public String Tipo1;
@@ -20,11 +20,11 @@ public class Pokemon {
     public boolean estaEnCaja;
 
     public int getID() {
-        return ID;
+        return Id;
     }
 
     public void setID(int ID) {
-        this.ID = ID;
+        this.Id = ID;
     }
 
     public String getNombre() {
@@ -164,7 +164,7 @@ public class Pokemon {
     @Override
     public String toString() {
         return "Pokemon{" +
-                "ID=" + ID +
+                "ID=" + Id +
                 ", Nombre='" + Nombre + '\'' +
                 ", Habilidad='" + Habilidad + '\'' +
                 ", Tipo1='" + Tipo1 + '\'' +
@@ -189,7 +189,7 @@ public class Pokemon {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pokemon pokemon = (Pokemon) o;
-        return ID == pokemon.ID;
+        return Id == pokemon.Id;
     }
 
 }

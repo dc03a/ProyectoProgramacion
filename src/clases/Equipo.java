@@ -14,16 +14,6 @@ public class Equipo {
         this.equipo = equipo;
     }
 
-    public String getNombre() {
-        return Nombre;
-    }
-
-    public void setNombre(String nombre) {
-        Nombre = nombre;
-    }
-
-
-
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

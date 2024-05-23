@@ -35,28 +35,57 @@ CREATE TABLE equipo (
 );
 
 DELIMITER $$
+
 CREATE TRIGGER insertar
-AFTER INSERT ON pokemon
-FOR EACH ROW
+    AFTER INSERT ON pokemon
+    FOR EACH ROW
 BEGIN
     DECLARE idPk INT;
     DECLARE nombrePk VARCHAR(100);
     DECLARE eqPk BOOLEAN;
-    SET idPk = (SELECT new.Id FROM pokemon WHERE Id = new.Id);
-    SET nombrePk = (SELECT new.Nombre FROM pokemon WHERE Id = new.Id);
-    SET eqPk = (SELECT new.estaEnEquipo FROM pokemon WHERE Id = new.Id);
+    SET idPk = (SELECT NEW.Id FROM pokemon WHERE Id = NEW.Id);
+    SET nombrePk = (SELECT NEW.Nombre FROM pokemon WHERE Id = NEW.Id);
+    SET eqPk = (SELECT NEW.estaEnEquipo FROM pokemon WHERE Id = NEW.Id);
     IF eqPk = 1 THEN
-        DELETE FROM caja WHERE IdPokemon = idPk;
-        INSERT INTO equipo(IdPokemon, Nombre) VALUES(idPk, nombrePk);
-    else
         DELETE FROM equipo WHERE IdPokemon = idPk;
+        INSERT INTO equipo(IdPokemon, Nombre) VALUES(idPk, nombrePk);
+    ELSE
+        DELETE FROM caja WHERE IdPokemon = idPk;
         INSERT INTO caja(IdPokemon, NombrePokemon) VALUES(idPk, nombrePk);
     END IF;
 END $$
+
+CREATE TRIGGER liberar
+    BEFORE DELETE ON pokemon
+    FOR EACH ROW
+BEGIN
+    DECLARE comprobar INT;
+    SET comprobar = (SELECT COUNT(*) FROM pokemon);
+    IF comprobar = 1 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se puede eliminar más Pokémon';
+    END IF;
+END $$
+
+CREATE TRIGGER mover
+    BEFORE UPDATE ON pokemon
+    FOR EACH ROW
+BEGIN
+    DECLARE idPk INT;
+    DECLARE nombrePk VARCHAR(100);
+    DECLARE eqPk BOOLEAN;
+    SET idPk = NEW.Id;
+    SET nombrePk = NEW.Nombre;
+    SET eqPk = NEW.estaEnEquipo;
+    IF eqPk = 1 THEN
+        DELETE FROM equipo WHERE IdPokemon = idPk;
+        INSERT INTO equipo(IdPokemon, Nombre) VALUES(idPk, nombrePk);
+    ELSE
+        DELETE FROM caja WHERE IdPokemon = idPk;
+        INSERT INTO caja(IdPokemon, NombrePokemon) VALUES(idPk, nombrePk);
+    END IF;
+END $$
+
 DELIMITER ;
-
-DELIMITER $$
-
 
 
 INSERT INTO pokemon (Nombre, Habilidad, Tipo1, Tipo2, Hp, Ataque, Defensa, AtaqueEspecial, DefensaEspecial, Velocidad, Nivel, Movimiento1, Movimiento2, estaEnCaja, estaEnEquipo, Objeto) VALUES
@@ -105,39 +134,4 @@ INSERT INTO pokemon (Nombre, Habilidad, Tipo1, Tipo2, Hp, Ataque, Defensa, Ataqu
                                                                                                                                                                                               ('Oddish', 'Clorofila', 'Planta', 'Veneno', 45, 50, 55, 75, 65, 30, 50, 'Absorber', 'Ácido', TRUE, FALSE, 'Restos'),
                                                                                                                                                                                               ('Gloom', 'Clorofila', 'Planta', 'Veneno', 60, 65, 70, 85, 75, 40, 50, 'Absorber', 'Ácido', TRUE, FALSE, 'Baya Atania'),
                                                                                                                                                                                               ('Vileplume', 'Clorofila', 'Planta', 'Veneno', 75, 80, 85, 110, 90, 50, 50, 'Absorber', 'Ácido', TRUE, FALSE, 'Baya Ziuela'),
-                                                                                                                                                                                              ('Paras', 'Efecto Espora', 'Bicho', 'Planta', 35, 70, 55, 45, 55, 25, 50, 'Arañazo', 'Gruñido', TRUE, FALSE, 'Garra Rápida'),
-                                                                                                                                                                                              ('Parasect', 'Efecto Espora', 'Bicho', 'Planta', 60, 95, 80, 60, 80, 30, 50, 'Arañazo', 'Gruñido', TRUE, FALSE, 'Chaleco Asalto');
-CREATE TRIGGER liberar
-BEFORE DELETE ON pokemon
-FOR EACH ROW
-BEGIN
-    DECLARE comprobar int;
-    SET comprobar = (SELECT COUNT(*) FROM POKEMON);
-    IF comprobar = 1 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se puede eliminar mas Pokemon';
-    END IF;
-END $$
-DELIMITER ;
-
-DELIMITER $$
-
-
-CREATE TRIGGER mover
-    BEFORE UPDATE ON pokemon
-    FOR EACH ROW
-BEGIN
-    DECLARE idPk INT;
-    DECLARE nombrePk VARCHAR(100);
-    DECLARE eqPk BOOLEAN;
-    SET idPk = Id;
-    SET nombrePk = NEW.Nombre;
-    SET eqPk = NEW.estaEnEquipo;
-    IF eqPk = 1 THEN
-        DELETE FROM equipo WHERE IdPokemon = idPk;
-        INSERT INTO equipo(IdPokemon, Nombre) VALUES(idPk, nombrePk);
-    ELSE
-        DELETE FROM caja WHERE IdPokemon = idPk;
-        INSERT INTO caja(IdPokemon, NombrePokemon) VALUES(idPk, nombrePk);
-    END IF;
-END $$
-DELIMITER ;
+                                                                                                                                                                                              ('Paras', 'Efecto Espora', 'Bicho', 'Planta', 35, 70, 55, 45, 55, 25, 50, 'Arañazo', 'Gruñido', TRUE, FALSE, 'Garra Rápida')

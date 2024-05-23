@@ -8,12 +8,6 @@ import utilidades.*;
 public class CajaDAO {
     private static final String JSON_CAJA_PATH = "json/caja.json";
     private static final String JSON_EQUIPO_PATH = "json/caja.json";
-    private static final String JSON_POKEMON_PATH = "json/pokemon.json";
-
-    /* para comprobar el tamanio de una caja */
-    public static boolean getTamanioCaja(ArrayList<Pokemon> lista) {
-        return lista.size() < 30;
-    }
 
     /* Para generar la lista de pokemons de la caja que le pasemos */
     public static ArrayList<Pokemon> listaPokemon() throws IOException {
@@ -66,7 +60,7 @@ public class CajaDAO {
         caja.getListaCaja().add(pokemon);
         funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
 
-        String query = "UPDATE pokemon SET estaEnCaja = 1, estaEnEquipo = 0 WHERE ID = ?";
+        String query = "UPDATE pokemon SET estaEnCaja = 1, estaEnEquipo = 0 WHERE Id = ?";
         try (Connection con = credenciales.conectar();
              PreparedStatement sentencia = con.prepareStatement(query);) {
             sentencia.setInt(1, pokemon.getID());
@@ -84,8 +78,9 @@ public class CajaDAO {
             throw new IllegalArgumentException("El Pokémon con el nombre " + pokemonNombre + " no está en la caja.");
         }
 
+        funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
 
-        String query = "UPDATE pokemon SET estaEnCaja = 0, estaEnEquipo = 1 WHERE NOMBRE = ?";
+        String query = "UPDATE pokemon SET estaEnCaja = 0, estaEnEquipo = 1 WHERE Nombre = ?";
         try (Connection con = credenciales.conectar();
              PreparedStatement sentencia = con.prepareStatement(query)) {
             sentencia.setString(1, pokemonNombre);
@@ -93,18 +88,6 @@ public class CajaDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        funcionesJSON.escribirCajaAJSON(caja, JSON_CAJA_PATH);
-    }
-
-    public static Pokemon obtenerPokemonDeCaja(String pokemonNombre) throws IOException {
-        Caja caja = funcionesJSON.leerCajaDeJSON(JSON_CAJA_PATH);
-
-        for (Pokemon pokemon : caja.getListaCaja()) {
-            if (pokemon.getNombre().equalsIgnoreCase(pokemonNombre)) {
-                return pokemon;
-            }
-        }
-        return null;
     }
 
     public static void liberarPokemon(Pokemon pokemon) throws SQLException, IOException {
@@ -113,7 +96,7 @@ public class CajaDAO {
             return;
         }
 
-        String query = "UPDATE pokemon SET estaEnEquipo = 0, estaEnCaja = 0 WHERE NOMBRE = ?";
+        String query = "UPDATE pokemon SET estaEnEquipo = 0, estaEnCaja = 0 WHERE Nombre = ?";
         try (Connection con = credenciales.conectar(); PreparedStatement sentencia = con.prepareStatement(query)) {
             sentencia.setString(1, pokemon.getNombre());
             sentencia.executeUpdate();
