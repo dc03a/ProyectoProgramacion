@@ -425,6 +425,24 @@
       "estaEnCaja": true
     },
     {
+      "ID": 26,
+      "Nombre": "Raichu",
+      "Habilidad": "Electricidad Estática",
+      "Tipo1": "Eléctrico",
+      "Nivel": 50,
+      "Hp": 60,
+      "Ataque": 90,
+      "Defensa": 55,
+      "AtaqueEspecial": 90,
+      "DefensaEspecial": 80,
+      "Velocidad": 110,
+      "Movimiento1": "Rayo",
+      "Movimiento2": "Ataque Rápido",
+      "Objeto": "Baya Atania",
+      "estaEnEquipo": false,
+      "estaEnCaja": true
+    },
+    {
       "ID": 27,
       "Nombre": "Sandshrew",
       "Habilidad": "Velo Arena",
@@ -791,25 +809,6 @@
       "Movimiento1": "Arañazo",
       "Movimiento2": "Gruñido",
       "Objeto": "Garra Rápida",
-      "estaEnEquipo": false,
-      "estaEnCaja": true
-    },
-    {
-      "ID": 47,
-      "Nombre": "Parasect",
-      "Habilidad": "Efecto Espora",
-      "Tipo1": "Bicho",
-      "Tipo2": "Planta",
-      "Nivel": 50,
-      "Hp": 60,
-      "Ataque": 95,
-      "Defensa": 80,
-      "AtaqueEspecial": 60,
-      "DefensaEspecial": 80,
-      "Velocidad": 30,
-      "Movimiento1": "Arañazo",
-      "Movimiento2": "Gruñido",
-      "Objeto": "Chaleco Asalto",
       "estaEnEquipo": false,
       "estaEnCaja": true
     }

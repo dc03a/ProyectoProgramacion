@@ -27,35 +27,8 @@ public class funcionesJSON {
 
     public static void escribirEquipoAJSON(Equipo equipo, String rutaArchivo) throws IOException {
         try {
-            Equipo equipoExistente = leerObjetoDeJSON(rutaArchivo, Equipo.class);
-
-            if (equipoExistente == null) {
-                escribirJson(equipo, rutaArchivo);
-                System.out.println("Equipo guardado en el archivo: " + rutaArchivo);
-            } else {
-                boolean cambiosRealizados = false;
-
-                for (Pokemon nuevoPokemon : equipo.getEquipo()) {
-                    boolean encontrado = false;
-                    for (Pokemon existentePokemon : equipoExistente.getEquipo()) {
-                        if (nuevoPokemon.getID() == existentePokemon.getID()) {
-                            encontrado = true;
-                            break;
-                        }
-                    }
-                    if (!encontrado) {
-                        equipoExistente.getEquipo().add(nuevoPokemon);
-                        cambiosRealizados = true;
-                    }
-                }
-
-                if (cambiosRealizados) {
-                    escribirJson(equipoExistente, rutaArchivo);
-                    System.out.println("Equipo actualizado y guardado en el archivo: " + rutaArchivo);
-                } else {
-                    System.out.println("No se realizaron cambios. El equipo ya estaba actualizado.");
-                }
-            }
+            escribirJson(equipo, rutaArchivo);
+            System.out.println("Equipo guardado en el archivo: " + rutaArchivo);
         } catch (IOException e) {
             System.err.println("Error al escribir el equipo en el archivo JSON: " + e.getMessage());
             throw e;

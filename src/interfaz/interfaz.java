@@ -909,12 +909,19 @@ class PCPokemonGUI extends JFrame {
             Equipo equipo = EquipoDAO.getEquipo();
 
             if (pokemon != null) {
-                EquipoDAO.quitarPokemon(pokemon);
-                funcionesJSON.escribirEquipoAJSON(equipo, "json/equipo.json");
+                ArrayList<Pokemon> listaEquipo = equipo.getEquipo();
 
-                JOptionPane.showMessageDialog(null, pokemon.getNombre() + "ha sido transferido correctamente a la caja");
+                boolean eliminado = listaEquipo.removeIf(p -> p.getNombre().equalsIgnoreCase(pokemon.getNombre()));
+
+                if (eliminado) {
+                    equipo.setEquipo(listaEquipo);
+                    funcionesJSON.escribirEquipoAJSON(equipo, "json/equipo.json");
+                    JOptionPane.showMessageDialog(null, pokemon.getNombre() + " ha sido transferido correctamente a la caja");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se ha encontrado ningún Pokémon con el nombre en el equipo");
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "No se ha encontrado ningún Pokémon con el nombre en el equipo");
+                JOptionPane.showMessageDialog(null, "No se ha proporcionado ningún Pokémon válido para transferir");
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
