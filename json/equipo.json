@@ -54,6 +54,24 @@
       "Objeto": "Chaleco Asalto",
       "estaEnEquipo": true,
       "estaEnCaja": false
+    },
+    {
+      "ID": 10,
+      "Nombre": "Caterpie",
+      "Habilidad": "Polvo Escudo",
+      "Tipo1": "Bicho",
+      "Nivel": 50,
+      "Hp": 45,
+      "Ataque": 30,
+      "Defensa": 35,
+      "AtaqueEspecial": 20,
+      "DefensaEspecial": 20,
+      "Velocidad": 45,
+      "Movimiento1": "Placaje",
+      "Movimiento2": "Disparo Demora",
+      "Objeto": "Baya Aranja",
+      "estaEnEquipo": true,
+      "estaEnCaja": false
     }
   ]
 }

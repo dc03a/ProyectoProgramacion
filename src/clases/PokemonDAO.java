@@ -6,14 +6,12 @@ import java.util.ArrayList;
 
 import utilidades.*;
 
-import javax.swing.*;
-
 public class PokemonDAO {
     private static final String JSON_POKEMON_PATH = "json/pokemon.json";
     private static final String JSON_EQUIPO_PATH = "json/equipo.json";
     private static final String JSON_CAJA_PATH = "json/caja.json";
 
-    public static ArrayList<Pokemon> seleccionarTodosLosPokemon() throws SQLException, IOException {
+    public static ArrayList<Pokemon> instanciarTodosLosPokemon() throws SQLException, IOException {
         ArrayList<Pokemon> listaPokemon = new ArrayList<>();
         String query = "SELECT * FROM pokemon";
         Equipo equipo = funcionesJSON.leerEquipoDeJSON(JSON_EQUIPO_PATH);

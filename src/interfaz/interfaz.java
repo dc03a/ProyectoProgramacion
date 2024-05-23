@@ -165,7 +165,7 @@ class PCPokemonGUI extends JFrame {
 
     private static void cargarPokemons() {
         try {
-            ArrayList<Pokemon> pokemons = PokemonDAO.seleccionarTodosLosPokemon();
+            ArrayList<Pokemon> pokemons = PokemonDAO.instanciarTodosLosPokemon();
             ArrayList<Pokemon> equipo = new ArrayList<>();
             ArrayList<Pokemon> caja = new ArrayList<>();
 
